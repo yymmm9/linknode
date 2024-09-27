@@ -1,21 +1,42 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { Icon } from '@iconify/react';
+import { SocialLinkProviderProps } from '@/types';
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  icon: string;
+// export interface InputProps
+//   extends React.InputHTMLAttributes<HTMLInputElement> {
+//   icon: string;
+// }
+
+interface IconWrapperProps {
+  className?: string; // 可选的 className
+  Icon: React.ElementType; // 传入图标组件
 }
 
+const IconWrapper: React.FC<IconWrapperProps> = ({ className, Icon }) => {
+  return <Icon className={className} />;
+};
+
+
+export interface InputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'placeholder'>, 
+    Pick<SocialLinkProviderProps, 'icon' | 'placeholder'> {
+  // 这里可以添加任何额外的属性
+}
 const SocialInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, icon: propIcon, ...props }, ref) => {
+  ({ className, icon: PropIcon, ...props }, ref) => {
     return (
       <div className="relative">
-        <Icon
+        <div className="absolute icon left-2.5 top-2/4 size-5 translate-y-[-50%]">
+        {/* <div className="icon  absolute inset-0 flex items-center"> */}
+          {typeof PropIcon == "string" ? PropIcon :
+        <IconWrapper className="size-5" Icon={PropIcon} />
+      }
+        </div>
+        {/* <Icon
           icon={propIcon}
           className="absolute left-2.5 top-2/4 size-5 translate-y-[-50%]"
-        />
+        /> */}
         <input
           type="search"
           className={cn(

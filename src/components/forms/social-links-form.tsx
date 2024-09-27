@@ -11,17 +11,22 @@ import {
 import { SocialInput } from '@/components/ui/social-input';
 import { useData } from '@/lib/context/link-context';
 import type { SocialLinkProviderProps } from '@/types';
+import { TdesignLogoWechatStroke } from "@/components/icon/wechat";
+import { FacebookIcon, GithubIcon, InstagramIcon, LinkedinIcon, TwitterIcon, YoutubeIcon, MailIcon} from 'lucide-react';
+import { WhatsappIcon } from '../icon/whatsapp';
+import { AkarIconsTelegramFill } from '../icon/telegram';
 
 const socialLinksProvider: SocialLinkProviderProps[] = [
-  { name: 'facebook', icon: 'ph:facebook-logo-duotone', id: 'f' },
-  { name: 'twitter', icon: 'ph:twitter-logo-duotone', id: 't' },
-  { name: 'instagram', icon: 'ph:instagram-logo-duotone', id: 'ig' },
-  { name: 'telegram', icon: 'ph:telegram-logo-duotone', id: 'tg' },
-  { name: 'youtube', icon: 'ph:youtube-logo-duotone', id: 'y' },
-  { name: 'email', icon: 'ph:envelope-duotone', id: 'e' },
-  { name: 'github', icon: 'ph:github-logo-duotone', id: 'gh' },
-  { name: 'linkedin', icon: 'ph:linkedin-logo-duotone', id: 'l' },
-  { name: 'whatsapp', icon: 'ph:whatsapp-logo-duotone', id: 'w' },
+  { name: 'facebook', icon: FacebookIcon, id: 'f', placeholder: ''},
+  { name: 'twitter', icon: TwitterIcon, id: 't', placeholder: ''},
+  { name: 'instagram', icon: InstagramIcon, id: 'ig', placeholder: ''},
+  { name: 'telegram', icon: AkarIconsTelegramFill, id: 'tg', placeholder: ''},
+  { name: 'youtube', icon: YoutubeIcon, id: 'y', placeholder: ''},
+  { name: 'email', icon: MailIcon, id: 'e', placeholder: ''},
+  { name: 'github', icon: GithubIcon, id: 'gh', placeholder: ''},
+  { name: 'linkedin', icon: LinkedinIcon, id: 'l', placeholder: ''},
+  { name: 'whatsapp', icon: WhatsappIcon, id: 'w', placeholder: 'wa.me/+34627620232'},
+  { name: 'whatsapp', icon: TdesignLogoWechatStroke, id: 'wc', placeholder: 'wechat id'},
 ];
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
@@ -48,7 +53,7 @@ export default function SocialLinksForm() {
               id={link.name}
               name={link.id}
               icon={link.icon}
-              placeholder={`${link.name}.com/johndoe`}
+              placeholder={link?.placeholder ? link.placeholder :`${link.name}.com/johndoe`}
               value={data[link.id]}
               onChange={handleInputChange}
             />

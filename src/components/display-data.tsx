@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { Icon } from '@iconify/react';
-import { ImageIcon } from 'lucide-react';
-import type { DisplayDataProps } from '@/types';
+import { FacebookIcon, ImageIcon, InstagramIcon, TwitterIcon, YoutubeIcon } from 'lucide-react';
+import type { DataProps, DisplayDataProps } from '@/types';
 import ExtraLinksCard from '@/components/extra-links-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { names } from '@/types';
 
 export default function DisplayData({ acc }: DisplayDataProps) {
   const allSocialLinksAreEmpty =
@@ -30,7 +31,18 @@ export default function DisplayData({ acc }: DisplayDataProps) {
     gh: 'ph:github-logo-duotone',
     l: 'ph:linkedin-logo-duotone',
   };
-
+  const iconsMap: Record<string, any> = {
+    f: <FacebookIcon/>,
+    t: <TwitterIcon/>,
+    ig: <InstagramIcon/>,
+    // tg: <TelegramIcon/>,
+    // w: <WhatsappIcon/>,
+    y: <YoutubeIcon/>,
+    e: 'ph:envelope-duotone',
+    // gh: 'ph:github-logo-duotone',
+    l: 'ph:linkedin-logo-duotone',
+  };
+  const excludedKeys = ['i', 'n', 'd', 'bg'];
   return (
     <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-8 overflow-y-scroll p-2">
       <div className="z-50 text-center">
@@ -53,9 +65,10 @@ export default function DisplayData({ acc }: DisplayDataProps) {
       </div>
       {!allSocialLinksAreEmpty && (
         <div className="flex flex-wrap items-center justify-center">
-          {Object.entries(acc).map(
-            ([key, value]: [string, string | undefined]) => {
-              const excludedKeys = ['i', 'n', 'd', 'bg'];
+          {Object.entries(acc)
+   .filter(([key]) => !excludedKeys.includes(key)) // 过滤掉 excludedKeys 中的键
+   .map(([key, value]: [string, any]) => {
+              
 
               if (key !== 'ls' && value && !excludedKeys.includes(key)) {
                 const propIcon = iconMap[key];
@@ -91,7 +104,20 @@ export default function DisplayData({ acc }: DisplayDataProps) {
                   return (
                     <span className="p-1" key={key}>
                       <a href={value} target="_blank" rel="noopener noreferrer">
-                        <Icon icon={propIcon} className="size-6" />
+                      {propIcon ? (
+    <Icon icon={propIcon} className="size-6" />
+) : (
+    (() => {
+        const value = names[key as keyof typeof names];
+        if (typeof value === 'string') {
+            return value; // Return the string value directly
+        } else if (typeof value === 'object' && value !== null) {
+            return value.name; // Return the name property from the object
+        }
+        return null; // Handle the case where value is undefined or null
+    })()
+)}
+
                       </a>
                     </span>
                   );

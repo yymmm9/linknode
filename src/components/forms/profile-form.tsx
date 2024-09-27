@@ -41,12 +41,23 @@ export default function ProfileForm() {
               id="name"
               name="n"
               type="text"
-              placeholder="John Doe"
+              placeholder="John"
               value={data.n}
               onChange={handleInputChange}
             />
           </div>
           <div>
+            <Label htmlFor="lastname">Lastname</Label>
+            <Input
+              id="lastname"
+              name="ln"
+              type="text"
+              placeholder="Doe"
+              value={data.ln}
+              onChange={handleInputChange}
+            />
+          </div>
+          {/* <div>
             <Label htmlFor="Profile-url">Profile Url</Label>
             <Input
               id="Profile-url"
@@ -54,6 +65,30 @@ export default function ProfileForm() {
               type="url"
               placeholder="https://example.com"
               value={data.i}
+              onChange={handleInputChange}
+            />
+          </div> */}
+        </div>
+        <div className="grid gap-2 md:grid-cols-2">
+          <div>
+            <Label htmlFor="phone">Phone</Label>
+            <Input
+              id="phone"
+              name="p"
+              type="text"
+              placeholder="+34 ..."
+              value={data.p}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              name="em"
+              type="email"
+              placeholder="https://example.com"
+              value={data.em}
               onChange={handleInputChange}
             />
           </div>
