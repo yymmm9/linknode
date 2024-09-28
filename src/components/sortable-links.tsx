@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useData } from '@/lib/context/link-context';
 import type { ExtraLinkProps } from '@/types';
+import { Trash2Icon } from 'lucide-react';
 
 interface SortableLinksProps {
   id: ExtraLinkProps;
@@ -31,6 +32,7 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
       <Card className="relative p-4">
         <div className="space-y-4">
           <div className="grid gap-2 md:grid-cols-2">
+              <div className="hidden">
             <div className="grid gap-2">
               <Label htmlFor={`link-icon-${uniqueID}`}>Icon Key</Label>
               <Input
@@ -44,7 +46,7 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
                   newLinks[index].i = e.target.value;
                   updateAdditionalInfo(newLinks);
                 }}
-              />
+              /></div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor={`link-name-${uniqueID}`}>Label</Label>
@@ -61,7 +63,6 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
                 }}
               />
             </div>
-          </div>
           <div className="grid gap-2">
             <Label htmlFor={`link-name-${uniqueID}`}>Destination URL</Label>
             <Input
@@ -77,9 +78,23 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
               }}
             />
           </div>
+          </div>
         </div>
+        <div
+          className="absolute -top-2 right-5 bg-white flex gap-2"
+          >
         <button
-          className="absolute -top-2 right-5 bg-white"
+          onClick={()=>{
+            
+            const newLinks = [...data.ls];  // 创建数组副本
+            newLinks.splice(index, 1);  // 删除指定索引的元素
+          updateAdditionalInfo(newLinks)
+          }}
+        >
+          <Trash2Icon className='size-4'/>
+        </button>
+        <button
+          // className="absolute -top-2 right-5 bg-white"
           {...attributes}
           {...listeners}
         >
@@ -91,6 +106,7 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
             ></path>
           </svg>
         </button>
+        </div>
       </Card>
     </div>
   );

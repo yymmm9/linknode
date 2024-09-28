@@ -96,7 +96,7 @@ export default function ExtraLinksForm() {
         <CardHeader className="space-y-1">
           <CardTitle className="flex items-center justify-between text-2xl">
             Extra Links
-            <GetIconInfo />
+            {/* <GetIconInfo /> */}
           </CardTitle>
           <CardDescription>
             Enter your additional link details here.
@@ -113,8 +113,13 @@ export default function ExtraLinksForm() {
               items={data.ls.map((link) => link.id)}
               strategy={verticalListSortingStrategy}
             >
-              {data.ls.map((link, index) => {
-                return <SortableLinks key={link.id} id={link} index={index} />;
+              {data.ls
+              // .filter((link)=>{return link.id >1 && (link?.l || link?.u)})
+              .map((link, index) => {
+                if((link?.l || link?.u)){
+                  return <SortableLinks key={link.id} id={link} index={index} />;
+                }
+                return;
               })}
             </SortableContext>
           </DndContext>

@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Icon } from '@iconify/react';
-import { FacebookIcon, ImageIcon, InstagramIcon, TwitterIcon, YoutubeIcon } from 'lucide-react';
 import type { DataProps, DisplayDataProps } from '@/types';
 import ExtraLinksCard from '@/components/extra-links-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { names } from '@/types';
+import { iconMap } from './forms/social-links-form';
+import { IconWrapper } from './ui/social-input';
+import { ImageIcon } from 'lucide-react';
 
 export default function DisplayData({ acc }: DisplayDataProps) {
   const allSocialLinksAreEmpty =
@@ -19,29 +20,7 @@ export default function DisplayData({ acc }: DisplayDataProps) {
     !acc.e &&
     !acc.gh &&
     !acc.l;
-
-  const iconMap: Record<string, string> = {
-    f: 'ph:facebook-logo-duotone',
-    t: 'ph:twitter-logo-duotone',
-    ig: 'ph:instagram-logo-duotone',
-    tg: 'ph:telegram-logo-duotone',
-    w: 'ph:whatsapp-logo-duotone',
-    y: 'ph:youtube-logo-duotone',
-    e: 'ph:envelope-duotone',
-    gh: 'ph:github-logo-duotone',
-    l: 'ph:linkedin-logo-duotone',
-  };
-  const iconsMap: Record<string, any> = {
-    f: <FacebookIcon/>,
-    t: <TwitterIcon/>,
-    ig: <InstagramIcon/>,
-    // tg: <TelegramIcon/>,
-    // w: <WhatsappIcon/>,
-    y: <YoutubeIcon/>,
-    e: 'ph:envelope-duotone',
-    // gh: 'ph:github-logo-duotone',
-    l: 'ph:linkedin-logo-duotone',
-  };
+    
   const excludedKeys = ['i', 'n', 'd', 'bg'];
   return (
     <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-8 overflow-y-scroll p-2">
@@ -71,13 +50,15 @@ export default function DisplayData({ acc }: DisplayDataProps) {
               
 
               if (key !== 'ls' && value && !excludedKeys.includes(key)) {
-                const propIcon = iconMap[key];
+                const propIcon = iconMap[key as string];
+
                 if (key === 'e') {
                   // Handle email link generation
                   return (
                     <span className="p-1" key={key}>
                       <a href={`mailto:${value}`}>
-                        <Icon icon={propIcon} className="size-6" />
+                      {typeof propIcon == "string" ? propIcon :
+        <IconWrapper className="size-5" Icon={propIcon} />}
                       </a>
                     </span>
                   );
@@ -96,7 +77,7 @@ export default function DisplayData({ acc }: DisplayDataProps) {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <Icon icon={propIcon} className="size-6" />
+                        <IconWrapper Icon={propIcon} className="size-6" />
                       </a>
                     </span>
                   );
@@ -105,7 +86,7 @@ export default function DisplayData({ acc }: DisplayDataProps) {
                     <span className="p-1" key={key}>
                       <a href={value} target="_blank" rel="noopener noreferrer">
                       {propIcon ? (
-    <Icon icon={propIcon} className="size-6" />
+    <IconWrapper Icon={propIcon} className="size-6" />
 ) : (
     (() => {
         const value = names[key as keyof typeof names];

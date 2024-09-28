@@ -26,8 +26,13 @@ const socialLinksProvider: SocialLinkProviderProps[] = [
   { name: 'github', icon: GithubIcon, id: 'gh', placeholder: ''},
   { name: 'linkedin', icon: LinkedinIcon, id: 'l', placeholder: ''},
   { name: 'whatsapp', icon: WhatsappIcon, id: 'w', placeholder: 'wa.me/+34627620232'},
-  { name: 'whatsapp', icon: TdesignLogoWechatStroke, id: 'wc', placeholder: 'wechat id'},
+  { name: 'wechat', icon: TdesignLogoWechatStroke, id: 'wc', placeholder: 'wechat id'},
 ];
+
+export const iconMap: { [key: string]: React.ElementType } = Object.fromEntries(
+  socialLinksProvider.map((social: any) => [social.id, social.icon])
+);
+
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 

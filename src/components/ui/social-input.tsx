@@ -3,20 +3,17 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { SocialLinkProviderProps } from '@/types';
 
-// export interface InputProps
-//   extends React.InputHTMLAttributes<HTMLInputElement> {
-//   icon: string;
-// }
-
 interface IconWrapperProps {
   className?: string; // 可选的 className
-  Icon: React.ElementType; // 传入图标组件
+  Icon?: React.ElementType; // 传入 React 组件类型，设置为可选
 }
 
-const IconWrapper: React.FC<IconWrapperProps> = ({ className, Icon }) => {
+export const IconWrapper: React.FC<IconWrapperProps> = ({ className, Icon }) => {
+  if (!Icon) {
+    return null;
+  }
   return <Icon className={className} />;
 };
-
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'placeholder'>, 
