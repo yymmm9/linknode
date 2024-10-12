@@ -12,6 +12,7 @@ specifiers:
   '@radix-ui/react-avatar': ^1.1.0
   '@radix-ui/react-dialog': ^1.1.1
   '@radix-ui/react-label': ^2.1.0
+  '@radix-ui/react-popover': ^1.1.2
   '@radix-ui/react-scroll-area': ^1.1.0
   '@radix-ui/react-select': ^2.1.1
   '@radix-ui/react-slot': ^1.1.0
@@ -20,6 +21,7 @@ specifiers:
   '@supabase/ssr': ^0.5.1
   '@supabase/supabase-js': ^2.45.4
   '@t3-oss/env-nextjs': ^0.7.3
+  '@tanstack/react-query': '4'
   '@types/eslint': ^8.56.11
   '@types/node': 20.5.7
   '@types/react': 18.2.21
@@ -67,6 +69,7 @@ dependencies:
   '@radix-ui/react-avatar': 1.1.1_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-dialog': 1.1.2_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-label': 2.1.0_zkisbtryv3xtasf42ecsrjh3ky
+  '@radix-ui/react-popover': 1.1.2_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-scroll-area': 1.2.0_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-select': 2.1.2_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-slot': 1.1.0_gq4reeurwxuj4hvyerswzzqthy
@@ -75,6 +78,7 @@ dependencies:
   '@supabase/ssr': 0.5.1_3yupeprrlxqrmmgp6c53md45ia
   '@supabase/supabase-js': 2.45.4
   '@t3-oss/env-nextjs': 0.7.3_w5ulheaegxflodxd3n5dmwwtkq
+  '@tanstack/react-query': 4.36.1_biqbaboplfbrettd7655fr4n2y
   '@vercel/analytics': 1.3.1_next@14.0.3+react@18.2.0
   '@vercel/og': 0.5.20
   class-variance-authority: 0.7.0
@@ -1053,6 +1057,40 @@ packages:
       react-dom: 18.2.0_react@18.2.0
     dev: false
 
+  /@radix-ui/react-popover/1.1.2_zkisbtryv3xtasf42ecsrjh3ky:
+    resolution: {integrity: sha512-u2HRUyWW+lOiA2g0Le0tMmT55FGOEWHwPFt1EPfbLly7uXQExFo5duNKqG2DzmFXIdqOeNd+TpE8baHWJCyP9w==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@radix-ui/primitive': 1.1.0
+      '@radix-ui/react-compose-refs': 1.1.0_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-context': 1.1.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-dismissable-layer': 1.1.1_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-focus-guards': 1.1.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-focus-scope': 1.1.0_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-id': 1.1.0_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-popper': 1.2.0_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-portal': 1.1.2_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-presence': 1.1.1_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-primitive': 2.0.0_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-slot': 1.1.0_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-use-controllable-state': 1.1.0_gq4reeurwxuj4hvyerswzzqthy
+      '@types/react': 18.2.21
+      '@types/react-dom': 18.2.7
+      aria-hidden: 1.2.4
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-remove-scroll: 2.6.0_gq4reeurwxuj4hvyerswzzqthy
+    dev: false
+
   /@radix-ui/react-popper/1.2.0_zkisbtryv3xtasf42ecsrjh3ky:
     resolution: {integrity: sha512-ZnRMshKF43aBxVWPWvbj21+7TQCvhuULWJ4gNIKYpRlQt5xGRhLx66tMp8pya2UkGHTSlhpXwmjqltDYHhw7Vg==}
     peerDependencies:
@@ -1841,6 +1879,28 @@ packages:
       '@t3-oss/env-core': 0.7.3_w5ulheaegxflodxd3n5dmwwtkq
       typescript: 5.2.2
       zod: 3.23.8
+    dev: false
+
+  /@tanstack/query-core/4.36.1:
+    resolution: {integrity: sha512-DJSilV5+ytBP1FbFcEJovv4rnnm/CokuVvrBEtW/Va9DvuJ3HksbXUJEpI0aV1KtuL4ZoO9AVE6PyNLzF7tLeA==}
+    dev: false
+
+  /@tanstack/react-query/4.36.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-y7ySVHFyyQblPl3J3eQBWpXZkliroki3ARnBKsdJchlgt7yJLRDUcf4B8soufgiYt3pEQIkBWBx1N9/ZPIeUWw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.36.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      use-sync-external-store: 1.2.2_react@18.2.0
     dev: false
 
   /@types/eslint/8.56.12:
@@ -5100,6 +5160,14 @@ packages:
       detect-node-es: 1.1.0
       react: 18.2.0
       tslib: 2.7.0
+    dev: false
+
+  /use-sync-external-store/1.2.2_react@18.2.0:
+    resolution: {integrity: sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /util-deprecate/1.0.2:

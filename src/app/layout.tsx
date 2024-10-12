@@ -5,6 +5,7 @@ import { Providers } from '@/components/providers';
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
+import QueryProvider from '@/components/query-provider';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -87,7 +88,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <QueryProvider>
+          <Providers>{children}</Providers>
+        </QueryProvider>
         <Analytics />
         <Toaster />
       </body>
