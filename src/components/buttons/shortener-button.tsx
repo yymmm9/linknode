@@ -41,7 +41,7 @@ export default function ShortenerButton() {
           </DialogTrigger>
           <DialogContent
             className="overflow-hidden p-0 sm:max-w-[450px]"
-            showClose={false}
+            // showClose={false}
           >
             <CardHeader className="p-6  pb-0">
               <CardTitle className="flex select-none items-center justify-between text-xl">
