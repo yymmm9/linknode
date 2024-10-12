@@ -4,6 +4,7 @@ import { siteConfig } from '@/app/page';
 import { Providers } from '@/components/providers';
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
+import { Toaster } from 'sonner';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -88,6 +89,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>{children}</Providers>
         <Analytics />
+        <Toaster />
       </body>
     </html>
   );
