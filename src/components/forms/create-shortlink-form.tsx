@@ -203,11 +203,7 @@ const CreateShortlinkForm = ({}) => {
                       'border-destructive focus-visible:ring-destructive':
                         error,
                     })}
-                    placeholder={
-                      error
-                        ? (error.message as string)
-                        : 'https://linknode.vercel.app/1?data=eylaikaksps...'
-                    }
+                    placeholder={error ? (error.message as string) : 'hov...'}
                     {...{
                       ...field,
                       value: shortUrlInfo.url,

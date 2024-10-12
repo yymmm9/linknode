@@ -11,11 +11,10 @@ import BackgroundShell from '@/components/backgrounds/background-shell';
 import GithubButton from '@/components/buttons/github-button';
 
 export const siteConfig = {
-  name: 'LinkNode - one page, many links.',
-  description:
-    'LinkNode is an open-source tool that helps you generate one link for all your links.',
-  ogImage: 'https://linknode.vercel.app/og-image.png',
-  url: 'https://linknode.vercel.app',
+  name: 'hov - one page, many links.',
+  description: '',
+  // ogImage: 'https://linknode.vercel.app/og-image.png',
+  url: '',
 };
 
 export default function Home() {

@@ -26,8 +26,7 @@ export default function NotFound() {
           Opps! Page not found.
         </h1>
         <p className="mt-4 text-gray-500 dark:text-gray-400">
-          Organize your links with LinkNode and make them easy to find and
-          share.
+          Organize your links and make them easy to find and share.
         </p>
         <div className="mt-6 flex w-full shrink-0 items-center justify-center gap-x-3 sm:w-auto">
           <Button size={'sm'} asChild>

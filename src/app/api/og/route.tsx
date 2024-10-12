@@ -37,7 +37,7 @@ export function GET(req: NextRequest) {
             tw="flex px-8 text-6xl font-bold leading-tight tracking-tight"
             style={{ overflowWrap: 'break-word' }}
           >
-            {name}&#39;s - LinkNode
+            {name}&#39;s - hov
           </div>
         </div>
       ),

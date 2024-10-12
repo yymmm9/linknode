@@ -79,7 +79,7 @@ export default function PublishButton() {
                         window.location.origin
                       }/1?data=${encodeData(data)}`;
                       await navigator.share({
-                        title: `${data.n} - LinkNode`,
+                        title: `${data.n} - hov`,
                         text: `Find all of ${data.n}'s links in one place.`,
                         url: inputLink,
                       });

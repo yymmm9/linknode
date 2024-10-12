@@ -26,20 +26,20 @@ export function generateMetadata({ searchParams }: SearchParamsProps) {
     openGraph: {
       type: 'website',
       locale: 'en_US',
-      url: 'https://linknode.vercel.app',
-      title: `${data.n}'s - LinkNode`,
+      url: 'https://hov.vercel.app',
+      title: `${data.n}'s - hov`,
       description: `Find all of ${data.n}'s links in one place.`,
-      images: `https://linknode.vercel.app/api/og?data=${encodeURI(
-        data.n ? data.n : 'Made with linknode',
+      images: `https://hov.vercel.app/api/og?data=${encodeURI(
+        data.n ? data.n : 'Made with hov',
       )}`,
-      siteName: `${data.n}'s - LinkNode`,
+      siteName: `${data.n}'s - hov`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${data.n} - LinkNode`,
+      title: `${data.n} - hov`,
       description: `Find all of ${data.n}'s links in one place.`,
-      images: `https://linknode.vercel.app/api/og?data=${encodeURI(
-        data.n ? data.n : 'Made with linknode',
+      images: `https://hov.vercel.app/api/og?data=${encodeURI(
+        data.n ? data.n : 'Made with hov',
       )}`,
       creator: '@sujjeeee',
     },

@@ -7,7 +7,7 @@ export default function GithubButton() {
   return (
     <Link
       target="_blank"
-      href="https://github.com/sujjeee/linknode"
+      href="https://github.com/"
       className={buttonVariants()}
     >
       <Github className="mr-2 size-4" />
