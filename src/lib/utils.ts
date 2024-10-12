@@ -44,7 +44,7 @@ export function isEmptyValues(obj: DataProps): boolean {
   type Keys = keyof DataProps;
 
   for (const key of Object.keys(obj) as Keys[]) {
-    if (obj[key] !== '' && obj[key].length !== 0) {
+    if (obj[key] !== '' && obj?.[key]?.length !== 0) {
       return false;
     }
   }
