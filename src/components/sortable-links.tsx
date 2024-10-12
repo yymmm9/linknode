@@ -32,21 +32,30 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
       <Card className="relative p-4">
         <div className="space-y-4">
           <div className="grid gap-2 md:grid-cols-2">
-              <div className="hidden">
-            <div className="grid gap-2">
-              <Label htmlFor={`link-icon-${uniqueID}`}>Icon Key</Label>
-              <Input
-                id={`link-icon-${uniqueID}`}
-                name="i"
-                type="text"
-                placeholder="ri:4k-fill"
-                value={id.i}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  const newLinks = [...data.ls];
-                  newLinks[index].i = e.target.value;
-                  updateAdditionalInfo(newLinks);
-                }}
-              /></div>
+            <div className="hidden">
+              <div className="grid gap-2">
+                <Label htmlFor={`link-icon-${uniqueID}`}>Icon Key</Label>
+                <Input
+                  id={`link-icon-${uniqueID}`}
+                  name="i"
+                  type="text"
+                  placeholder="ri:4k-fill"
+                  value={id.i}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    const newLinks = [...data.ls];
+                    if (newLinks && index >= 0 && newLinks[index]) {
+                      newLinks[index].i = e.target.value;
+                    } else {
+                      console.error(
+                        'Error updating link icon:',
+                        index,
+                        newLinks,
+                      );
+                    }
+                    updateAdditionalInfo(newLinks);
+                  }}
+                />
+              </div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor={`link-name-${uniqueID}`}>Label</Label>
@@ -58,54 +67,55 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
                 value={id.l}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   const newLinks = [...data.ls];
-                  newLinks[index].l = e.target.value;
+                  if (newLinks && newLinks[index]) {
+                    newLinks[index].l = e.target.value;
+                  }
                   updateAdditionalInfo(newLinks);
                 }}
               />
             </div>
-          <div className="grid gap-2">
-            <Label htmlFor={`link-name-${uniqueID}`}>Destination URL</Label>
-            <Input
-              id={`link-url-${uniqueID}`}
-              name="u"
-              type="url"
-              placeholder="https://example.com"
-              value={id.u}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const newLinks = [...data.ls];
-                newLinks[index].u = e.target.value;
-                updateAdditionalInfo(newLinks);
-              }}
-            />
-          </div>
+            <div className="grid gap-2">
+              <Label htmlFor={`link-name-${uniqueID}`}>Destination URL</Label>
+              <Input
+                id={`link-url-${uniqueID}`}
+                name="u"
+                type="url"
+                placeholder="https://example.com"
+                value={id.u}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const newLinks = [...data.ls];
+                  if (newLinks && newLinks[index]) {
+                    newLinks[index].u = e.target.value;
+                  }
+                  updateAdditionalInfo(newLinks);
+                }}
+              />
+            </div>
           </div>
         </div>
-        <div
-          className="absolute -top-2 right-5 bg-white flex gap-2"
+        <div className="absolute -top-2 right-5 bg-white flex gap-2">
+          <button
+            onClick={() => {
+              const newLinks = [...data.ls]; // 创建数组副本
+              newLinks.splice(index, 1); // 删除指定索引的元素
+              updateAdditionalInfo(newLinks);
+            }}
           >
-        <button
-          onClick={()=>{
-            
-            const newLinks = [...data.ls];  // 创建数组副本
-            newLinks.splice(index, 1);  // 删除指定索引的元素
-          updateAdditionalInfo(newLinks)
-          }}
-        >
-          <Trash2Icon className='size-4'/>
-        </button>
-        <button
-          // className="absolute -top-2 right-5 bg-white"
-          {...attributes}
-          {...listeners}
-        >
-          <svg viewBox="0 0 20 20" width="15">
-            <path
-              d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-8a2 2 0 1 0-.001-4.001A2 2 0 0 0 13 6zm0 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"
-              transform="rotate(-90,10,10)"
-              fill={'currentcolor'}
-            ></path>
-          </svg>
-        </button>
+            <Trash2Icon className="size-4" />
+          </button>
+          <button
+            // className="absolute -top-2 right-5 bg-white"
+            {...attributes}
+            {...listeners}
+          >
+            <svg viewBox="0 0 20 20" width="15">
+              <path
+                d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-8a2 2 0 1 0-.001-4.001A2 2 0 0 0 13 6zm0 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"
+                transform="rotate(-90,10,10)"
+                fill={'currentcolor'}
+              ></path>
+            </svg>
+          </button>
         </div>
       </Card>
     </div>

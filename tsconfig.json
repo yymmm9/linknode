@@ -20,7 +20,11 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "noImplicitAny": true,   // Prevents use of 'any' type and forces explicit types
+    "strictNullChecks": true, // Ensures handling of `null` and `undefined` more rigorously
+    "noUncheckedIndexedAccess": true, // Enforces type checks for index accesses
+    "forceConsistentCasingInFileNames": true // Enforces consistent casing for imports
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
