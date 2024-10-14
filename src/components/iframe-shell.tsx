@@ -24,7 +24,6 @@ function IFrameImplementation(props: React.ComponentPropsWithRef<'iframe'>) {
     reject: () => void;
   }>(null);
 
-  /* eslint-disable @typescript-eslint/no-unused-vars  */
   const [_, triggerLoad] = useState(false);
 
   if (awaiter.current?.promise) {

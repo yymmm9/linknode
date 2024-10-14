@@ -1,38 +1,37 @@
-// source: https://github.com/sadmann7/skateshop/blob/main/.eslintrc.cjs
-
 /** @type {import("eslint").Linter.Config} */
 const config = {
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    project: true,
-  },
-  plugins: ["@typescript-eslint", "tailwindcss"],
+  // parser: "@typescript-eslint/parser",
+  // parserOptions: {
+  //   project: true,
+  // },
+  // plugins: ["@typescript-eslint", "tailwindcss"],
   extends: [
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended-type-checked",
-    "prettier",
-    "plugin:tailwindcss/recommended",
+    // "plugin:@typescript-eslint/recommended-type-checked",
+    // "prettier",
+    // "plugin:tailwindcss/recommended",
   ],
   rules: {
-    // These opinionated rules are enabled in stylistic-type-checked above.
-    // Feel free to reconfigure them to your own preference.
-    "@typescript-eslint/array-type": "off",
-    "@typescript-eslint/consistent-type-definitions": "off",
-
-    "@typescript-eslint/consistent-type-imports": [
-      "warn",
-      {
-        prefer: "type-imports",
-        fixStyle: "inline-type-imports",
-      },
-    ],
-    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "@typescript-eslint/no-misused-promises": [
-      2,
-      {
-        checksVoidReturn: { attributes: false },
-      },
-    ],
+    // Disable specific rules here
+    // "@typescript-eslint/array-type": "off", // Already disabled
+    // "@typescript-eslint/consistent-type-definitions": "off", // Already disabled
+    // "@typescript-eslint/consistent-type-imports": [
+    //   "warn",
+    //   {
+    //     prefer: "type-imports",
+    //     fixStyle: "inline-type-imports",
+    //   },
+    // ],
+    // "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }], // Change "warn" to "off" if you want to disable
+    // "@typescript-eslint/no-misused-promises": [
+    //   2,
+    //   {
+    //     checksVoidReturn: { attributes: false },
+    //   },
+    // ],
+    // // Add other rules you want to disable below
+    // "tailwindcss/classnames-order": "off", // Example: disable tailwind class order rule
+    // // "no-console": "off", // Example: disable no-console rule
   },
   settings: {
     tailwindcss: {
@@ -46,4 +45,4 @@ const config = {
   },
 }
 
-module.exports = config
+module.exports = config;

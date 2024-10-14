@@ -1,6 +1,6 @@
 // original source: https://github.com/ibelick/background-snippets/blob/main/app/components/background.tsx
 
-/* eslint-disable tailwindcss/no-contradicting-classname  */
+/* eslint- disable tailwindcss/no-contradicting-classname  */
 const BgTheme1 = () => {
   return <div className="absolute inset-0 z-[-10] size-full bg-white" />;
 };
