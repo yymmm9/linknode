@@ -8,7 +8,10 @@ import { useData } from '@/lib/context/link-context';
 export default function DemoButton() {
   const { showDemo } = useData();
   return (
-    <Button className="w-full" onClick={showDemo}>
+    <Button
+      className="w-full bg-neutral-100 text-neutral-800 hover:text-neutral-100"
+      onClick={showDemo}
+    >
       <Play className="mr-2 size-4" />
       Demo
     </Button>

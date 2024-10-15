@@ -4,6 +4,7 @@ export default function page() {
   return (
     <div>
       <UserProfile />
+      {/* todo show links */}
     </div>
   );
 }
