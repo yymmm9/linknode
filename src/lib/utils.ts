@@ -4,6 +4,13 @@ import { customAlphabet } from 'nanoid';
 import { encode, decode } from 'js-base64';
 import { toast } from 'sonner';
 import type { DataProps, ShortLinkProps } from '@/types';
+import { createClient } from '@supabase/supabase-js';
+
+export const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+
+);
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

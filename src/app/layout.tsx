@@ -92,7 +92,7 @@ export default function RootLayout({
           <Providers>{children}</Providers>
         </QueryProvider>
         <Analytics />
-        <Toaster />
+        {/* <Toaster /> */}
       </body>
     </html>
   );

@@ -8,6 +8,8 @@ import DisplayData from '@/components/display-data';
 import { useData } from '@/lib/context/link-context';
 import { DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { BACKGROUND_OPTIONS } from '@/components/backgrounds/background-snippets';
+import DemoButton from './demo-button';
+import ShortenerButton from './shortener-button';
 
 export default function PreviewButton() {
   const { data } = useData();
@@ -42,8 +44,14 @@ export default function PreviewButton() {
           ) : (
             <>
               {!isEmpty && selectedBgComponent}
-              <div className="h-full px-2 pt-10">
+              <div className="h-full px-2 pt-10 relative">
                 <DisplayData acc={data} />
+                <div className="fixed left-2 right-2 bottom-4 grid w-full px-4 grid-cols-2 items-center justify-center gap-2 md:grid-cols-4 ">
+                  <DemoButton />
+                  {/* <PublishButton /> */}
+                  <ShortenerButton />
+                  {/* <GithubButton /> */}
+                </div>
               </div>
             </>
           )}

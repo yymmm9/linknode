@@ -30,9 +30,9 @@ export default function Home() {
 
           <div className="grid w-full grid-cols-2 items-center justify-center gap-2 md:grid-cols-4 ">
             <DemoButton />
-            <PublishButton />
+            {/* <PublishButton /> */}
             <ShortenerButton />
-            <GithubButton />
+            {/* <GithubButton /> */}
           </div>
         </div>
       </section>

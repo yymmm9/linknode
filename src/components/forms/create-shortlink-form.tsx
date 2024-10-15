@@ -21,6 +21,7 @@ import {
   checkCustomCredentials,
   cn,
   encodeData,
+  supabase,
 } from '@/lib/utils';
 import {
   Form,
@@ -42,6 +43,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import useUser from '@/app/hook/useUser';
 
 const CreateShortlinkForm = ({}) => {
   const { data } = useData();
@@ -50,6 +52,8 @@ const CreateShortlinkForm = ({}) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { setSomeResponseInfo, setAuthKey, setProjectSlug, setShortedLink } =
     useAPIResponse();
+
+  const { data: user, isLoading: userIsLoading, isError, error } = useUser();
 
   const domainRegex =
     /^(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+)([a-zA-Z0-9]{2,63}|[a-zA-Z0-9-]{2,63}[a-zA-Z0-9])$/;
@@ -157,6 +161,16 @@ const CreateShortlinkForm = ({}) => {
       setIsLoading(true);
       const response = await createShortLink(data);
 
+      if (user && response) {
+        const body = [
+          {
+            user_id: user.id,
+            shortlink: response.data?.key,
+          },
+        ];
+        const res = await supabase.from('links').insert(body);
+      }
+
       if (!response) {
         toast.error('No response received');
         return;
@@ -186,7 +200,7 @@ const CreateShortlinkForm = ({}) => {
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
         className="grid gap-2"
       >
-        <FormField
+        {/* <FormField
           control={form.control}
           name="url"
           render={({ field, formState }) => {
@@ -214,7 +228,7 @@ const CreateShortlinkForm = ({}) => {
               </FormItem>
             );
           }}
-        />
+        /> */}
         <FormField
           control={form.control}
           name="shortLink"
@@ -243,7 +257,7 @@ const CreateShortlinkForm = ({}) => {
           }}
         />
 
-        <Accordion type="single" collapsible>
+        {/* <Accordion type="single" collapsible>
           <AccordionItem value="item-1" className="border-none">
             <AccordionTrigger className="text-sm">Optional</AccordionTrigger>
             <AccordionContent className="grid gap-2 overflow-visible">
@@ -414,7 +428,7 @@ const CreateShortlinkForm = ({}) => {
               />
             </AccordionContent>
           </AccordionItem>
-        </Accordion>
+        </Accordion> */}
         <Button type="submit" disabled={isLoading} className="mt-2 w-full">
           {isLoading ? (
             <>

@@ -35,6 +35,7 @@ specifiers:
   class-variance-authority: ^0.7.0
   clsx: ^2.1.1
   cmdk: ^0.2.1
+  dub: ^0.43.6
   eslint: 8.48.0
   eslint-config-next: 13.4.19
   eslint-config-prettier: ^9.1.0
@@ -86,6 +87,7 @@ dependencies:
   class-variance-authority: 0.7.0
   clsx: 2.1.1
   cmdk: 0.2.1_vnxzf5c44dqo4vncfl2mrh2gwm
+  dub: 0.43.6_zod@3.23.8
   input-otp: 1.2.4_biqbaboplfbrettd7655fr4n2y
   js-base64: 3.7.7
   lucide-react: 0.271.0_react@18.2.0
@@ -2744,6 +2746,14 @@ packages:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
       domhandler: 5.0.3
+    dev: false
+
+  /dub/0.43.6_zod@3.23.8:
+    resolution: {integrity: sha512-f/dyf6ZFITQoGMlSQstAPNeOmwi8FUpzuQ0Lw2v5B8jCMUVS2yaD/P4DufDyjTrPZvWrozbTBP7aWd9G9kEGvw==}
+    peerDependencies:
+      zod: '>= 3'
+    dependencies:
+      zod: 3.23.8
     dev: false
 
   /eastasianwidth/0.2.0:
