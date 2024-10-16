@@ -30,19 +30,6 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 import useUser from '@/app/hook/useUser';
 
 const CreateShortlinkForm = ({}) => {
@@ -165,7 +152,7 @@ const CreateShortlinkForm = ({}) => {
         const body = [
           {
             user_id: user.id,
-            shortlink: response.data?.key,
+            key: response.data?.key,
           },
         ];
         const res = await supabase.from('links').insert(body);
