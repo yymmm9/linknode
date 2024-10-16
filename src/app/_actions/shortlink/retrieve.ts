@@ -4,17 +4,12 @@ import { env } from '@/env.mjs';
 import { catchError, dub, generateNanoId } from '@/lib/utils';
 import type { APIResponse, ShortLinkProps } from '@/types';
 
-export default async function createShortLink(shortUrlInfo: ShortLinkProps) {
+export default async function retrieveShortLink(key: string) {
+  if (!key) return
   try {
-    // Generate necessary parameters
-    const projectSlug = shortUrlInfo?.projectSlug || env.DUB_DOT_CO_SLUG;
-    const shortLink = shortUrlInfo?.shortLink || generateNanoId();
-
-    // Create a short link using the Dub API
-    const response = await dub.links.create({
-      url: shortUrlInfo.url,
-      key: shortLink,
-      domain: shortUrlInfo?.domain || env.NEXT_PUBLIC_BASE_SHORT_DOMAIN,
+    const response = await dub.links.get({
+      domain: "hov.sh",
+      key
     });
 
     // Return the response from the Dub API
@@ -25,7 +20,8 @@ export default async function createShortLink(shortUrlInfo: ShortLinkProps) {
     };
   } catch (error) {
     // Handle any errors and log them
-    catchError(error);
+    console.log(error)
+    // catchError(error);
     return {
       success: false,
       error: 'An unexpected error occurred.',

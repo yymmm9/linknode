@@ -6,11 +6,17 @@ import { toast } from 'sonner';
 import type { DataProps, ShortLinkProps } from '@/types';
 import { createClient } from '@supabase/supabase-js';
 
+import { Dub } from 'dub';
+
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL as string,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
 
 );
+
+export const dub = new Dub({
+  token: process.env.DUB_DOT_CO_TOKEN,
+});
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
