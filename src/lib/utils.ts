@@ -4,15 +4,9 @@ import { customAlphabet } from 'nanoid';
 import { encode, decode } from 'js-base64';
 import { toast } from 'sonner';
 import type { DataProps, ShortLinkProps } from '@/types';
-import { createClient } from '@supabase/supabase-js';
+// import { createClient } from '@supabase/supabase-js';
 
 import { Dub } from 'dub';
-
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_ANON_KEY!
-
-);
 
 export const dub = new Dub({
   token: process.env.DUB_DOT_CO_TOKEN,

@@ -1,7 +1,7 @@
 'use client';
 
 import useUser from '@/app/hook/useUser';
-import { supabase } from '@/lib/utils';
+// import { supabase } from '@/lib/utils';
 import { Button } from './ui/button';
 import { Check, Copy } from 'lucide-react';
 import Link from 'next/link';
@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import dayjs from 'dayjs';
 import EditShortLink from './edit-link';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@supabase/supabase-js';
 
 interface LinkData {
   id: string;
@@ -18,9 +19,14 @@ interface LinkData {
   created_at: string; // Adjust type based on your actual data structure
 }
 
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_ANON_KEY!,
+);
+
 export default function UserShortLinks() {
-// {Links}
-// :{Links: any}
+  // {Links}
+  // :{Links: any}
   const [links, setLinks] = useState<LinkData[]>([]);
   const [hasCopied, setHasCopied] = useState(false);
   const { data: user, isLoading: userIsLoading } = useUser();
