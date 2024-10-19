@@ -21,7 +21,7 @@ import {
   checkCustomCredentials,
   cn,
   encodeData,
-  supabase,
+  // supabase,
 } from '@/lib/utils';
 import {
   Form,
@@ -31,6 +31,12 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import useUser from '@/app/hook/useUser';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_ANON_KEY!,
+);
 
 const CreateShortlinkForm = ({}) => {
   const { data } = useData();
