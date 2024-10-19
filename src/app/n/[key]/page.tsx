@@ -29,7 +29,9 @@ export const siteConfig = {
 const bgGradient =
   'block text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-600 py-2';
 
-export default function Home() {
+export default function Home({ params }: { params: any }) {
+  let key = params?.key;
+  if (!key) return;
   return (
     <main className="relative h-screen md:container lg:grid-cols-3">
       {/* <section className="flex h-screen flex-col items-center justify-center gap-6 pb-6 lg:col-span-2 lg:px-20 lg:pb-0"></section> */}
@@ -46,7 +48,7 @@ export default function Home() {
               /> */}
 
               <TextEffect per="char" preset="blur">
-                一触即发，轻松获取客户好评
+                {'请提供/' + key + '/给客服, 即刻激活立牌'}
               </TextEffect>
               {/* <span className={bgGradient}>solutions for tomorrow</span> */}
             </h1>
@@ -54,14 +56,22 @@ export default function Home() {
               捕获客户真实反馈，评论数量增长比传统方式高出534%，助你快速提升品牌影响力。
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-              <ContactDrawer />
-
-              <p
-                // href="/"
-                className="flex items-center justify-center h-10 px-4 py-2 text-sm font-semibold text-gray-500 transition-all duration-200 bg-white border border-gray-300 rounded-full hover:text-teal-700 focus:ring-2 shadow-button shadow-gray-500/5 focus:ring-teal-950 focus:ring-offset-2 ring-offset-gray-200 hover:shadow-none"
-              >
-                下滑阅读详情
-              </p>
+              <ContactDrawer
+                cta="添加客服微信"
+                copyCta="复制微信号"
+                toCopy="yimmmmin"
+                title="添加微信，开启服务"
+                description="平面设计、印刷广告、灯箱立体字、网站、电商及线上点单，一站式解决方案，等你来体验！"
+                variant="secondary"
+              />
+              <ContactDrawer
+                cta="立即激活立牌"
+                copyCta="复制产品编码"
+                info="产品编码："
+                toCopy={key}
+                title="激活立牌，开启无限可能"
+                description="请务必附上店面的谷歌地图链接给客服"
+              />
             </div>
           </div>
           <div className="my-8"></div>

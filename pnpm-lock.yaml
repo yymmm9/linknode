@@ -41,6 +41,7 @@ specifiers:
   eslint-config-next: 13.4.19
   eslint-config-prettier: ^9.1.0
   eslint-plugin-tailwindcss: ^3.17.4
+  framer-motion: ^11.11.9
   input-otp: ^1.2.4
   js-base64: ^3.7.7
   lucide-react: ^0.271.0
@@ -53,6 +54,7 @@ specifiers:
   react-dom: 18.2.0
   react-hook-form: ^7.53.0
   react-icons: ^5.3.0
+  react-use-measure: ^2.1.1
   resend: ^4.0.0
   sonner: ^0.7.4
   tailwind-merge: ^1.14.0
@@ -90,6 +92,7 @@ dependencies:
   cmdk: 0.2.1_vnxzf5c44dqo4vncfl2mrh2gwm
   dayjs: 1.11.13
   dub: 0.43.6_zod@3.23.8
+  framer-motion: 11.11.9_biqbaboplfbrettd7655fr4n2y
   input-otp: 1.2.4_biqbaboplfbrettd7655fr4n2y
   js-base64: 3.7.7
   lucide-react: 0.271.0_react@18.2.0
@@ -99,6 +102,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.53.0_react@18.2.0
   react-icons: 5.3.0_react@18.2.0
+  react-use-measure: 2.1.1_biqbaboplfbrettd7655fr4n2y
   resend: 4.0.0_biqbaboplfbrettd7655fr4n2y
   sonner: 0.7.4_biqbaboplfbrettd7655fr4n2y
   tailwind-merge: 1.14.0
@@ -2622,6 +2626,10 @@ packages:
     resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
     dev: false
 
+  /debounce/1.2.1:
+    resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
+    dev: false
+
   /debug/3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
@@ -3342,6 +3350,25 @@ packages:
   /fraction.js/4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
     dev: true
+
+  /framer-motion/11.11.9_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-XpdZseuCrZehdHGuW22zZt3SF5g6AHJHJi7JwQIigOznW4Jg1n0oGPMJQheMaKLC+0rp5gxUKMRYI6ytd3q4RQ==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.7.0
+    dev: false
 
   /fs.realpath/1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -4597,6 +4624,17 @@ packages:
       invariant: 2.2.4
       react: 18.2.0
       tslib: 2.7.0
+    dev: false
+
+  /react-use-measure/2.1.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-nocZhN26cproIiIduswYpV5y5lQpSQS1y/4KuvUCjSKmw7ZWIS/+g3aFnX3WdBkyuGUtTLif3UTqnLLhbDoQig==}
+    peerDependencies:
+      react: '>=16.13'
+      react-dom: '>=16.13'
+    dependencies:
+      debounce: 1.2.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react/18.2.0:
