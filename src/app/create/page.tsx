@@ -5,17 +5,17 @@ import SocialLinksForm from '@/components/forms/social-links-form';
 import MobileMockup from '@/components/mobile-mockup';
 import PreviewButton from '@/components/buttons/preview-button';
 import DemoButton from '@/components/buttons/demo-button';
-import PublishButton from '@/components/buttons/publish-button';
+// import PublishButton from '@/components/buttons/publish-button';
 import ShortenerButton from '@/components/buttons/shortener-button';
 import BackgroundShell from '@/components/backgrounds/background-shell';
-import GithubButton from '@/components/buttons/github-button';
+// import GithubButton from '@/components/buttons/github-button';
 
-export const siteConfig = {
-  name: 'hov - links',
-  description: '',
-  // ogImage: 'https://linknode.vercel.app/og-image.png',
-  url: '',
-};
+// export const siteConfig = {
+//   name: 'hov - links',
+//   description: '',
+//   // ogImage: 'https://linknode.vercel.app/og-image.png',
+//   url: '',
+// };
 
 export default function Home() {
   return (

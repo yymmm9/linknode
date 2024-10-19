@@ -19,6 +19,8 @@ interface LinkData {
 }
 
 export default function UserShortLinks() {
+// {Links}
+// :{Links: any}
   const [links, setLinks] = useState<LinkData[]>([]);
   const [hasCopied, setHasCopied] = useState(false);
   const { data: user, isLoading: userIsLoading } = useUser();
