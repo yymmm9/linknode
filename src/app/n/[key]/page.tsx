@@ -19,12 +19,12 @@ import {
 } from 'lucide-react';
 import ContactDrawer from '@/components/contact-drawer';
 
-export const siteConfig = {
-  name: 'hov - links',
-  description: '',
-  // ogImage: 'https://linknode.vercel.app/og-image.png',
-  url: '',
-};
+// export const siteConfig = {
+//   name: 'hov - links',
+//   description: '',
+//   // ogImage: 'https://linknode.vercel.app/og-image.png',
+//   url: '',
+// };
 
 const bgGradient =
   'block text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-600 py-2';

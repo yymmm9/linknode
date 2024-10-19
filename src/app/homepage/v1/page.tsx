@@ -1,11 +1,11 @@
 import React from 'react';
 
-export const siteConfig = {
-  name: 'hov - links',
-  description: '',
-  // ogImage: 'https://linknode.vercel.app/og-image.png',
-  url: '',
-};
+// export const siteConfig = {
+//   name: 'hov - links',
+//   description: '',
+//   // ogImage: 'https://linknode.vercel.app/og-image.png',
+//   url: '',
+// };
 
 export default function Home() {
   return (
