@@ -5,42 +5,71 @@ import { supabase } from '@/lib/utils';
 import { Button } from './ui/button';
 import { Check, Copy } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import dayjs from 'dayjs';
 import EditShortLink from './edit-link';
+import { useRouter } from 'next/navigation';
 
-export default async function UserShortLinks() {
-  const [hasCopied, setHasCopied] = React.useState(false);
-  const { data: user, isLoading: userIsLoading, isError, error } = useUser();
-  if (userIsLoading) return <div>Loading...</div>;
-  if (!user) {
-    window.location.href = '/signup';
-  }
-  // if (isError) return <div>Error: {error.message}</div>;
-  const res = await supabase.from('links').select().eq('user_id', user?.id);
-  if (res.error) return <div>Error: {res.error.message}</div>;
+interface LinkData {
+  id: string;
+  key: string;
+  user_id: string;
+  created_at: string; // Adjust type based on your actual data structure
+}
+
+export default function UserShortLinks() {
+  const [links, setLinks] = useState<LinkData[]>([]);
+  const [hasCopied, setHasCopied] = useState(false);
+  const { data: user, isLoading: userIsLoading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redirect if the user is loading or not found
+    if (userIsLoading) return; // Loading state
+    if (!user) {
+      router.push('/signup'); // Use Next.js router for redirection
+      return;
+    }
+
+    // Fetch links for the user
+    const fetchLinks = async () => {
+      const res = await supabase
+        .from('links')
+        .select('*')
+        .eq('user_id', user.id);
+      if (res.error) {
+        toast.error(`Error fetching links: ${res.error.message}`);
+      } else {
+        setLinks(res.data as LinkData[]); // Cast to LinkData array
+      }
+    };
+
+    fetchLinks();
+  }, [userIsLoading, user, router]);
 
   const copyToClipboard = async (link: string) => {
     try {
       await navigator.clipboard.writeText(link);
       setHasCopied(true);
+      toast.success('Link copied to clipboard!');
     } catch (error) {
       toast.error('Failed to copy to clipboard');
-      return null;
     }
   };
 
+  if (userIsLoading) return <div>Loading...</div>;
+
   return (
-    <div className="flex flex-col gap-4 ">
-      {res.data.map((link) => {
+    <div className="flex flex-col gap-4">
+      {links.map((link) => {
         const url = 'hov.sh/' + link.key;
         return (
           <div
             key={link.id}
             className="border-gray-200 bg-white border rounded-xl transition-[filter] hover:drop-shadow-card-hover"
           >
-            <div className=" py-2.5 px-4 flex items-center gap-5 sm:gap-8 md:gap-12 text-sm justify-between">
+            <div className="py-2.5 px-4 flex items-center gap-5 sm:gap-8 md:gap-12 text-sm justify-between">
               <div className="flex items-center gap-3">
                 {/* Avatar Image */}
                 <div className="relative shrink-0 items-center justify-center sm:flex">
@@ -54,7 +83,7 @@ export default async function UserShortLinks() {
                       width="20"
                       height="20"
                       className="blur-0 rounded-full h-5 w-5 shrink-0 transition-[width,height] sm:h-6 sm:w-6"
-                      src={'https://avatar.vercel.sh/' + link.key} // 动态头像链接
+                      src={'https://avatar.vercel.sh/' + link.key}
                       style={{ color: 'transparent' }}
                     />
                   </div>
@@ -71,7 +100,7 @@ export default async function UserShortLinks() {
                     </Link>
                     <Button
                       variant={'ghost'}
-                      className="relative group  flex items-center !p-1.5 h-fit"
+                      className="relative group flex items-center !p-1.5 h-fit"
                       onClick={() => copyToClipboard(url)}
                     >
                       {hasCopied ? (
@@ -90,10 +119,6 @@ export default async function UserShortLinks() {
                   {/* Timestamps */}
                   <div className="text-sm text-gray-400 flex gap-2">
                     <p>{dayjs(link?.created_at).format('YYYY-MM-DD')}</p>
-                    {/* <p>
-                      Last Modified:{' '}
-                      {dayjs(link?.last_modified).format('YYYY-MM-DD HH:mm')}
-                    </p> */}
                   </div>
                 </div>
               </div>
