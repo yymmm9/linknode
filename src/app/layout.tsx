@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import QueryProvider from '@/components/query-provider';
+import Header from '@/components/Header';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -89,7 +90,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryProvider>
-          <Providers>{children}</Providers>
+          <Providers>
+            <Header />
+            {children}
+          </Providers>
         </QueryProvider>
         <Analytics />
         {/* <Toaster /> */}

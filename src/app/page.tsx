@@ -27,7 +27,7 @@ export const siteConfig = {
 };
 
 const bgGradient =
-  'block text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-600 py-2';
+  'block text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-fuchsia-600 py-2';
 
 export default function Home() {
   return (
@@ -37,10 +37,10 @@ export default function Home() {
       <section className="relative overflow-hidden border-b">
         <div className="max-w-screen-xl px-8 pt-24 mx-auto md:px-12 lg:px-32">
           <div className="text-center flex flex-col items-center">
-            <span className="font-mono text-sm font-medium tracking-tight text-teal-600 uppercase">
+            <span className="font-mono text-sm font-medium tracking-tight text-violet-600 uppercase">
               会员卡 APP 预计12月上线
             </span>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tighter text-teal-950 md:text-6xl">
+            <h1 className="mt-4 text-4xl font-semibold tracking-tighter text-violet-950 md:text-6xl">
               {/* <TextEffectWithExit
                 texts={['Innovating financial', 'solutions for tomorrow']}
               /> */}
@@ -58,7 +58,7 @@ export default function Home() {
 
               <p
                 // href="/"
-                className="flex items-center justify-center h-10 px-4 py-2 text-sm font-semibold text-gray-500 transition-all duration-200 bg-white border border-gray-300 rounded-full hover:text-teal-700 focus:ring-2 shadow-button shadow-gray-500/5 focus:ring-teal-950 focus:ring-offset-2 ring-offset-gray-200 hover:shadow-none"
+                className="flex items-center justify-center h-10 px-4 py-2 text-sm font-semibold text-gray-500 transition-all duration-200 bg-white border border-gray-300 rounded-full hover:text-violet-700 focus:ring-2 shadow-button shadow-gray-500/5 focus:ring-violet-950 focus:ring-offset-2 ring-offset-gray-200 hover:shadow-none"
               >
                 下滑阅读详情
               </p>
@@ -192,10 +192,10 @@ const FinancialFeatures = () => {
   return (
     <div className="relative max-w-screen-xl px-8 py-12 mx-auto md:px-12 lg:px-32">
       <div className="max-w-2xl">
-        <span className="font-mono text-sm font-medium tracking-tight text-teal-600 uppercase">
+        <span className="font-mono text-sm font-medium tracking-tight text-violet-600 uppercase">
           功能们
         </span>
-        <p className="mt-4 text-4xl font-semibold tracking-tighter text-teal-950">
+        <p className="mt-4 text-4xl font-semibold tracking-tighter text-violet-950">
           好评无需购买，
           <span className={bgGradient}>自动收获真实好评</span>
         </p>
@@ -207,13 +207,13 @@ const FinancialFeatures = () => {
         {/* <div className="flex flex-wrap items-center gap-2 mt-10">
           <a
             href="https://lexingtonthemes.lemonsqueezy.com/checkout/buy/95522c10-eed2-4620-84ab-5cbd34efc225"
-            className="flex items-center justify-center h-10 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 rounded-full bg-gradient-to-b from-teal-500 to-cyan-600 hover:to-cyan-700 shadow-button shadow-teal-600/50 focus:ring-2 focus:ring-teal-950 focus:ring-offset-2 ring-offset-gray-200 hover:shadow-none"
+            className="flex items-center justify-center h-10 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 rounded-full bg-gradient-to-b from-violet-500 to-fuchsia-600 hover:to-fuchsia-700 shadow-button shadow-violet-600/50 focus:ring-2 focus:ring-violet-950 focus:ring-offset-2 ring-offset-gray-200 hover:shadow-none"
           >
             Buy Alfred
           </a>
           <a
             href="/system/overview"
-            className="flex items-center justify-center h-10 px-4 py-2 text-sm font-semibold text-gray-500 transition-all duration-200 bg-white border border-gray-300 rounded-full hover:text-teal-700 focus:ring-2 shadow-button shadow-gray-500/5 focus:ring-teal-950 focus:ring-offset-2 ring-offset-gray-200 hover:shadow-none"
+            className="flex items-center justify-center h-10 px-4 py-2 text-sm font-semibold text-gray-500 transition-all duration-200 bg-white border border-gray-300 rounded-full hover:text-violet-700 focus:ring-2 shadow-button shadow-gray-500/5 focus:ring-violet-950 focus:ring-offset-2 ring-offset-gray-200 hover:shadow-none"
           >
             See all pages
           </a>
@@ -224,9 +224,9 @@ const FinancialFeatures = () => {
         {features.map((feature: any, index: number) => (
           <div
             key={index}
-            className="group flex h-full flex-col bg-white px-5 pb-[30px] pt-6 text-sm transition-all sm:min-h-[250px] md:min-h-[200px] xl:min-h-[250px] hover:bg-gradient-to-b from-teal-500 to-cyan-600 duration-200"
+            className="group flex h-full flex-col bg-white px-5 pb-[30px] pt-6 text-sm transition-all sm:min-h-[250px] md:min-h-[200px] xl:min-h-[250px] hover:bg-gradient-to-b from-violet-500 to-fuchsia-600 duration-200"
           >
-            <div className="inline-flex items-center text-teal-700 group-hover:text-white">
+            <div className="inline-flex items-center text-violet-700 group-hover:text-white">
               {feature.icon}
             </div>
             <div className="mt-8 font-mono text-base font-medium tracking-tighter uppercase group-hover:text-white lg:mt-24">
