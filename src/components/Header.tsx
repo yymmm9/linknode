@@ -3,7 +3,7 @@ import Link from 'next/link';
 // import Boards from "./icons/boards";
 // import Logo from "./icons/logo";
 // import Mark from "./icons/mark";
-import { useRouter } from 'next/navigation';
+
 import {
   Drawer,
   DrawerClose,
@@ -72,7 +72,7 @@ const Header = () => {
           </div>
           <div className="inline-flex items-center">
             <nav className="hidden sm:flex sm:grow">
-              <ul className="flex grow justify-end flex-wrap items-center text-sm">
+              <ul className="flex grow justify-end flex-wrap items-center text-sm gap-6 px-4">
                 {/* <li className="ml-6 flex gap-1.5 items-start">
                   <Link
                     href="https://originui.com"
@@ -95,24 +95,47 @@ const Header = () => {
                     New
                   </span>
                 </li> */}
-                <li className="ml-6">
+                <li className="">
                   <Link
-                    href="https://cruip.com/docs/"
-                    className="block font-medium text-gray-800 hover:underline"
+                    href="/contact"
+                    className="block font-medium text-gray-400"
                     // style="outline: none;"
                   >
-                    Documentation
+                    联系
                   </Link>
                 </li>
-                <li className="ml-5 pl-5 border-l border-gray-200">
-                  <Link
-                    className="block font-medium text-gray-800 hover:underline"
-                    href="https://cruip.com/login/"
-                    // style="outline: none;"
-                  >
-                    Sign In
-                  </Link>
-                </li>
+                {/* <li className="border-l background-gray-200 h-full"></li>
+                <li className="flex items-center">
+                  <Drawer>
+                    <DrawerTrigger>
+                      <MenuIcon className="size-6 md:size-8 xl:size-10 block font-medium text-gray-400" />
+                    </DrawerTrigger>
+                    <DrawerContent className="bg-white">
+                      <div
+                        className="mx-auto mt-4 grid w-full grid-cols-2 grid-rows-2
+                         items-center justify-center gap-2 p-2 xl:my-6 xl:max-w-xl"
+                      >
+                        {menuItems.map((item, index) => (
+                          <DrawerClose key={index}>
+                            <Link
+                              href={item.url}
+                              className={cn(
+                                'rounded-lg border bg-neutral-50 border-neutral-200 text-neutral-500 hover:text-neutral-900',
+                                { 'row-span-2': index === 0 },
+                                item.className,
+                              )}
+                            >
+                              <div className="flex w-full items-center justify-center gap-2 py-6 text-xl lg:py-16 lg:text-2xl h-full">
+                                {item.icon}
+                                {item.name}
+                              </div>
+                            </Link>
+                          </DrawerClose>
+                        ))}
+                      </div>
+                    </DrawerContent>
+                  </Drawer>
+                </li> */}
               </ul>
             </nav>
 

@@ -31,7 +31,7 @@ const bgGradient =
 
 export default function Home() {
   return (
-    <main className="relative h-screen md:container lg:grid-cols-3">
+    <main className="relative md:container lg:grid-cols-3">
       {/* <section className="flex h-screen flex-col items-center justify-center gap-6 pb-6 lg:col-span-2 lg:px-20 lg:pb-0"></section> */}
 
       <section className="relative overflow-hidden border-b">
