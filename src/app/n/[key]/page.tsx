@@ -37,7 +37,7 @@ export default function Home({ params }: { params: any }) {
       {/* <section className="flex h-screen flex-col items-center justify-center gap-6 pb-6 lg:col-span-2 lg:px-20 lg:pb-0"></section> */}
 
       <section className="relative overflow-hidden border-b">
-        <div className="max-w-screen-xl px-8 pt-24 mx-auto md:px-12 lg:px-32">
+        <div className="max-w-screen-xl px-8 pt-24 mx-auto md:px-12 lg:pt-32 lg:px-32">
           <div className="text-center flex flex-col items-center">
             <span className="font-mono text-sm font-medium tracking-tight text-violet-600 uppercase">
               会员卡 APP 预计12月上线

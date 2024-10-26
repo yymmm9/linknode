@@ -4,9 +4,9 @@ import { siteConfig } from '@/app/page';
 import { Providers } from '@/components/providers';
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
-import { Toaster } from 'sonner';
 import QueryProvider from '@/components/query-provider';
 import Header from '@/components/Header';
+import ContactDrawer from '@/components/contact-drawer';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -95,34 +95,27 @@ export default function RootLayout({
             {children}
             <section>
               <div className="px-8 py-24 mx-auto md:px-12 lg:px-32 max-w-screen-xl">
-                <div className="w-full rounded-3xl shadow-box shadow-blue-500/50 bg-gradient-to-t from-violet-500 to-fuchsia-600 lg:px-20 lg:py-32 p-8 py-20 flex flex-col gap-14 text-center">
+                <div className="w-full rounded-3xl shadow-box shadow-violet-500/50 bg-gradient-to-t from-violet-500 to-fuchsia-600 lg:px-20 lg:py-32 p-8 py-20 flex flex-col gap-14 text-center">
                   <div>
                     <p className="text-4xl tracking-tighter font-semibold text-white md:text-6xl">
-                      Take control of your
-                      <span className="block"> financial future today</span>
+                      {/* 别轻易给顾客优惠 试试要个好评先 */}
+                      别等同行买了才意识到重要性
+                      {/* <span className="block">试试要个好评先</span> */}
                     </p>
                     <p className="mt-4 text-white max-w-sm mx-auto">
-                      Explore our range of services and start your journey
-                      towards financial success.
+                      让你的品牌不再“默默无闻”，现在就行动，占领先机！
                     </p>
                   </div>
                   <div className="flex flex-col md:flex-row justify-center gap-3">
-                    <a
+                    {/* <a
                       href="#_"
                       title="your link title"
                       aria-label="your links label"
-                      className="rounded-full px-4 py-2 text-sm font-semibold transition-all flex items-center justify-center text-white bg-blue-950 shadow-button shadow-blue-950/50 h-10 focus:ring-2 focus:ring-blue-950 focus:ring-offset-2 duration-200 ring-offset-white hover:shadow-none hover:bg-white hover:text-blue-950"
+                      className="rounded-full px-4 py-2 text-sm font-semibold transition-all flex items-center justify-center text-white bg-violet-950 shadow-button shadow-violet-950/50 h-10 focus:ring-2 focus:ring-violet-950 focus:ring-offset-2 duration-200 ring-offset-white hover:shadow-none hover:bg-white hover:text-violet-950"
                     >
                       Get Started for free
-                    </a>
-                    <a
-                      href="/forms/contact"
-                      title="your link title"
-                      aria-label="your links label"
-                      className="rounded-full px-4 border py-2 text-sm font-semibold transition-all flex items-center justify-center bg-white text-gray-500 h-10 border-gray-300 focus:ring-2 shadow-button shadow-gray-500/5 focus:ring-blue-950 focus:ring-offset-2 duration-200 ring-offset-white hover:shadow-none hover:bg-white/5 hover:text-blue-700"
-                    >
-                      Talk to sales
-                    </a>
+                    </a> */}
+                    <ContactDrawer variant="secondary" />
                   </div>
                 </div>
               </div>
