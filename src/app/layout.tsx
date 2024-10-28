@@ -7,6 +7,7 @@ import { Inter } from 'next/font/google';
 import QueryProvider from '@/components/query-provider';
 import Header from '@/components/Header';
 import ContactDrawer from '@/components/contact-drawer';
+import { cn } from '@/lib/utils';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -88,13 +89,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className, 'pt-20')}>
         <QueryProvider>
           <Providers>
             <Header />
             {children}
             <section>
-              <div className="px-8 py-24 mx-auto md:px-12 lg:px-32 max-w-screen-xl">
+              <div className="p-4 mx-auto md:px-12 lg:px-32 max-w-screen-xl">
                 <div className="w-full rounded-3xl shadow-box shadow-violet-500/50 bg-gradient-to-t from-violet-500 to-fuchsia-600 lg:px-20 lg:py-32 p-8 py-20 flex flex-col gap-14 text-center">
                   <div>
                     <p className="text-4xl tracking-tighter font-semibold text-white md:text-6xl">

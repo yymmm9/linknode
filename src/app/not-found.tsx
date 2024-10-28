@@ -1,10 +1,12 @@
 import { Button } from '@/components/ui/button';
+import { brandSlogan } from '@/lib/site';
 import Link from 'next/link';
 import React from 'react';
 
 export default function NotFound() {
   return (
-    <div className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%]">
+    <div className=" grid w-full max-w-lg max-h-screen py-32 mx-auto">
+      {/* <div className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%]"> */}
       <div className="mx-auto flex max-w-sm flex-col items-center justify-center text-center">
         <p className="rounded-full bg-blue-50 p-3 text-sm font-medium text-blue-500 dark:bg-gray-800">
           <svg
@@ -23,14 +25,12 @@ export default function NotFound() {
           </svg>
         </p>
         <h1 className="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
-          Opps! Page not found.
+          空空如也, 未找到对应的资源
         </h1>
-        <p className="mt-4 text-gray-500 dark:text-gray-400">
-          Organize your links and make them easy to find and share.
-        </p>
+        <p className="mt-4 text-gray-500 dark:text-gray-400">{brandSlogan}</p>
         <div className="mt-6 flex w-full shrink-0 items-center justify-center gap-x-3 sm:w-auto">
           <Button size={'sm'} asChild>
-            <Link href={'/'}>Create your page</Link>
+            <Link href={'/'}>回到主页</Link>
           </Button>
         </div>
       </div>
