@@ -1,8 +1,5 @@
 'use client';
 import Link from 'next/link';
-// import Boards from "./icons/boards";
-// import Logo from "./icons/logo";
-// import Mark from "./icons/mark";
 
 import {
   Drawer,
@@ -16,6 +13,7 @@ import { MenuIcon } from 'lucide-react';
 import { Music } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Logo } from './brand';
+import { HideOnScroll } from '@/lib/hooks/scroll';
 
 const menuItems = [
   {
@@ -53,7 +51,7 @@ const menuItems = [
 
 const Header = () => {
   return (
-    <header
+    <HideOnScroll
       id="site-header"
       className="fixed top-2 md:top-6 w-full z-30 max-w-screen-xl px-8 mx-auto md:px-12 lg:px-32 "
     >
@@ -231,7 +229,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </header>
+    </HideOnScroll>
   );
 };
 
