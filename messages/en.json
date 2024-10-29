@@ -1,39 +1,85 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "ProfileForm.Title": "Profile Information",
-  "ProfileForm.Description": "Enter your profile or title information here.",
-  "ProfileForm.Name": "Name",
-  "ProfileForm.Lastname": "Lastname",
-  "ProfileForm.NamePlaceholder": "John",
-  "ProfileForm.LastnamePlaceholder": "Doe",
-  "ProfileForm.Phone": "Phone",
-  "ProfileForm.Email": "Email",
-  "ProfileForm.About": "About yourself",
-  "SocialLinksForm.Title": "Social Links",
-  "SocialLinksForm.": "Social Links",
-  "SocialLinksForm.facebook": "facebook",
-  "SocialLinksForm.twitter": "twitter",
-  "SocialLinksForm.instagram": "instagram",
-  "SocialLinksForm.telegram": "telegram",
-  "SocialLinksForm.youtube": "youtube",
-  "SocialLinksForm.email": "email",
-  "SocialLinksForm.github": "github",
-  "SocialLinksForm.linkedin": "linkedin",
-  "SocialLinksForm.whatsapp": "whatsapp",
-  "SocialLinksForm.wechat": "wechat",
+  "ProfileForm": {
+    "Title": "Profile Information",
+    "Description": "Enter your profile or title information here.",
+    "Name": "Name",
+    "Lastname": "Lastname",
+    "NamePlaceholder": "John",
+    "LastnamePlaceholder": "Doe",
+    "Phone": "Phone",
+    "Email": "Email",
+    "About": "About yourself"
+  },
+  "SocialLinksForm": {
+    "Title": "Social Links",
+    "Description": "Enter your social media links here.",
+    "facebook": "facebook",
+    "twitter": "twitter",
+    "instagram": "instagram",
+    "telegram": "telegram",
+    "youtube": "youtube",
+    "email": "email",
+    "github": "github",
+    "linkedin": "linkedin",
+    "whatsapp": "whatsapp",
+    "wechat": "wechat"
+  },
   "Description": "Enter your social media links here.",
-  "ExtraLinksForm.Description": "Enter your additional link details here.",
-  "ExtraLinksForm.Title": "Extra Links",
-  "Buttons.Demo": "Demo",
-  "ShortenerButton.can-and-39-t-short-link-with-empty-fields-0": "Can&#39;t short link with empty fields!",
-  "ShortenerButton.shorten-your-link-with-dub-co-and-get-full-control-over-it-0": "Shorten your link with dub.co and get full control over it.",
-  "ShortenerButton.powered-by-dub-co-0": "Powered by Dub.co",
-  "ShortenerButton.shortener-0": "Shortener",
-  "ShortenerButton.can-and-39-t-short-link-with-empty-fields": "Can&#39;t short link with empty fields!",
-  "ShortenerButton.shorten-your-link-with-dub-co-and-get-full-control-over-it": "Shorten your link with dub.co and get full control over it.",
-  "ShortenerButton.powered-by-dub-co": "Powered by Dub.co",
-  "ShortenerButton.shortener": "Shortener",
-  "MobileMockup.no-information": "No information.",
-  "PreviewButton.no-information": "No information.",
-  "PreviewButton.preview-page": "Preview page"
+  "ExtraLinksForm": {
+    "Description": "Enter your additional link details here.",
+    "Title": "Extra Links"
+  },
+  "Buttons": {
+    "Demo": "Demo"
+  },
+  "ShortenerButton": {
+    "can-and-39-t-short-link-with-empty-fields-0": "Can&#39;t short link with empty fields!",
+    "shorten-your-link-with-dub-co-and-get-full-control-over-it-0": "Shorten your link with dub.co and get full control over it.",
+    "powered-by-dub-co-0": "Powered by Dub.co",
+    "shortener-0": "Shortener",
+    "can-and-39-t-short-link-with-empty-fields": "Can&#39;t short link with empty fields!",
+    "shorten-your-link-with-dub-co-and-get-full-control-over-it": "Shorten your link with dub.co and get full control over it.",
+    "powered-by-dub-co": "Powered by Dub.co",
+    "shortener": "Shortener"
+  },
+  "MobileMockup": {
+    "no-information": "No information."
+  },
+  "PreviewButton": {
+    "no-information": "No information.",
+    "preview-page": "Preview page"
+  },
+  "HomePage": {
+    "xia-hua-yue-du-xiang-qing": "Slide down to read details",
+    "bu-huo-ke-hu-zhen-shi-fan-kui-ping-lun-shu-liang-zeng-chang-bi-chuan-tong-fang-shi-gao-chu-534-zhu-ni-kuai-su-ti-sheng-pin-pai-ying-xiang-li": "Capture real customer feedback, increase the number of comments by 534% compared to traditional methods, and help you quickly increase brand influence.",
+    "yi-chu-ji-fa-qing-song-huo-qu-ke-hu-hao-ping": "Ready to go, easily get customer praise",
+    "caption": "Membership card APP is expected to be launched in December",
+    "hov-links": "hov - links"
+  },
+  "Features": {
+    "zhen-shi-de-hao-ping-bang-ni-jian-li-kou-bei-ying-de-qian-zai-ke-hu-de-xin-ren-ding-dan-zi-ran-er-ran-jiu-lai-le": "Genuine reviews build your reputation, earn potential customer trust, and orders follow naturally.",
+    "xin-ren-gan-man-man-ding-dan-yuan-yuan-bu-duan": "Full of trust, flowing with orders.",
+    "kan-kan-wo-men-you-duo-ku": "See how cool we are.",
+    "bu-jin-gong-neng-qiang-da-yan-zhi-ye-zai-xian-xi-yin-ke-hu-de-guan-zhu-hao-bu-fei-li": "Not only powerful but stylish too, effortlessly drawing customer attention.",
+    "she-ji-tai-ku-le-yan-qiu-gen-zhuo-zou": "So cool it’s eye-catching.",
+    "gei-ke-hu-yi-ge-qing-song-ti-yan": "Give customers an effortless experience.",
+    "zhi-xu-qing-chu-huo-sao-yi-sao-ke-hu-li-ke-gei-chu-fan-kui-jian-hua-yi-qie-liu-cheng-bu-zai-cuo-shi-mei-yi-ge-bao-gui-ping-lun": "Just a tap or scan and feedback is instant, simplifying the process to capture every valuable review.",
+    "peng-yi-peng-jian-dan-dao-bu-hang": "Just a tap — couldn’t be easier.",
+    "shi-shi-you-duo-qing-song": "See how easy it can be.",
+    "bu-zai-gan-ga-di-qing-ke-hu-ping-jia-bu-huo-shuai-ti-gao-5-bei-zhe-xie-hao-ping-zi-dong-song-shang-men": "No more awkward requests for reviews — capture rates soar by 5x+, and good reviews roll in automatically.",
+    "ping-lun-xiang-bao-mi-hua-yi-yang-beng-chu-lai": "Reviews pop like popcorn.",
+    "rang-wo-men-shang-tou-tiao": "Let’s hit the top of the list.",
+    "shui-bu-xiang-bei-geng-duo-ren-zhao-dao-hao-ping-yue-duo-pai-ming-yue-gao-rang-ni-zai-ke-hu-yan-zhong-wu-chu-bu-zai": "Who doesn’t want to be found more? More reviews, higher rankings, and you’ll be everywhere customers look.",
+    "ren-qi-biao-sheng-sou-suo-yin-qing-tui-bao-ni": "Popularity soars, search engines love you.",
+    "bu-xin-ni-shi-shi": "See it for yourself.",
+    "jiu-xiang-chi-dao-wu-xian-xu-bei-de-yin-liao-zhe-bi-tou-zi-yi-ci-gao-ding-wei-lai-wu-jin-hao-ping-zi-ji-lai": "Like an endless refill, this one-time investment brings a steady flow of positive reviews.",
+    "zhi-hua-yi-ci-qian-shuang-yong-yi-bei-zi": "One payment, lifetime benefits."
+  },
+  "FinancialFeatures": {
+    "dang-ke-hu-kan-dao-ni-zai-google-shang-yong-you-geng-duo-de-zheng-mian-ping-jia-shi-ta-men-geng-rong-yi-xin-ren-ni-de-pin-pai-zhe-zhi-jie-ying-xiang-ta-men-de-gou-mai-jue-ce": "When customers see you have more positive reviews on Google, they are more likely to trust your brand, which directly affects their purchasing decisions.",
+    "zi-dong-shou-huo-zhen-shi-hao-ping": "Automatically harvest real good reviews",
+    "hao-ping-wu-xu-gou-mai": "Good reviews do not need to be purchased,",
+    "gong-neng-men": "Functions"
+  }
 }

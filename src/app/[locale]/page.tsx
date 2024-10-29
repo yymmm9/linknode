@@ -9,6 +9,7 @@ import ContactDrawer from '@/components/contact-drawer';
 
 export const siteConfig = {
   name: 'hov - links',
+  // name: t('hov-links'),
   description: '',
   // ogImage: 'https://linknode.vercel.app/og-image.png',
   url: '',
@@ -25,7 +26,7 @@ export default function Home() {
         <div className="max-w-screen-xl px-8 pt-24 mx-auto md:px-12 lg:px-32 lg:pt-32">
           <div className="text-center flex flex-col items-center">
             <span className="font-mono text-sm font-medium tracking-tight text-violet-600 uppercase">
-              会员卡 APP 预计12月上线
+              {t('caption')}
             </span>
             <h1 className="mt-4 text-4xl font-semibold tracking-tighter text-violet-950 md:text-6xl">
               {/* <TextEffectWithExit
@@ -33,12 +34,14 @@ export default function Home() {
               /> */}
 
               <TextEffect per="char" preset="blur">
-                一触即发，轻松获取客户好评
+                {t('yi-chu-ji-fa-qing-song-huo-qu-ke-hu-hao-ping')}
               </TextEffect>
               {/* <span className={bgGradient}>solutions for tomorrow</span> */}
             </h1>
             <p className="max-w-sm mt-4 text-base text-gray-700 lg:mx-auto lg:text-base">
-              捕获客户真实反馈，评论数量增长比传统方式高出534%，助你快速提升品牌影响力。
+              {t(
+                'bu-huo-ke-hu-zhen-shi-fan-kui-ping-lun-shu-liang-zeng-chang-bi-chuan-tong-fang-shi-gao-chu-534-zhu-ni-kuai-su-ti-sheng-pin-pai-ying-xiang-li',
+              )}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
               <ContactDrawer />
@@ -47,7 +50,7 @@ export default function Home() {
                 // href="/"
                 className="flex items-center justify-center h-10 px-4 py-2 text-sm font-semibold text-gray-500 transition-all duration-200 bg-white border border-gray-300 rounded-full hover:text-violet-700 focus:ring-2 shadow-button shadow-gray-500/5 focus:ring-violet-950 focus:ring-offset-2 ring-offset-gray-200 hover:shadow-none"
               >
-                下滑阅读详情
+                {t('xia-hua-yue-du-xiang-qing')}
               </p>
             </div>
           </div>

@@ -1,23 +1,87 @@
 {
   "HomePage": {
     "title": "Hello world!",
-    "about": "Go to the about page"
+    "about": "Go to the about page",
+    "xia-hua-yue-du-xiang-qing": "下滑阅读详情",
+    "bu-huo-ke-hu-zhen-shi-fan-kui-ping-lun-shu-liang-zeng-chang-bi-chuan-tong-fang-shi-gao-chu-534-zhu-ni-kuai-su-ti-sheng-pin-pai-ying-xiang-li": "捕获客户真实反馈，评论数量增长比传统方式高出534%，助你快速提升品牌影响力。",
+    "yi-chu-ji-fa-qing-song-huo-qu-ke-hu-hao-ping": "一触即发，轻松获取客户好评",
+    "hui-yuan-ka-app-yu-ji-12-yue-shang-xian": "会员卡 APP 预计12月上线",
+    "hov-links": "hov - links",
+    "caption": "会员卡 APP 预计12月上线"
   },
-  "ProfileForm.Title": "个人信息",
-  "ProfileForm.Description": "简介",
-  "ProfileForm.NamePlaceholder": "三",
-  "ProfileForm.Lastname": "姓",
-  "ProfileForm.Name": "名",
-  "ProfileForm.LastnamePlaceholder": "三",
-  "ProfileForm.Phone": "电话",
-  "ProfileForm.Email": "邮箱",
-  "SocialLinksForm.facebook": "脸书",
-  "SocialLinksForm.twitter": "推特",
-  "SocialLinksForm.instagram": "instagram",
-  "SocialLinksForm.telegram": "telegram",
-  "SocialLinksForm.youtube": "youtube",
-  "SocialLinksForm.email": "邮箱",
-  "SocialLinksForm.github": "github",
-  "SocialLinksForm.linkedin": "领英",
-  "SocialLinksForm.whatsapp": "whatsapp"
+  "ProfileForm": {
+    "Title": "个人信息",
+    "Description": "简介",
+    "NamePlaceholder": "三",
+    "Lastname": "姓",
+    "Name": "名",
+    "LastnamePlaceholder": "三",
+    "Phone": "电话",
+    "Email": "邮箱",
+    "About": "关于"
+  },
+  "SocialLinksForm": {
+    "Title": "Social Links",
+    "Description": "Enter your social media links here.",
+    "facebook": "脸书",
+    "twitter": "推特",
+    "instagram": "instagram",
+    "telegram": "telegram",
+    "youtube": "youtube",
+    "email": "邮箱",
+    "github": "github",
+    "linkedin": "领英",
+    "whatsapp": "whatsapp",
+    "wechat": "微信"
+  },
+  "Description": "在这里输入你的社交媒体链接。",
+  "ExtraLinksForm": {
+    "Description": "在这里输入你的额外链接详细信息。",
+    "Title": "额外链接"
+  },
+  "Buttons": {
+    "Demo": "演示"
+  },
+  "ShortenerButton": {
+    "can-and-39-t-short-link-with-empty-fields-0": "不能用空字段缩短链接！",
+    "shorten-your-link-with-dub-co-and-get-full-control-over-it-0": "使用dub.co缩短链接，并获得对它的完全控制。",
+    "powered-by-dub-co-0": "由Dub.co提供支持",
+    "shortener-0": "缩短器",
+    "can-and-39-t-short-link-with-empty-fields": "不能用空字段缩短链接！",
+    "shorten-your-link-with-dub-co-and-get-full-control-over-it": "使用dub.co缩短链接，并获得对它的完全控制。",
+    "powered-by-dub-co": "由Dub.co提供支持",
+    "shortener": "缩短器"
+  },
+  "MobileMockup": {
+    "no-information": "无信息。"
+  },
+  "PreviewButton": {
+    "no-information": "无信息。",
+    "preview-page": "预览页面"
+  },
+  "Features": {
+    "zhen-shi-de-hao-ping-bang-ni-jian-li-kou-bei-ying-de-qian-zai-ke-hu-de-xin-ren-ding-dan-zi-ran-er-ran-jiu-lai-le": "真实的好评帮你建立口碑，赢得潜在客户的信任，订单自然而然就来了。",
+    "xin-ren-gan-man-man-ding-dan-yuan-yuan-bu-duan": "信任感满满，订单源源不断",
+    "kan-kan-wo-men-you-duo-ku": "看看我们有多酷",
+    "bu-jin-gong-neng-qiang-da-yan-zhi-ye-zai-xian-xi-yin-ke-hu-de-guan-zhu-hao-bu-fei-li": "不仅功能强大，颜值也在线，吸引客户的关注毫不费力。",
+    "she-ji-tai-ku-le-yan-qiu-gen-zhuo-zou": "设计太酷了，眼球跟着走",
+    "gei-ke-hu-yi-ge-qing-song-ti-yan": "给客户一个轻松体验",
+    "zhi-xu-qing-chu-huo-sao-yi-sao-ke-hu-li-ke-gei-chu-fan-kui-jian-hua-yi-qie-liu-cheng-bu-zai-cuo-shi-mei-yi-ge-bao-gui-ping-lun": "只需轻触或扫一扫，客户立刻给出反馈，简化一切流程，不再错失每一个宝贵评论。",
+    "peng-yi-peng-jian-dan-dao-bu-hang": "碰一碰，简单到不行",
+    "shi-shi-you-duo-qing-song": "试试有多轻松",
+    "bu-zai-gan-ga-di-qing-ke-hu-ping-jia-bu-huo-shuai-ti-gao-5-bei-zhe-xie-hao-ping-zi-dong-song-shang-men": "不再尴尬地请客户评价，捕获率提高5倍+，这些好评自动送上门。",
+    "ping-lun-xiang-bao-mi-hua-yi-yang-beng-chu-lai": "评论像爆米花一样蹦出来",
+    "rang-wo-men-shang-tou-tiao": "让我们上头条",
+    "shui-bu-xiang-bei-geng-duo-ren-zhao-dao-hao-ping-yue-duo-pai-ming-yue-gao-rang-ni-zai-ke-hu-yan-zhong-wu-chu-bu-zai": "谁不想被更多人找到？好评越多，排名越高，让你在客户眼中无处不在。",
+    "ren-qi-biao-sheng-sou-suo-yin-qing-tui-bao-ni": "人气飙升，搜索引擎推爆你",
+    "bu-xin-ni-shi-shi": "不信你试试",
+    "jiu-xiang-chi-dao-wu-xian-xu-bei-de-yin-liao-zhe-bi-tou-zi-yi-ci-gao-ding-wei-lai-wu-jin-hao-ping-zi-ji-lai": "就像吃到无限续杯的饮料，这笔投资一次搞定，未来无尽好评自己来。",
+    "zhi-hua-yi-ci-qian-shuang-yong-yi-bei-zi": "只花一次钱，爽用一辈子"
+  },
+  "FinancialFeatures": {
+    "dang-ke-hu-kan-dao-ni-zai-google-shang-yong-you-geng-duo-de-zheng-mian-ping-jia-shi-ta-men-geng-rong-yi-xin-ren-ni-de-pin-pai-zhe-zhi-jie-ying-xiang-ta-men-de-gou-mai-jue-ce": "当客户看到你在Google上拥有更多的正面评价时，他们更容易信任你的品牌，这直接影响他们的购买决策。",
+    "zi-dong-shou-huo-zhen-shi-hao-ping": "自动收获真实好评",
+    "hao-ping-wu-xu-gou-mai": "好评无需购买，",
+    "gong-neng-men": "功能们"
+  }
 }

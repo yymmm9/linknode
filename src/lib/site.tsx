@@ -17,25 +17,26 @@ export const features = [
   {
     id: 1,
     icon: <CreditCardIcon size={24} />,
-    title: '只花一次钱，爽用一辈子',
+    title: 'zhi-hua-yi-ci-qian-shuang-yong-yi-bei-zi',
     description:
-      '就像吃到无限续杯的饮料，这笔投资一次搞定，未来无尽好评自己来。',
-    cta: '不信你试试',
+      'jiu-xiang-chi-dao-wu-xian-xu-bei-de-yin-liao-zhe-bi-tou-zi-yi-ci-gao-ding-wei-lai-wu-jin-hao-ping-zi-ji-lai',
+    cta: 'bu-xin-ni-shi-shi',
   },
   {
     id: 2,
     icon: <TrendingUpIcon size={24} />,
-    title: '人气飙升，搜索引擎推爆你',
+    title: 'ren-qi-biao-sheng-sou-suo-yin-qing-tui-bao-ni',
     description:
-      '谁不想被更多人找到？好评越多，排名越高，让你在客户眼中无处不在。',
-    cta: '让我们上头条',
+      'shui-bu-xiang-bei-geng-duo-ren-zhao-dao-hao-ping-yue-duo-pai-ming-yue-gao-rang-ni-zai-ke-hu-yan-zhong-wu-chu-bu-zai',
+    cta: 'rang-wo-men-shang-tou-tiao',
   },
   {
     id: 3,
     icon: <StarsIcon size={24} />,
-    title: '评论像爆米花一样蹦出来',
-    description: '不再尴尬地请客户评价，捕获率提高5倍+，这些好评自动送上门。',
-    cta: '试试有多轻松',
+    title: 'ping-lun-xiang-bao-mi-hua-yi-yang-beng-chu-lai',
+    description:
+      'bu-zai-gan-ga-di-qing-ke-hu-ping-jia-bu-huo-shuai-ti-gao-5-bei-zhe-xie-hao-ping-zi-dong-song-shang-men',
+    cta: 'shi-shi-you-duo-qing-song',
   },
   // {
   //   id: 4,
@@ -48,11 +49,11 @@ export const features = [
   {
     id: 5,
     icon: <SmartphoneNfcIcon size={24} />,
-    title: '碰一碰，简单到不行',
+    title: 'peng-yi-peng-jian-dan-dao-bu-hang',
     description:
-      '只需轻触或扫一扫，客户立刻给出反馈，简化一切流程，不再错失每一个宝贵评论。',
+      'zhi-xu-qing-chu-huo-sao-yi-sao-ke-hu-li-ke-gei-chu-fan-kui-jian-hua-yi-qie-liu-cheng-bu-zai-cuo-shi-mei-yi-ge-bao-gui-ping-lun',
     // '没有复杂的安装，没有麻烦的操作。扫一扫就能评价，简单到像喝杯水。',
-    cta: '给客户一个轻松体验',
+    cta: 'gei-ke-hu-yi-ge-qing-song-ti-yan',
   },
   // {
   //   id: 6,
@@ -64,9 +65,10 @@ export const features = [
   {
     id: 7,
     icon: <EyeIcon size={24} />,
-    title: '设计太酷了，眼球跟着走',
-    description: '不仅功能强大，颜值也在线，吸引客户的关注毫不费力。',
-    cta: '看看我们有多酷',
+    title: 'she-ji-tai-ku-le-yan-qiu-gen-zhuo-zou',
+    description:
+      'bu-jin-gong-neng-qiang-da-yan-zhi-ye-zai-xian-xi-yin-ke-hu-de-guan-zhu-hao-bu-fei-li',
+    cta: 'kan-kan-wo-men-you-duo-ku',
   },
   // {
   //   id: 8,
@@ -92,10 +94,10 @@ export const features = [
   {
     id: 11,
     icon: <ShieldCheck size={24} />,
-    title: '信任感满满，订单源源不断',
+    title: 'xin-ren-gan-man-man-ding-dan-yuan-yuan-bu-duan',
     // title: '评论多了，生意自然好',
     description:
-      '真实的好评帮你建立口碑，赢得潜在客户的信任，订单自然而然就来了。',
+      'zhen-shi-de-hao-ping-bang-ni-jian-li-kou-bei-ying-de-qian-zai-ke-hu-de-xin-ren-ding-dan-zi-ran-er-ran-jiu-lai-le',
   },
   // {
   //   id: 12,
