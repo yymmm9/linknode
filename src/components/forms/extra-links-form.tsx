@@ -5,7 +5,6 @@ import type { ExtraLinkProps } from '@/types';
 import { Button } from '@/components/ui/button';
 import type { DragEndEvent } from '@dnd-kit/core';
 import { useData } from '@/lib/context/link-context';
-import GetIconInfo from '@/components/get-icon-info';
 import SortableLinks from '@/components/sortable-links';
 import {
   DndContext,
@@ -31,6 +30,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useTranslations } from 'next-intl';
+
+const t = useTranslations('ExtraLinksForm');
 
 export default function ExtraLinksForm() {
   const sensors = useSensors(
@@ -95,12 +97,10 @@ export default function ExtraLinksForm() {
       <Card className="w-full">
         <CardHeader className="space-y-1">
           <CardTitle className="flex items-center justify-between text-xl">
-            Extra Links
+            {t('Title')}
             {/* <GetIconInfo /> */}
           </CardTitle>
-          <CardDescription>
-            Enter your additional link details here.
-          </CardDescription>
+          <CardDescription>{t('Description')}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           <DndContext

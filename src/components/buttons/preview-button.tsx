@@ -10,6 +10,9 @@ import { DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { BACKGROUND_OPTIONS } from '@/components/backgrounds/background-snippets';
 import DemoButton from './demo-button';
 import ShortenerButton from './shortener-button';
+import { useTranslations } from 'next-intl';
+
+const t = useTranslations('PreviewButton');
 
 export default function PreviewButton() {
   const { data } = useData();
@@ -33,13 +36,13 @@ export default function PreviewButton() {
       <Drawer.Root>
         <DrawerTrigger asChild>
           <Button className="w-full max-w-[350px] overflow-y-auto rounded-full tracking-wide">
-            Preview page
+            {t('preview-page')}
           </Button>
         </DrawerTrigger>
         <DrawerContent className="h-[75%] pb-2">
           {isEmpty ? (
             <div className="flex h-[90%] w-full items-center justify-center text-sm text-muted-foreground">
-              No information.
+              {t('no-information')}
             </div>
           ) : (
             <>

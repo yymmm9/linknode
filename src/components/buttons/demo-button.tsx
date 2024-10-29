@@ -4,7 +4,8 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Play } from 'lucide-react';
 import { useData } from '@/lib/context/link-context';
-
+import { useTranslations } from 'next-intl';
+const t = useTranslations();
 export default function DemoButton() {
   const { showDemo } = useData();
   return (
@@ -13,7 +14,7 @@ export default function DemoButton() {
       onClick={showDemo}
     >
       <Play className="mr-2 size-4" />
-      Demo
+      {t('Buttons.Demo')}
     </Button>
   );
 }

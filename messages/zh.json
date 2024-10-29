@@ -1,0 +1,23 @@
+{
+  "HomePage": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  },
+  "ProfileForm.Title": "个人信息",
+  "ProfileForm.Description": "简介",
+  "ProfileForm.NamePlaceholder": "三",
+  "ProfileForm.Lastname": "姓",
+  "ProfileForm.Name": "名",
+  "ProfileForm.LastnamePlaceholder": "三",
+  "ProfileForm.Phone": "电话",
+  "ProfileForm.Email": "邮箱",
+  "SocialLinksForm.facebook": "脸书",
+  "SocialLinksForm.twitter": "推特",
+  "SocialLinksForm.instagram": "instagram",
+  "SocialLinksForm.telegram": "telegram",
+  "SocialLinksForm.youtube": "youtube",
+  "SocialLinksForm.email": "邮箱",
+  "SocialLinksForm.github": "github",
+  "SocialLinksForm.linkedin": "领英",
+  "SocialLinksForm.whatsapp": "whatsapp"
+}

@@ -19,6 +19,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import useUser from '@/app/hook/useUser';
+import { useTranslations } from 'next-intl';
+
+const t = useTranslations('ShortenerButton');
 
 export default function ShortenerButton() {
   const { isDesktop } = useWindow();
@@ -37,7 +40,7 @@ export default function ShortenerButton() {
           <DialogTrigger asChild>
             <Button className="w-full">
               <LinkIcon className="mr-2 size-4" />
-              Shortener
+              {t('shortener')}
             </Button>
           </DialogTrigger>
           <DialogContent
@@ -46,20 +49,22 @@ export default function ShortenerButton() {
           >
             <CardHeader className="p-6  pb-0">
               <CardTitle className="flex select-none items-center justify-between text-xl">
-                Powered by Dub.co
+                {t('powered-by-dub-co')}
                 <Info
                   onClick={() => handleInfoClick('https://dub.co/')}
                   className="size-4 cursor-pointer text-muted-foreground hover:text-accent-foreground active:scale-95"
                 />
               </CardTitle>
               <CardDescription>
-                Shorten your link with dub.co and get full control over it.
+                {t(
+                  'shorten-your-link-with-dub-co-and-get-full-control-over-it',
+                )}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2 p-6 pt-0">
               {isEmpty ? (
                 <Button className="w-full">
-                  Can&#39;t short link with empty fields!
+                  {t('can-and-39-t-short-link-with-empty-fields')}
                 </Button>
               ) : shortedLink ? (
                 <DeleteShortlinkForm />
@@ -74,25 +79,27 @@ export default function ShortenerButton() {
           <DrawerTrigger asChild>
             <Button className="w-full">
               <LinkIcon className="mr-2 size-4" />
-              Shortener
+              {t('shortener-0')}
             </Button>
           </DrawerTrigger>
           <DrawerContent className="h-max p-6">
             <CardHeader className="p-0 pb-4 pt-1">
               <CardTitle className="flex select-none items-center justify-between p-0 text-lg">
-                Powered by Dub.co
+                {t('powered-by-dub-co-0')}
                 <Info
                   onClick={() => handleInfoClick('https://dub.co/')}
                   className="size-4 cursor-pointer text-muted-foreground hover:text-accent-foreground active:scale-95"
                 />
               </CardTitle>
               <CardDescription>
-                Shorten your link with dub.co and get full control over it.
+                {t(
+                  'shorten-your-link-with-dub-co-and-get-full-control-over-it-0',
+                )}
               </CardDescription>
             </CardHeader>
             {isEmpty ? (
               <Button className="w-full">
-                Can&#39;t short link with empty fields!
+                {t('can-and-39-t-short-link-with-empty-fields-0')}
               </Button>
             ) : shortedLink ? (
               <DeleteShortlinkForm />

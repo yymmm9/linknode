@@ -5,6 +5,9 @@ import DisplayData from '@/components/display-data';
 import { useData } from '@/lib/context/link-context';
 import { BACKGROUND_OPTIONS } from '@/components/backgrounds/background-snippets';
 import { cn, isEmptyValues } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
+
+const t = useTranslations('MobileMockup');
 
 const MobileMockup = React.memo(() => {
   const { data } = useData();
@@ -37,7 +40,7 @@ const MobileMockup = React.memo(() => {
       >
         {isEmpty ? (
           <div className="z-20 flex size-full items-center justify-center bg-white text-sm text-muted-foreground">
-            No information.
+            {t('no-information')}
           </div>
         ) : (
           <>

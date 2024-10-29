@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useData } from '@/lib/context/link-context';
+import { useTranslations } from 'next-intl';
 
 type InputChangeEvent = React.ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement
@@ -19,6 +20,7 @@ type InputChangeEvent = React.ChangeEvent<
 
 export default function ProfileForm() {
   const { data, updateProfileInfo } = useData();
+  const t = useTranslations('ProfileForm');
 
   const handleInputChange = (event: InputChangeEvent) => {
     const { name, value } = event.target;
@@ -28,31 +30,29 @@ export default function ProfileForm() {
   return (
     <Card className="w-full">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl">Profile Information</CardTitle>
-        <CardDescription>
-          Enter your profile or title information here.
-        </CardDescription>
+        <CardTitle className="text-2xl">{t('Title')}</CardTitle>
+        <CardDescription>{t('Description')}</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-2">
         <div className="grid gap-2 grid-cols-2">
           <div>
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">{t('Name')}</Label>
             <Input
               id="name"
               name="n"
               type="text"
-              placeholder="John"
+              placeholder={t('NamePlaceholder')}
               value={data.n}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <Label htmlFor="lastname">Lastname</Label>
+            <Label htmlFor="lastname">{t('Lastname')}</Label>
             <Input
               id="lastname"
               name="ln"
               type="text"
-              placeholder="Doe"
+              placeholder={t('LastnamePlaceholder')}
               value={data.ln}
               onChange={handleInputChange}
             />
@@ -71,7 +71,7 @@ export default function ProfileForm() {
         </div>
         <div className="grid gap-2 md:grid-cols-2">
           <div>
-            <Label htmlFor="phone">Phone</Label>
+            <Label htmlFor="phone">{t('Phone')}</Label>
             <Input
               id="phone"
               name="p"
@@ -82,7 +82,7 @@ export default function ProfileForm() {
             />
           </div>
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('Email')}</Label>
             <Input
               id="email"
               name="em"
@@ -94,11 +94,11 @@ export default function ProfileForm() {
           </div>
         </div>
         <div>
-          <Label htmlFor="description">About yourself</Label>
+          <Label htmlFor="description">{t('About')}</Label>
           <Textarea
             id="description"
             name="d"
-            placeholder="type something here..."
+            // placeholder="type something here..."
             value={data.d}
             onChange={handleInputChange}
           />

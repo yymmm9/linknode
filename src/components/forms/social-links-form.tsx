@@ -24,24 +24,32 @@ import {
 import { WhatsappIcon } from '../icon/whatsapp';
 import { AkarIconsTelegramFill } from '../icon/telegram';
 import { ScrollArea } from '../ui/scroll-area';
+import { useTranslations } from 'next-intl';
+
+const t = useTranslations('SocialLinksForm');
 
 const socialLinksProvider: SocialLinkProviderProps[] = [
-  { name: 'facebook', icon: FacebookIcon, id: 'f', placeholder: '' },
-  { name: 'twitter', icon: TwitterIcon, id: 't', placeholder: '' },
-  { name: 'instagram', icon: InstagramIcon, id: 'ig', placeholder: '' },
-  { name: 'telegram', icon: AkarIconsTelegramFill, id: 'tg', placeholder: '' },
-  { name: 'youtube', icon: YoutubeIcon, id: 'y', placeholder: '' },
-  { name: 'email', icon: MailIcon, id: 'e', placeholder: '' },
-  { name: 'github', icon: GithubIcon, id: 'gh', placeholder: '' },
-  { name: 'linkedin', icon: LinkedinIcon, id: 'l', placeholder: '' },
+  { name: t('facebook'), icon: FacebookIcon, id: 'f', placeholder: '' },
+  { name: t('twitter'), icon: TwitterIcon, id: 't', placeholder: '' },
+  { name: t('instagram'), icon: InstagramIcon, id: 'ig', placeholder: '' },
   {
-    name: 'whatsapp',
+    name: t('telegram'),
+    icon: AkarIconsTelegramFill,
+    id: 'tg',
+    placeholder: '',
+  },
+  { name: t('youtube'), icon: YoutubeIcon, id: 'y', placeholder: '' },
+  { name: t('email'), icon: MailIcon, id: 'e', placeholder: '' },
+  { name: t('github'), icon: GithubIcon, id: 'gh', placeholder: '' },
+  { name: t('linkedin'), icon: LinkedinIcon, id: 'l', placeholder: '' },
+  {
+    name: t('whatsapp'),
     icon: WhatsappIcon,
     id: 'w',
     placeholder: 'wa.me/+34627620232',
   },
   {
-    name: 'wechat',
+    name: t('wechat'),
     icon: TdesignLogoWechatStroke,
     id: 'wc',
     placeholder: 'wechat id',
@@ -65,10 +73,8 @@ export default function SocialLinksForm() {
   return (
     <Card className="w-full">
       <CardHeader className="">
-        <CardTitle className="text-xl">Social Links</CardTitle>
-        <CardDescription className="!mt-0">
-          Enter your social media links here.
-        </CardDescription>
+        <CardTitle className="text-xl">{t('Title')}</CardTitle>
+        <CardDescription className="!mt-0">{t('Description')}</CardDescription>
       </CardHeader>
       <CardContent className="">
         <ScrollArea
