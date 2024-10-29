@@ -89,11 +89,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, 'pt-20')}>
+      <body className={cn(inter.className, 'mt-2 pt-16 md:pt-24')}>
         <QueryProvider>
           <Providers>
             <Header />
-            {children}
+            <div className="flex items-center justify-center">{children}</div>
             <section>
               <div className="p-4 mx-auto md:px-12 lg:px-32 max-w-screen-xl">
                 <div className="w-full rounded-3xl shadow-box shadow-violet-500/50 bg-gradient-to-t from-violet-500 to-fuchsia-600 lg:px-20 lg:py-32 p-8 py-20 flex flex-col gap-14 text-center">

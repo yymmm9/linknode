@@ -33,8 +33,8 @@ export default function ProfileForm() {
           Enter your profile or title information here.
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className="grid gap-2 md:grid-cols-2">
+      <CardContent className="grid gap-2">
+        <div className="grid gap-2 grid-cols-2">
           <div>
             <Label htmlFor="name">Name</Label>
             <Input
@@ -93,7 +93,7 @@ export default function ProfileForm() {
             />
           </div>
         </div>
-        <div className="grid gap-2">
+        <div>
           <Label htmlFor="description">About yourself</Label>
           <Textarea
             id="description"

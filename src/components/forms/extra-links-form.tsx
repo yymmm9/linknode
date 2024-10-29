@@ -114,16 +114,13 @@ export default function ExtraLinksForm() {
               strategy={verticalListSortingStrategy}
             >
               {data.ls
-              // .filter((link)=>{return link.id >1 && (link?.l || link?.u)})
-              .map((link, index) => {
-                if((link?.l || link?.u)){
-                  return <SortableLinks key={link.id} id={link} index={index} />;
-                }
-                return;
-              })}
+                .filter((link) => link.id > 1 || link.l || link.u)
+                .map((link, index) => (
+                  <SortableLinks key={link.id} id={link} index={index} />
+                ))}
             </SortableContext>
           </DndContext>
-          <Button variant={'outline'} onClick={addLinkDetailForm}>
+          <Button variant={'outline'} onClick={() => addLinkDetailForm()}>
             +
           </Button>
         </CardContent>

@@ -93,3 +93,22 @@ body::-webkit-scrollbar {
     scrollbar-width: none;
   }
 }
+
+.masked-full {
+  mask-image: linear-gradient(
+    rgba(255, 255, 255, 0) 0%,
+    rgb(255, 255, 255, 0.3) 2%,
+    rgb(255, 255, 255) 7%,
+    rgb(255, 255, 255) 92%,
+    rgb(255, 255, 255, 0.3) 98%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    rgba(255, 255, 255, 0) 0%,
+    rgb(255, 255, 255, 0.3) 2%,
+    rgb(255, 255, 255) 7%,
+    rgb(255, 255, 255) 92%,
+    rgb(255, 255, 255, 0.3) 98%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
