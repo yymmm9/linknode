@@ -58,7 +58,7 @@ export default function Home({ params }: { params: any }) {
           </div>
           <div className="my-8"></div>
 
-          <div className="-mx-8 md:-px-12 lg:-px-32">
+          <div className="-mx-8 md:-px-12 lg:-px-32 max-w-[100vw]">
             <InfiniteSliderHoverSpeed />
           </div>
           <div className="my-8"></div>
