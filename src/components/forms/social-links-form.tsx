@@ -65,7 +65,7 @@ export default function SocialLinksForm() {
   return (
     <Card className="w-full">
       <CardHeader className="">
-        <CardTitle className="text-lg">Social Links</CardTitle>
+        <CardTitle className="text-xl">Social Links</CardTitle>
         <CardDescription className="!mt-0">
           Enter your social media links here.
         </CardDescription>

@@ -94,7 +94,7 @@ export default function ExtraLinksForm() {
     <>
       <Card className="w-full">
         <CardHeader className="space-y-1">
-          <CardTitle className="flex items-center justify-between text-2xl">
+          <CardTitle className="flex items-center justify-between text-xl">
             Extra Links
             {/* <GetIconInfo /> */}
           </CardTitle>
