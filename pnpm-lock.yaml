@@ -44,6 +44,7 @@ specifiers:
   framer-motion: ^11.11.9
   input-otp: ^1.2.4
   js-base64: ^3.7.7
+  lodash.pick: ^4.4.0
   lucide-react: ^0.271.0
   nanoid: ^5.0.7
   next: 14.0.3
@@ -96,6 +97,7 @@ dependencies:
   framer-motion: 11.11.9_biqbaboplfbrettd7655fr4n2y
   input-otp: 1.2.4_biqbaboplfbrettd7655fr4n2y
   js-base64: 3.7.7
+  lodash.pick: 4.4.0
   lucide-react: 0.271.0_react@18.2.0
   nanoid: 5.0.7
   next: 14.0.3_biqbaboplfbrettd7655fr4n2y
@@ -4053,6 +4055,10 @@ packages:
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
+
+  /lodash.pick/4.4.0:
+    resolution: {integrity: sha512-hXt6Ul/5yWjfklSGvLQl8vM//l3FtyHZeuelpzK6mm99pNvN9yTDruNZPEJZD1oWrqo+izBmB7oUfWgcCX7s4Q==}
+    dev: false
 
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}

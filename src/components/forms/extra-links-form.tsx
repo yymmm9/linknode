@@ -32,9 +32,9 @@ import {
 } from '@/components/ui/card';
 import { useTranslations } from 'next-intl';
 
-const t = useTranslations('ExtraLinksForm');
-
 export default function ExtraLinksForm() {
+  const t = useTranslations('ExtraLinksForm');
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {

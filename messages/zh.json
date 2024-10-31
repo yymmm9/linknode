@@ -15,14 +15,14 @@
     "NamePlaceholder": "三",
     "Lastname": "姓",
     "Name": "名",
-    "LastnamePlaceholder": "三",
+    "LastnamePlaceholder": "张",
     "Phone": "电话",
     "Email": "邮箱",
     "About": "关于"
   },
   "SocialLinksForm": {
-    "Title": "Social Links",
-    "Description": "Enter your social media links here.",
+    "Title": "社交媒体链接",
+    "Description": "让浏览者知道哪里关注你的动态",
     "facebook": "脸书",
     "twitter": "推特",
     "instagram": "instagram",

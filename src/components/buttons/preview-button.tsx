@@ -8,17 +8,16 @@ import DisplayData from '@/components/display-data';
 import { useData } from '@/lib/context/link-context';
 import { DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { BACKGROUND_OPTIONS } from '@/components/backgrounds/background-snippets';
-import DemoButton from './demo-button';
-import ShortenerButton from './shortener-button';
+import { DemoButton } from './demo-button';
+// import ShortenerButton from './shortener-button';
+import { Shortener } from './demo-button';
 import { useTranslations } from 'next-intl';
-
-const t = useTranslations('PreviewButton');
 
 export default function PreviewButton() {
   const { data } = useData();
 
   const [isEmpty, setIsEmpty] = React.useState<boolean>(false);
-
+  const t = useTranslations('PreviewButton');
   React.useEffect(() => {
     setIsEmpty(isEmptyValues(data));
   }, [data]);
@@ -52,7 +51,7 @@ export default function PreviewButton() {
                 <div className="fixed left-2 right-2 bottom-4 grid w-full px-4 grid-cols-2 items-center justify-center gap-2 md:grid-cols-4 ">
                   <DemoButton />
                   {/* <PublishButton /> */}
-                  <ShortenerButton />
+                  <Shortener />
                   {/* <GithubButton /> */}
                 </div>
               </div>

@@ -7,13 +7,11 @@ import { BACKGROUND_OPTIONS } from '@/components/backgrounds/background-snippets
 import { cn, isEmptyValues } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 
-const t = useTranslations('MobileMockup');
-
 const MobileMockup = React.memo(() => {
   const { data } = useData();
 
   const [isEmpty, setIsEmpty] = React.useState<boolean>(false);
-
+  const t = useTranslations('MobileMockup');
   React.useEffect(() => {
     setIsEmpty(isEmptyValues(data));
   }, [data]);

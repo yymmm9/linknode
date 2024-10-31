@@ -100,31 +100,31 @@ export default async function RootLayout({
 
   // Providing all messages to the client
   // side is the easiest way to get started
-  const messages = await getMessages();
+  // const messages = await getMessages();
 
   return (
     <html lang={locale}>
       <body className={cn(inter.className, 'mt-2 pt-16 md:pt-24')}>
-        <NextIntlClientProvider messages={messages}>
-          <QueryProvider>
-            <Providers>
-              <Header />
-              <div className="flex items-center justify-center">{children}</div>
-              <section>
-                <div className="p-4 mx-auto md:px-12 lg:px-32 max-w-screen-xl">
-                  <div className="w-full rounded-3xl shadow-box shadow-violet-500/50 bg-gradient-to-t from-violet-500 to-fuchsia-600 lg:px-20 lg:py-32 p-8 py-20 flex flex-col gap-14 text-center">
-                    <div>
-                      <p className="text-4xl tracking-tighter font-semibold text-white md:text-6xl">
-                        {/* 别轻易给顾客优惠 试试要个好评先 */}
-                        别等同行买了才意识到重要性
-                        {/* <span className="block">试试要个好评先</span> */}
-                      </p>
-                      <p className="mt-4 text-white max-w-sm mx-auto">
-                        让你的品牌不再“默默无闻”，现在就行动，占领先机！
-                      </p>
-                    </div>
-                    <div className="flex flex-col md:flex-row justify-center gap-3">
-                      {/* <a
+        {/* <NextIntlClientProvider locale={locale} messages={messages}> */}
+        <QueryProvider>
+          <Providers>
+            <Header />
+            <div className="flex items-center justify-center">{children}</div>
+            <section>
+              <div className="p-4 mx-auto md:px-12 lg:px-32 max-w-screen-xl">
+                <div className="w-full rounded-3xl shadow-box shadow-violet-500/50 bg-gradient-to-t from-violet-500 to-fuchsia-600 lg:px-20 lg:py-32 p-8 py-20 flex flex-col gap-14 text-center">
+                  <div>
+                    <p className="text-4xl tracking-tighter font-semibold text-white md:text-6xl">
+                      {/* 别轻易给顾客优惠 试试要个好评先 */}
+                      别等同行买了才意识到重要性
+                      {/* <span className="block">试试要个好评先</span> */}
+                    </p>
+                    <p className="mt-4 text-white max-w-sm mx-auto">
+                      让你的品牌不再“默默无闻”，现在就行动，占领先机！
+                    </p>
+                  </div>
+                  <div className="flex flex-col md:flex-row justify-center gap-3">
+                    {/* <a
                       href="#_"
                       title="your link title"
                       aria-label="your links label"
@@ -132,14 +132,14 @@ export default async function RootLayout({
                     >
                       Get Started for free
                     </a> */}
-                      <ContactDrawer variant="secondary" />
-                    </div>
+                    <ContactDrawer variant="secondary" />
                   </div>
                 </div>
-              </section>
-            </Providers>
-          </QueryProvider>
-        </NextIntlClientProvider>
+              </div>
+            </section>
+          </Providers>
+        </QueryProvider>
+        {/* </NextIntlClientProvider> */}
         <Analytics />
         {/* <Toaster /> */}
       </body>

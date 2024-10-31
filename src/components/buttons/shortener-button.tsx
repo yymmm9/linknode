@@ -18,12 +18,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import useUser from '@/app/hook/useUser';
+// import useUser from '@/app/hook/useUser';
 import { useTranslations } from 'next-intl';
 
-const t = useTranslations('ShortenerButton');
+export default function ShortenerButtonClient() {
+  const t = useTranslations('ShortenerButton');
 
-export default function ShortenerButton() {
   const { isDesktop } = useWindow();
   const { data } = useData();
   const isEmpty = isEmptyValues(data);

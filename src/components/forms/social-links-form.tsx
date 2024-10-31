@@ -1,4 +1,5 @@
-import React, { Suspense } from 'react';
+'use client';
+import React from 'react';
 import {
   Card,
   CardContent,
@@ -20,7 +21,10 @@ import {
 import { WhatsappIcon } from '../icon/whatsapp';
 import { AkarIconsTelegramFill } from '../icon/telegram';
 import { useTranslations } from 'next-intl';
-import { SocialLinksFormClient } from './social-links-CLIENT';
+
+import { SocialInput } from '@/components/ui/social-input';
+import { useData } from '@/lib/context/link-context';
+import { ScrollArea } from '../ui/scroll-area';
 
 const socialLinksProvider: SocialLinkProviderProps[] = [
   { name: 'facebook', icon: FacebookIcon, id: 'f', placeholder: '' },
@@ -54,23 +58,17 @@ export const iconMap: { [key: string]: React.ElementType } = Object.fromEntries(
   socialLinksProvider.map((social: any) => [social.id, social.icon]),
 );
 
-// export default function SocialLinksForm() {
-//   return (
-
-//     // <NextIntlClientProvider
-//     // locale=''
-//     //   messages={
-//     //     // … and provide the relevant messages
-//     //     messages
-//     //     // pick(messages, 'SocialLinksForm')
-//     //   }
-//     // >
-//     //   <SocialLinksFormC />
-//     // </NextIntlClientProvider>
-//   );
-// }
 export default function SocialLinksForm() {
   const t = useTranslations('SocialLinksForm');
+
+  const { data, updateSocialInfo } = useData();
+
+  type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+
+  const handleInputChange = (event: InputChangeEvent) => {
+    const { name, value } = event.target;
+    updateSocialInfo(name, value);
+  };
 
   return (
     <Card className="w-full">
@@ -79,9 +77,33 @@ export default function SocialLinksForm() {
         <CardDescription className="!mt-0">{t('Description')}</CardDescription>
       </CardHeader>
       <CardContent className="">
-        {/* <Suspense>
-          <SocialLinksFormClient socialLinksProvider={socialLinksProvider} />
-        </Suspense> */}
+        <ScrollArea
+          className={
+            '!-m-1 p-1 max-sm:masked-full h-[12.6rem] md:h-full !overflow-y-scroll md:!overflow-hidden w-full'
+          }
+        >
+          <div className="grid gap-4 md:grid-cols-2 py-1 h-full !-mb-4 pb-4">
+            {socialLinksProvider.map((link: any) => {
+              let value: any = data?.[link.id as keyof typeof data];
+              if (!link?.id || !value) return null;
+              return (
+                <SocialInput
+                  key={link.name}
+                  id={link.name}
+                  name={link.id}
+                  icon={link.icon}
+                  placeholder={
+                    link?.placeholder
+                      ? link.placeholder
+                      : `${link.name}.com/johndoe`
+                  }
+                  value={value}
+                  onChange={handleInputChange}
+                />
+              );
+            })}
+          </div>
+        </ScrollArea>
       </CardContent>
     </Card>
   );

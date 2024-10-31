@@ -42,6 +42,7 @@
     "framer-motion": "^11.11.9",
     "input-otp": "^1.2.4",
     "js-base64": "^3.7.7",
+    "lodash.pick": "^4.4.0",
     "lucide-react": "^0.271.0",
     "nanoid": "^5.0.7",
     "next": "14.0.3",
