@@ -81,5 +81,9 @@
     "zi-dong-shou-huo-zhen-shi-hao-ping": "Automatically harvest real good reviews",
     "hao-ping-wu-xu-gou-mai": "Good reviews do not need to be purchased,",
     "gong-neng-men": "Functions"
+  },
+  "BackgroundShell": {
+    "Title": "Background",
+    "Description": "Customize your background theme from here."
   }
 }

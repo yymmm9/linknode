@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
+import Link from 'next/link';
 
 interface ExtraLinksCardProps {
   label: string;
@@ -13,25 +14,26 @@ export default function ExtraLinksCard({
   icon,
 }: ExtraLinksCardProps) {
   return (
-    <li>
+    <li className="group relative flex items-center justify-between w-full border shadow rounded-full hover:scale-105 transition-all ease-in-out duration-300 dark:bg-black/90 bg-white/10 hover:bg-neutral-100 dark:hover:bg-neutral-800 max-w-lg cursor-pointer">
       {label && url && (
-        <a href={url} target="_blank">
-          <dt className="-m-1 flex items-center space-x-2 rounded-xl bg-slate-50 p-1 shadow-sm hover:bg-slate-100">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg text-slate-500">
+        <Link href={url} className="flex items-center w-full p-2 rounded-full">
+          <dt className="flex w-full items-center relative">
+            <div className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center size-6">
               {icon ? (
                 <Icon icon={icon} className="size-5" />
               ) : (
                 <Icon icon="ph:link-simple" className="size-5" />
               )}
             </div>
-            <div className="w-full min-w-0 grow">
-              <p className="text-sm font-medium leading-6 text-accent-foreground">
-                {label}
-              </p>
-            </div>
+            <p className="flex justify-center font-medium font-monoo w-full dark:text-neutral-100 text-neutral-800">
+              {label}
+            </p>
           </dt>
-        </a>
+        </Link>
       )}
+      {/* <div className="absolute group-hover:flex right-3 top-1/2 -translate-y-1/2 items-center md:hidden md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center">
+          <CopyToClipboard url={url} />
+        </div> */}
     </li>
   );
 }

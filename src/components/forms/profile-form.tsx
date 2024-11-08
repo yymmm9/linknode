@@ -44,6 +44,7 @@ export default function ProfileForm() {
               placeholder={t('NamePlaceholder')}
               value={data.n}
               onChange={handleInputChange}
+              autoComplete="name"
             />
           </div>
           <div>
@@ -55,6 +56,7 @@ export default function ProfileForm() {
               placeholder={t('LastnamePlaceholder')}
               value={data.ln}
               onChange={handleInputChange}
+              autoComplete="family-name"
             />
           </div>
           {/* <div>

@@ -12,6 +12,7 @@ import { DemoButton } from './demo-button';
 // import ShortenerButton from './shortener-button';
 import { Shortener } from './demo-button';
 import { useTranslations } from 'next-intl';
+import PublishButton from './publish-button';
 
 export default function PreviewButton() {
   const { data } = useData();
@@ -50,7 +51,7 @@ export default function PreviewButton() {
                 <DisplayData acc={data} />
                 <div className="fixed left-2 right-2 bottom-4 grid w-full px-4 grid-cols-2 items-center justify-center gap-2 md:grid-cols-4 ">
                   <DemoButton />
-                  {/* <PublishButton /> */}
+                  <PublishButton />
                   <Shortener />
                   {/* <GithubButton /> */}
                 </div>

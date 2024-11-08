@@ -84,8 +84,9 @@ export default function SocialLinksForm() {
         >
           <div className="grid gap-4 md:grid-cols-2 py-1 h-full !-mb-4 pb-4">
             {socialLinksProvider.map((link: any) => {
-              let value: any = data?.[link.id as keyof typeof data];
-              if (!link?.id || !value) return null;
+              let value: any = data?.[link.id as keyof typeof data] || null;
+              if (!link?.id) return null;
+              // if (!link?.id || !value) return null;
               return (
                 <SocialInput
                   key={link.name}

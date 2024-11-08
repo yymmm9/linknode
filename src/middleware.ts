@@ -8,7 +8,15 @@ export const config = {
   matcher: ['/',
     '/(zh|en)/:path*',
     '/(n|create)/:path*',
-  ]
+    '/link',
+  ],
+  redirect: [
+    {
+      source: '/link',
+      destination: '/:locale/link',
+      permanent: true,
+    },
+  ],
 };
 
 // if no locale code and path starts with /n/ redirect by adding locale

@@ -4,7 +4,9 @@ import { ReactElement } from "react";
 export const names = {
   i: 'Profile Image', // 个人资料图片
   n: 'First Name', // 名
+
   ln: 'Last Name', // 姓
+
   d: 'Description', // 简介或描述
   f: 'Facebook', // Facebook 个人主页链接
   t: 'Twitter', // Twitter 个人主页链接
@@ -16,10 +18,12 @@ export const names = {
   w: 'WhatsApp', // WhatsApp 联系方式
   y: 'YouTube', // YouTube 频道链接
   bg: 'Background Color', // 背景颜色,
+
   em: 'Email',
   p: 'Phone',
+
   wc: {
-    name:'Wechat',
+    name: 'Wechat',
     icon: TdesignLogoWechatStroke,
   },
   web: 'Website',

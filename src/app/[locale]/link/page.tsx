@@ -2,8 +2,8 @@ import { decodeData } from '@/lib/utils';
 import NotFound from '@/app/not-found';
 import { BACKGROUND_OPTIONS } from '@/components/backgrounds/background-snippets';
 import DisplayData from '@/components/display-data';
-import DataLoading from '@/app/1/loading';
-import LinkPageError from '@/app/1/error';
+import DataLoading from './loading';
+import LinkPageError from './error';
 
 interface SearchParamsProps {
   searchParams: {

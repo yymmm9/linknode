@@ -40,7 +40,7 @@
     "Title": "额外链接"
   },
   "Buttons": {
-    "Demo": "演示"
+    "Demo": "演示内容"
   },
   "ShortenerButton": {
     "can-and-39-t-short-link-with-empty-fields-0": "不能用空字段缩短链接！",
@@ -83,5 +83,9 @@
     "zi-dong-shou-huo-zhen-shi-hao-ping": "自动收获真实好评",
     "hao-ping-wu-xu-gou-mai": "好评无需购买，",
     "gong-neng-men": "功能们"
+  },
+  "BackgroundShell": {
+    "Description": "从这里自定义您的背景主题。",
+    "Title": "背景"
   }
 }

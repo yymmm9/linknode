@@ -77,7 +77,7 @@ export default function PublishButton() {
                     try {
                       const inputLink = `${
                         window.location.origin
-                      }/1?data=${encodeData(data)}`;
+                      }/link?data=${encodeData(data)}`;
                       await navigator.share({
                         title: `${data.n} - hov`,
                         text: `Find all of ${data.n}'s links in one place.`,
