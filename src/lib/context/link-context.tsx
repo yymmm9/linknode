@@ -3,6 +3,7 @@ import type { ExtraLinkProps, DataProps } from '@/types';
 
 interface DataContextType {
   data: DataProps;
+  setData: (data: DataProps) => void;
   addNewData: (linkData: ExtraLinkProps) => void;
   updateIndex: (updatedIndex: ExtraLinkProps[]) => void;
   updateProfileInfo: (name: string, value: string) => void;
@@ -129,6 +130,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     <DataContext.Provider
       value={{
         data,
+        setData,
         addNewData,
         updateIndex,
         updateProfileInfo,

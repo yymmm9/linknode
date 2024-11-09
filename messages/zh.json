@@ -87,5 +87,16 @@
   "BackgroundShell": {
     "Description": "从这里自定义您的背景主题。",
     "Title": "背景"
+  },
+  "Profile": {
+    "LinksTitle": "创建的链接们"
+  },
+  "EditShortLink": {
+    "cancel": "取消",
+    "submit": "提交",
+    "no-data-available": "无数据可用",
+    "modify-your-short-link-settings": "修改你的短链接设置。",
+    "edit-short-link": "编辑短链接",
+    "edit": "编辑"
   }
 }

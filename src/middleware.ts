@@ -7,7 +7,7 @@ export const config = {
   // Match only internationalized pathnames
   matcher: ['/',
     '/(zh|en)/:path*',
-    '/(n|create)/:path*',
+    '/(n|create|profile)/:path*',
     '/link',
   ],
   redirect: [
@@ -16,6 +16,11 @@ export const config = {
       destination: '/:locale/link',
       permanent: true,
     },
+    //   {
+    //     source: '/profile',
+    //     destination: '/:locale/profile',
+    //     permanent: true,
+    //   },
   ],
 };
 

@@ -15,13 +15,20 @@ import {
 } from './ui/drawer';
 import retrieveShortLink from '@/app/_actions/shortlink/retrieve';
 import DisplayData from './display-data';
+import { useTranslations } from 'next-intl';
+import BackgroundShell from './backgrounds/background-shell';
+import ExtraLinksForm from './forms/extra-links-form';
+import ProfileForm from './forms/profile-form';
+import SocialLinksForm from './forms/social-links-form';
+import { useData } from '@/lib/context/link-context';
 
 export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [data, setData] = useState<any>(null); // State for storing the fetched data
+  // const [data, setData] = useState<any>(null); // State for storing the fetched data
   const [isLoading, setIsLoading] = useState(false); // State to handle loading state
   const [hasFetchedData, setHasFetchedData] = useState(false); // Track if data has been fetched
-
+  const t = useTranslations('EditShortLink');
+  const { data, setData } = useData();
   useEffect(() => {
     const fetchData = async () => {
       if (!key || hasFetchedData) return; // Only fetch if key exists and data hasn't been fetched yet
@@ -33,8 +40,10 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
       if (url) {
         const params = new URLSearchParams(url.split('?')[1]);
         const rawData = params.get('data');
-        const decodedData = rawData && decodeData(rawData);
-        setData(decodedData); // Store fetched and decoded data in state
+        const decodedData: any = rawData && decodeData(rawData);
+        if (decodedData) {
+          setData(decodedData); // Store fetched and decoded data in state
+        }
       }
 
       setIsLoading(false); // End loading when fetch is complete
@@ -51,30 +60,41 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
     <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <DrawerTrigger asChild>
         <div className="flex items-center gap-2">
-          <Button variant={'ghost'}>Edit</Button>
+          <Button variant={'ghost'}>{t('edit')}</Button>
         </div>
       </DrawerTrigger>
       <DrawerContent className="max-h-[75vh] pb-2">
         <div className="mx-auto w-full max-w-sm overflow-y-auto">
           <DrawerHeader>
-            <DrawerTitle>Edit Short Link</DrawerTitle>
+            <DrawerTitle>{t('edit-short-link')}</DrawerTitle>
             <DrawerDescription>
-              Modify your short link settings.
+              {t('modify-your-short-link-settings')}
             </DrawerDescription>
           </DrawerHeader>
-          <div className="">
+
+          <div className="hide_scrollbar flex w-full flex-col gap-5 overflow-y-auto pb-[10vh] lg:pb-0">
+            {/* todo edit link button, check if logged in */}
+
+            <ProfileForm />
+            <SocialLinksForm />
+            <ExtraLinksForm />
+
+            <BackgroundShell />
+          </div>
+
+          {/* <div className="">
             {isLoading ? (
               'Loading...'
             ) : data ? (
               <DisplayData acc={data} />
             ) : (
-              'No data available'
+              t('no-data-available')
             )}
-          </div>
+          </div> */}
           <DrawerFooter>
-            <Button>Submit</Button>
+            <Button>{t('submit')}</Button>
             <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">{t('cancel')}</Button>
             </DrawerClose>
           </DrawerFooter>
         </div>

@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import EditShortLink from './edit-link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
+import { useTranslations } from 'next-intl';
 
 interface LinkData {
   id: string;
@@ -31,7 +32,7 @@ export default function UserShortLinks() {
   const [hasCopied, setHasCopied] = useState(false);
   const { data: user, isLoading: userIsLoading } = useUser();
   const router = useRouter();
-
+  const t = useTranslations('Profile');
   useEffect(() => {
     // Redirect if the user is loading or not found
     if (userIsLoading) return; // Loading state
@@ -70,6 +71,7 @@ export default function UserShortLinks() {
 
   return (
     <div className="flex flex-col gap-4">
+      <h3>{t('LinksTitle')}</h3>
       {links.map((link) => {
         const url = 'hov.sh/' + link.key;
         return (

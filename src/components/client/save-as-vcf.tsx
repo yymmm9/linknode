@@ -1,7 +1,7 @@
 'use client';
 import { PlusIcon } from 'lucide-react';
 import { Button } from '../ui/button';
-// import VCard from "vcard-creator";
+import VCard from 'vcard-creator';
 import { cn } from '@/lib/utils';
 import { cva } from 'class-variance-authority';
 
@@ -55,34 +55,31 @@ export const SaveVcf = ({
     },
   );
 
-  // const myVCard = new VCard();
+  const myVCard = new VCard();
 
-  // myVCard
-  //   .addName(data.lastName, data.firstName)
-  //   // // .addName(data.lastName, data.firstName, additional, prefix, suffix)
-  //   // // Add work data
-  //   .addCompany(data.organization)
-  //   .addJobtitle(data.title)
-  //   .addRole(data.role)
-  //   .addEmail(info.email)
-  //   .addPhoneNumber(info.workPhone, "PREF;WORK")
-  //   // .addPhoneNumber(123456789, 'WORK')
-  //   // .addAddress(null, null, 'street', 'worktown', null, 'workpostcode', 'Belgium')
-  //   // .addSocial('https://twitter.com/desloovere_j', 'Twitter', 'desloovere_j')
-  //   .addURL(info.website);
+  myVCard
+    .addName(data?.ln, data?.n)
+    // // .addName(data.lastName, data.firstName, additional, prefix, suffix)
+    // // Add work data
+    .addCompany(data?.o)
+    .addJobtitle(data?.ti)
+    .addRole(data?.r)
+    .addEmail(data?.e)
+    .addPhoneNumber(data?.p, 'PREF;WORK')
+    .addURL(data?.web);
+  // .addPhoneNumber(123456789, 'WORK')
+  // .addAddress(null, null, 'street', 'worktown', null, 'workpostcode', 'Belgium')
+  // .addSocial('https://twitter.com/desloovere_j', 'Twitter', 'desloovere_j')
 
-  //get as formatted string
-  // const vCardString = myVCard.toString();
+  // get as formatted string
+  const vCardString = myVCard.toString();
 
   return (
     <Button
       className={cn(buttonStyles({ variant }))}
       variant={variant == 'default' ? 'secondary' : 'default'}
       onClick={() =>
-        window.open(
-          `data:text/vcard;charset=utf-8,${encodeURIComponent(vcardString)}`,
-          '_blank',
-        )
+        (document.location.href = `data:text/vcard;charset=utf-8,${encodeURIComponent(vcardString)}`)
       }
     >
       {variant == 'icon' || !cta ? <PlusIcon className="size-6" /> : null}

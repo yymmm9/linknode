@@ -41,7 +41,7 @@ export function generateMetadata({ searchParams }: SearchParamsProps) {
       images: `https://hov.vercel.app/api/og?data=${encodeURI(
         data.n ? data.n : 'Made with hov',
       )}`,
-      creator: '@sujjeeee',
+      creator: '@',
     },
   };
 }

@@ -1,5 +1,5 @@
 import { TdesignLogoWechatStroke } from "@/components/icon/wechat";
-import { ReactElement } from "react";
+
 // 定义 names 对象，字段值为描述字符串
 export const names = {
   i: 'Profile Image', // 个人资料图片

@@ -85,5 +85,16 @@
   "BackgroundShell": {
     "Title": "Background",
     "Description": "Customize your background theme from here."
+  },
+  "Profile": {
+    "LinksTitle": "Your Pages"
+  },
+  "EditShortLink": {
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "no-data-available": "No data available",
+    "modify-your-short-link-settings": "Modify your short link settings.",
+    "edit-short-link": "Edit Short Link",
+    "edit": "Edit"
   }
 }
