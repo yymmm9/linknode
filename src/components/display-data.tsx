@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import type { DataProps, DisplayDataProps } from '@/types';
+import type { DisplayDataProps } from '@/types';
 import ExtraLinksCard from '@/components/extra-links-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { names } from '@/types';

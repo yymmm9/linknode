@@ -7,14 +7,6 @@ import { FinancialFeatures } from '@/components/FeaturesGrid';
 import React from 'react';
 import ContactDrawer from '@/components/contact-drawer';
 
-export const siteConfig = {
-  name: 'hov - links',
-  // name: t('hov-links'),
-  description: '',
-  // ogImage: 'https://linknode.vercel.app/og-image.png',
-  url: '',
-};
-
 export default function Home() {
   const t = useTranslations('HomePage');
 
@@ -29,14 +21,9 @@ export default function Home() {
               {t('caption')}
             </span>
             <h1 className="mt-4 text-4xl font-semibold tracking-tighter text-violet-950 md:text-6xl">
-              {/* <TextEffectWithExit
-                texts={['Innovating financial', 'solutions for tomorrow']}
-              /> */}
-
               <TextEffect per="char" preset="blur">
                 {t('yi-chu-ji-fa-qing-song-huo-qu-ke-hu-hao-ping')}
               </TextEffect>
-              {/* <span className={bgGradient}>solutions for tomorrow</span> */}
             </h1>
             <p className="max-w-sm mt-4 text-base text-gray-700 lg:mx-auto lg:text-base">
               {t(

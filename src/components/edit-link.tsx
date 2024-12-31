@@ -14,13 +14,14 @@ import {
   DrawerTrigger,
 } from './ui/drawer';
 import retrieveShortLink from '@/app/_actions/shortlink/retrieve';
-import DisplayData from './display-data';
+import updateShortLink from '@/app/_actions/shortlink/update';
 import { useTranslations } from 'next-intl';
 import BackgroundShell from './backgrounds/background-shell';
 import ExtraLinksForm from './forms/extra-links-form';
 import ProfileForm from './forms/profile-form';
 import SocialLinksForm from './forms/social-links-form';
 import { useData } from '@/lib/context/link-context';
+import { toast } from 'sonner';
 
 export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -56,6 +57,34 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
     }
   }, [isDrawerOpen, key, hasFetchedData]); // Only refetch when the drawer opens and key changes
 
+  const updateLink = async () => {
+    if (!key || !data) {
+      toast.error(t('NoDataToUpdate'));
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const encodedData = encodeURIComponent(JSON.stringify(data));
+      const result = await updateShortLink({
+        id: key,
+        url: `https://${window.location.host}?data=${encodedData}`,
+      });
+      
+      if (result.success) {
+        setIsDrawerOpen(false);
+        toast.success(t('UpdateSuccess'));
+      } else {
+        toast.error(result.error || t('UpdateFailed'));
+      }
+    } catch (error) {
+      console.error('Error updating link:', error);
+      toast.error(t('UpdateFailed'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <DrawerTrigger asChild>
@@ -72,28 +101,32 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
             </DrawerDescription>
           </DrawerHeader>
 
-          <div className="hide_scrollbar flex w-full flex-col gap-5 overflow-y-auto pb-[10vh] lg:pb-0">
-            {/* todo edit link button, check if logged in */}
+          {isLoading ? (
+            <div className="flex items-center justify-center p-4">
+              {t('loading')}...
+            </div>
+          ) : data ? (
+            <div className="hide_scrollbar flex w-full flex-col gap-5 overflow-y-auto pb-12 lg:pb-0">
+              <ProfileForm />
+              <SocialLinksForm />
+              <ExtraLinksForm />
+              <BackgroundShell />
+            </div>
+          ) : (
+            <div className="flex items-center justify-center p-4">
+              {t('no-data-available')}
+            </div>
+          )}
 
-            <ProfileForm />
-            <SocialLinksForm />
-            <ExtraLinksForm />
-
-            <BackgroundShell />
-          </div>
-
-          {/* <div className="">
-            {isLoading ? (
-              'Loading...'
-            ) : data ? (
-              <DisplayData acc={data} />
-            ) : (
-              t('no-data-available')
-            )}
-          </div> */}
-          <DrawerFooter>
-            <Button>{t('submit')}</Button>
-            <DrawerClose asChild>
+          <DrawerFooter className="fixed left-1/2 bottom-0 -translate-x-1/2 flex flex-row w-full gap-2">
+          
+            <Button className='w-full'
+              onClick={updateLink} 
+              disabled={isLoading || !data}
+            > 
+              {isLoading ? t('updating') : t('submit')}
+            </Button>
+            <DrawerClose asChild className='w-full'>
               <Button variant="outline">{t('cancel')}</Button>
             </DrawerClose>
           </DrawerFooter>

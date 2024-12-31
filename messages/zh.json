@@ -9,6 +9,12 @@
     "hov-links": "hov - links",
     "caption": "会员卡 APP 预计12月上线"
   },
+  "Navigation": {
+    "home": "首页",
+    "profile": "个人资料",
+    "links": "链接",
+    "settings": "设置"
+  },
   "ProfileForm": {
     "Title": "个人信息",
     "Description": "简介",
@@ -21,8 +27,8 @@
     "About": "关于"
   },
   "SocialLinksForm": {
-    "Title": "社交媒体链接",
-    "Description": "让浏览者知道哪里关注你的动态",
+    "Title": "社交链接",
+    "Description": "添加你的社交媒体资料",
     "facebook": "脸书",
     "twitter": "推特",
     "instagram": "instagram",
@@ -89,7 +95,9 @@
     "Title": "背景"
   },
   "Profile": {
-    "LinksTitle": "创建的链接们"
+    "LinksTitle": "创建的链接",
+    "copy": "复制链接",
+    "Copy": "复制链接"
   },
   "EditShortLink": {
     "cancel": "取消",
@@ -97,6 +105,13 @@
     "no-data-available": "无数据可用",
     "modify-your-short-link-settings": "修改你的短链接设置。",
     "edit-short-link": "编辑短链接",
-    "edit": "编辑"
+    "edit": "编辑",
+    "updating": "更新中",
+    "loading": "加载中",
+    "NoDataToUpdate": "没有数据可更新",
+    "UpdateSuccess": "更新成功",
+    "UpdateFailed": "更新失败",
+    "Copied": "已复制",
+    "Copy": "复制"
   }
 }

@@ -1,5 +1,11 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
+  "Navigation": {
+    "home": "Home",
+    "profile": "Profile",
+    "links": "Links",
+    "settings": "Settings"
+  },
   "ProfileForm": {
     "Title": "Profile Information",
     "Description": "Enter your profile or title information here.",
@@ -11,9 +17,14 @@
     "Email": "Email",
     "About": "About yourself"
   },
+  "Profile": {
+    "LinksTitle": "Created Links",
+    "copy": "Copy link",
+    "Copy": "Copy link"
+  },
   "SocialLinksForm": {
     "Title": "Social Links",
-    "Description": "Enter your social media links here.",
+    "Description": "Add your social media profiles",
     "facebook": "facebook",
     "twitter": "twitter",
     "instagram": "instagram",
@@ -86,15 +97,21 @@
     "Title": "Background",
     "Description": "Customize your background theme from here."
   },
-  "Profile": {
-    "LinksTitle": "Your Pages"
-  },
   "EditShortLink": {
     "cancel": "Cancel",
     "submit": "Submit",
     "no-data-available": "No data available",
     "modify-your-short-link-settings": "Modify your short link settings.",
     "edit-short-link": "Edit Short Link",
-    "edit": "Edit"
+    "edit": "Edit Link",
+    "pleaseLogin": "Please login to edit links",
+    "noLinkKey": "No link key provided",
+    "updating": "Updating",
+    "loading": "Loading",
+    "NoDataToUpdate": "No data to update",
+    "UpdateSuccess": "Update successful",
+    "UpdateFailed": "Update failed",
+    "Copied": "Copied",
+    "Copy": "Copy"
   }
 }

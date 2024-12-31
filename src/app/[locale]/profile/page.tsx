@@ -1,18 +1,19 @@
+'use client';
+
 import UserProfile from '@/components/supaauth/user-profile';
 import UserShortLinks from '@/components/user-short-links';
-import { NextIntlClientProvider, useTranslations } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
+import ErrorBoundary from '@/components/error-boundary';
 
-export default async function page() {
-  const messages = await getMessages();
-  // const t = useTranslations('Profile');
+export default function ProfilePage() {
+  const t = useTranslations('Profile');
+
   return (
     <div className="flex flex-col gap-4 m-4 min-h-96">
-      <UserProfile />
-      <NextIntlClientProvider messages={messages}>
-        {/* todo show links */}
+      <ErrorBoundary>
+        <UserProfile />
         <UserShortLinks />
-      </NextIntlClientProvider>
+      </ErrorBoundary>
     </div>
   );
 }

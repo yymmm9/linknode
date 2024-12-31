@@ -14,7 +14,7 @@ import ContactDrawer from '@/components/contact-drawer';
 import { cn } from '@/lib/utils';
 import { Footer } from '../layout';
 
-export const inter = Inter({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
 });
@@ -94,29 +94,26 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
-    notFound();
-  }
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  // const messages = await getMessages();
+  const messages = await getMessages();
+  const isValidLocale = routing.locales.includes(locale as any);
+  if (!isValidLocale) notFound();
 
   return (
-    <html lang={locale}>
-      <body className={cn(inter.className, 'mt-2 pt-16 md:pt-24')}>
-        {/* <NextIntlClientProvider locale={locale} messages={messages}> */}
-        <QueryProvider>
-          <Providers>
-            <Header />
-            <div className="flex items-center justify-center">{children}</div>
-            <Footer />
-          </Providers>
-        </QueryProvider>
-        {/* </NextIntlClientProvider> */}
-        <Analytics />
-        {/* <Toaster /> */}
+    <html lang={locale} suppressHydrationWarning>
+      <body className={cn('min-h-screen bg-background antialiased', inter.variable)}>
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          <QueryProvider>
+            <Providers>
+              <div className="relative flex min-h-screen flex-col">
+                <Header />
+                <div className="flex-1">{children}</div>
+                <Footer />
+              </div>
+              <ContactDrawer />
+              <Analytics />
+            </Providers>
+          </QueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -29,7 +29,7 @@ export default function UserShortLinks() {
   // {Links}
   // :{Links: any}
   const [links, setLinks] = useState<LinkData[]>([]);
-  const [hasCopied, setHasCopied] = useState(false);
+  const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
   const { data: user, isLoading: userIsLoading } = useUser();
   const router = useRouter();
   const t = useTranslations('Profile');
@@ -57,17 +57,22 @@ export default function UserShortLinks() {
     fetchLinks();
   }, [userIsLoading, user, router]);
 
-  const copyToClipboard = async (link: string) => {
+  const handleCopy = async (url: string) => {
     try {
-      await navigator.clipboard.writeText(link);
-      setHasCopied(true);
-      toast.success('Link copied to clipboard!');
+      await navigator.clipboard.writeText(url);
+      setCopiedUrl(url);
+      toast.success(t('LinkCopied'));
+      // Reset after 3 seconds
+      setTimeout(() => {
+        setCopiedUrl(null);
+      }, 3000);
     } catch (error) {
-      toast.error('Failed to copy to clipboard');
+      console.error('Failed to copy:', error);
+      toast.error(t('CopyFailed'));
     }
   };
 
-  if (userIsLoading) return <div>Loading...</div>;
+  if (userIsLoading) return <div>载入中...</div>;
 
   return (
     <div className="flex flex-col gap-4">
@@ -79,7 +84,7 @@ export default function UserShortLinks() {
             key={link.id}
             className="border-gray-200 bg-white border rounded-xl transition-[filter] hover:drop-shadow-card-hover"
           >
-            <div className="py-2.5 px-4 flex items-center gap-5 sm:gap-8 md:gap-12 text-sm justify-between">
+            <div className="relative py-2.5 px-4 flex items-center gap-5 sm:gap-8 md:gap-12 text-sm justify-between">
               <div className="flex items-center gap-3">
                 {/* Avatar Image */}
                 <div className="relative shrink-0 items-center justify-center sm:flex">
@@ -111,17 +116,17 @@ export default function UserShortLinks() {
                     <Button
                       variant={'ghost'}
                       className="relative group flex items-center !p-1.5 h-fit"
-                      onClick={() => copyToClipboard(url)}
+                      onClick={() => handleCopy(url)}
                     >
-                      {hasCopied ? (
+                      {copiedUrl === url ? (
                         <>
                           <Check className="size-4" />
-                          <span className="sr-only">已复制</span>
+                          <span className="sr-only">{t('Copied')}</span>
                         </>
                       ) : (
                         <>
                           <Copy className="size-4" />
-                          <span className="sr-only">复制</span>
+                          <span className="sr-only">{t('Copy')}</span>
                         </>
                       )}
                     </Button>
@@ -134,7 +139,9 @@ export default function UserShortLinks() {
               </div>
 
               {/* Edit Button */}
+              
               <EditShortLink linkKey={link.key} />
+              
             </div>
           </div>
         );

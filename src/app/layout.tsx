@@ -110,8 +110,8 @@ export const Footer = () => {
       <div className="p-4 mx-auto md:px-12 lg:px-32 max-w-screen-xl">
         <div className="w-full rounded-3xl shadow-box shadow-violet-500/50 bg-gradient-to-t from-violet-500 to-fuchsia-600 lg:px-20 lg:py-32 p-8 py-20 flex flex-col gap-14 text-center">
           <div>
-            <p className="text-4xl tracking-tighter font-semibold text-white md:text-6xl">
-              {/* 别轻易给顾客优惠 试试要个好评先 */}
+            <p className="text-4xl tracking-tighter font-semibold text-white md:text-5xl">
+              别轻易给顾客优惠 试试要个好评先
               {/* 别等同行买了才意识到重要性 */}
               {/* <span className="block">试试要个好评先</span> */}
             </p>

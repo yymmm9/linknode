@@ -40,6 +40,7 @@ export type DataProps = {
   [K in keyof typeof names]?: string; // 默认类型为 string
 } & {
   ls: ExtraLinkProps[]; // 手动添加 ls 字段
+  // firstName: string; lastName: string; organization: string; title: string; role: string;
 };
 
 export interface ExtraLinkProps {
@@ -74,6 +75,7 @@ export interface SocialLinkProviderProps {
 }
 
 export interface ShortLinkProps {
+  id?: string;
   url: string;
   shortLink?: string;
   password?: string;

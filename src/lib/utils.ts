@@ -31,9 +31,9 @@ export const decodeData = (base64: string) => {
 
 export function catchError(err: unknown) {
   if (err instanceof Error) {
-    return toast.error(err.message);
+    return err.message;
   } else {
-    return toast.error('Something went wrong, please try again later.');
+    return 'Something went wrong, please try again later.';
   }
 }
 

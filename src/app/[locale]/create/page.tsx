@@ -5,6 +5,7 @@ import SocialLinksForm from '@/components/forms/social-links-form';
 import MobileMockup from '@/components/mobile-mockup';
 import PreviewButton from '@/components/buttons/preview-button';
 import { DemoButton, Shortener } from '@/components/buttons/demo-button';
+import EditShortLink from '@/components/buttons/edit-short-link'; // added import statement
 // import PublishButton from '@/components/buttons/publish-button';
 // import ShortenerButton from '@/components/buttons/shortener-button';
 import BackgroundShell from '@/components/backgrounds/background-shell';
@@ -27,8 +28,11 @@ export default async function Home() {
     <main className="relative grid min-h-screen px-4 md:container lg:grid-cols-3 lg:px-0">
       <NextIntlClientProvider messages={messages}>
         <section className="flex min-h-screen flex-col items-center justify-center gap-6 pb-6 lg:col-span-2 lg:px-20 lg:pb-0">
-          <div className="hide_scrollbar flex w-full flex-col gap-5 overflow-y-auto pb-[10vh] lg:pb-0">
+          <div className="hide_scrollbar flex w-full flex-col gap-5 overflow-y-auto pb-12 lg:pb-0">
             {/* todo edit link button, check if logged in */}
+            <div className="flex justify-end w-full">
+              <EditShortLink linkKey="" />
+            </div>
 
             <ProfileForm />
             <SocialLinksForm />
