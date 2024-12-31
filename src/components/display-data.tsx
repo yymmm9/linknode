@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import type { DisplayDataProps } from '@/types';
+import type { DataProps, DisplayDataProps } from '@/types';
 import ExtraLinksCard from '@/components/extra-links-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { names } from '@/types';
@@ -47,8 +47,8 @@ export default function DisplayData({ acc }: DisplayDataProps) {
 
   const { locale, defaultLocale } = useParams();
   const lang = locale || defaultLocale;
-  let firstname = acc?.n || '';
-  let lastname = acc?.ln || '';
+  let firstname = acc?.n || acc?.firstName || '';
+  let lastname = acc?.ln || acc?.lastName || '';
   let fullname =
     lang === 'zh' ? lastname + firstname : firstname + ' ' + lastname;
   console.log(acc);
@@ -57,7 +57,11 @@ export default function DisplayData({ acc }: DisplayDataProps) {
     <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-8 overflow-y-scroll p-4">
       <div className="z-50 text-center flex flex-col items-center">
         <div className="rounded-full relative">
-          <SaveVcf data={acc} variant="icon" cta={''} />
+          <SaveVcf 
+            acc={acc}
+            variant="icon" 
+            cta={''} 
+          />
 
           {acc.i && (
             <Avatar className="size-24 shadow border">

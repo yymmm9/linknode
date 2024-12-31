@@ -2,19 +2,24 @@
 
 import { env } from '@/env.mjs';
 import { catchError, dub, generateNanoId } from '@/lib/utils';
-import type { APIResponse, ShortLinkProps } from '@/types';
+import { 
+  APIResponse, 
+  CreateShortLinkInput, 
+  normalizeShortLinkValue 
+} from '@/types';
 
-export default async function createShortLink(shortUrlInfo: ShortLinkProps) {
+export default async function createShortLink(shortUrlInfo: CreateShortLinkInput) {
   try {
     // Generate necessary parameters
-    const projectSlug = shortUrlInfo?.projectSlug || env.DUB_DOT_CO_SLUG;
-    const shortLink = shortUrlInfo?.shortLink || generateNanoId();
+    const projectSlug = normalizeShortLinkValue(shortUrlInfo.projectSlug) ?? env.DUB_DOT_CO_SLUG;
+    const shortLink = normalizeShortLinkValue(shortUrlInfo.shortLink) ?? generateNanoId();
 
     // Create a short link using the Dub API
     const response = await dub.links.create({
       url: shortUrlInfo.url,
       key: shortLink,
-      domain: shortUrlInfo?.domain || env.NEXT_PUBLIC_BASE_SHORT_DOMAIN,
+      domain: normalizeShortLinkValue(shortUrlInfo.domain) ?? env.NEXT_PUBLIC_BASE_SHORT_DOMAIN,
+      ...(shortUrlInfo.projectSlug && { projectSlug }),
     });
 
     // Return the response from the Dub API

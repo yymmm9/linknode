@@ -3,56 +3,43 @@ import { PlusIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import VCard from "vcard-creator";
 import { cn } from "@/lib/utils";
-import { cva } from "class-variance-authority";
+import { DataProps } from "@/types";
 
 export const SaveVcf = ({
-  data,
-  info,
+  acc,
   variant = "default",
   cta,
 }: {
-  data: {
-    firstName: string;
-    lastName: string;
-    organization: string;
-    title: string;
-    role: string;
-  };
-  info: {
-    email: string;
-    workPhone: string;
-    website: string;
-  };
+  acc?: DataProps;
   variant?: "icon" | "default";
   cta?: string;
 }) => {
-  if (!data) return null;
+  if (!acc) return null;
 
-  const buttonStyles = cva(
+  const firstName = acc.n || acc.firstName || '';
+  const lastName = acc.ln || acc.lastName || '';
+  const organization = acc.o || acc.organization || '';
+  const title = acc.ti || acc.title || '';
+  const role = acc.r || acc.role || '';
+  const email = acc.e || acc.email || '';
+  const workPhone = acc.p || acc.workPhone || '';
+  const website = acc.web || acc.website || '';
+
+  const buttonStyles = cn(
     "flex items-center", 
-    {
-      variants: {
-        variant: {
-          default: "gap-2",
-          icon: "absolute bottom-0 right-0 z-10 size-8 p-1 rounded-full",
-        },
-      },
-      defaultVariants: {
-        variant: "default",
-      },
-    }
+    variant === "default" ? "gap-2" : "absolute bottom-0 right-0 z-10 size-8 p-1 rounded-full"
   );
 
   const createVCard = () => {
     const myVCard = new VCard();
     myVCard
-      .addName(data.lastName, data.firstName)
-      .addCompany(data.organization)
-      .addJobtitle(data.title)
-      .addRole(data.role)
-      .addEmail(info.email)
-      .addPhoneNumber(info.workPhone, "PREF;WORK")
-      .addURL(info.website);
+      .addName(lastName, firstName)
+      .addCompany(organization)
+      .addJobtitle(title)
+      .addRole(role)
+      .addEmail(email)
+      .addPhoneNumber(workPhone, "PREF;WORK")
+      .addURL(website);
 
     return myVCard.toString();
   };
@@ -63,7 +50,7 @@ export const SaveVcf = ({
     const link = document.createElement("a");
     
     link.href = URL.createObjectURL(blob);
-    link.download = `${data.firstName}_${data.lastName}.vcf`;
+    link.download = `${firstName}_${lastName}.vcf`;
     
     document.body.appendChild(link);
     link.click();
@@ -72,7 +59,7 @@ export const SaveVcf = ({
 
   return (
     <Button
-      className={cn(buttonStyles({ variant }))}
+      className={buttonStyles}
       variant={variant === "default" ? "secondary" : "default"}
       onClick={downloadVCard}
     >

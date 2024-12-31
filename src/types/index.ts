@@ -1,4 +1,5 @@
 import { TdesignLogoWechatStroke } from "@/components/icon/wechat";
+import { z } from 'zod';
 
 // 定义 names 对象，字段值为描述字符串
 export const names = {
@@ -40,7 +41,14 @@ export type DataProps = {
   [K in keyof typeof names]?: string; // 默认类型为 string
 } & {
   ls: ExtraLinkProps[]; // 手动添加 ls 字段
-  // firstName: string; lastName: string; organization: string; title: string; role: string;
+  firstName?: string; 
+  lastName?: string; 
+  organization?: string; 
+  title?: string; 
+  role?: string;
+  email?: string;
+  workPhone?: string;
+  website?: string;
 };
 
 export interface ExtraLinkProps {
@@ -75,14 +83,46 @@ export interface SocialLinkProviderProps {
 }
 
 export interface ShortLinkProps {
-  id?: string;
   url: string;
+  id?: string | number;
   shortLink?: string;
   password?: string;
   authorization?: string;
-  projectSlug?: string;
+  projectSlug?: string | boolean;
   domain?: string;
   rewrite?: boolean;
+  [key: string]: string | boolean | number | undefined;
+}
+
+export type CreateShortLinkInput = Required<Pick<ShortLinkProps, 'url'>> & Omit<ShortLinkProps, 'url'>;
+
+export const shortlinkSchema = z.object({
+  url: z.string().url(),
+  id: z.union([z.string(), z.number()]).optional(),
+  shortLink: z.string().optional(),
+  password: z.string().optional(),
+  authorization: z.string().optional(),
+  projectSlug: z.union([z.string(), z.boolean()]).optional(),
+  domain: z.string().optional(),
+  rewrite: z.boolean().optional(),
+});
+
+export type ShortLinkSchema = z.infer<typeof shortlinkSchema>;
+
+export function isValidShortLinkKey(key: unknown): key is keyof ShortLinkProps {
+  const validKeys: (keyof ShortLinkProps)[] = [
+    'url', 'id', 'shortLink', 
+    'password', 'authorization', 
+    'projectSlug', 'domain', 'rewrite'
+  ];
+  return typeof key === 'string' && validKeys.includes(key as keyof ShortLinkProps);
+}
+
+export function normalizeShortLinkValue(value: string | boolean | number | undefined): string | undefined {
+  if (value === undefined) return undefined;
+  if (typeof value === 'boolean') return value ? 'true' : 'false';
+  if (typeof value === 'number') return value.toString();
+  return value;
 }
 
 export interface APIResponse {
