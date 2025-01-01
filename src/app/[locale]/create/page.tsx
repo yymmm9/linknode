@@ -1,18 +1,18 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import ExtraLinksForm from '@/components/forms/extra-links-form';
 import ProfileForm from '@/components/forms/profile-form';
 import SocialLinksForm from '@/components/forms/social-links-form';
 import MobileMockup from '@/components/mobile-mockup';
 import PreviewButton from '@/components/buttons/preview-button';
 import { DemoButton, Shortener } from '@/components/buttons/demo-button';
-import EditShortLink from '@/components/buttons/edit-short-link'; // added import statement
-// import PublishButton from '@/components/buttons/publish-button';
-// import ShortenerButton from '@/components/buttons/shortener-button';
+const EditShortLink = dynamic(
+  () => import('@/components/buttons/edit-short-link'), 
+  { ssr: false }
+);
 import BackgroundShell from '@/components/backgrounds/background-shell';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-// import { NextIntlClientProvider, useMessages } from 'next-intl';
-// import GithubButton from '@/components/buttons/github-button';
 
 // export const siteConfig = {
 //   name: 'hov - links',
@@ -55,7 +55,7 @@ export default async function Home() {
 
         <div className="lg:hidden">
           <PreviewButton />
-          {/* todo update to supabase and dub */}
+          
         </div>
       </NextIntlClientProvider>
     </main>

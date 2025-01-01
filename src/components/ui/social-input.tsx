@@ -21,19 +21,17 @@ export interface InputProps
   // 这里可以添加任何额外的属性
 }
 const SocialInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, icon: PropIcon, ...props }, ref) => {
+  ({ className, icon: PropIcon, value, ...props }, ref) => {
+    // 确保 value 永远不会是 null
+    const inputValue = value === null ? '' : value;
+    
     return (
       <div className="relative">
         <div className="absolute icon left-2.5 top-2/4 size-5 translate-y-[-50%]">
-        {/* <div className="icon  absolute inset-0 flex items-center"> */}
           {typeof PropIcon == "string" ? PropIcon :
-        <IconWrapper className="size-5" Icon={PropIcon} />
-      }
+            <IconWrapper className="size-5" Icon={PropIcon} />
+          }
         </div>
-        {/* <Icon
-          icon={propIcon}
-          className="absolute left-2.5 top-2/4 size-5 translate-y-[-50%]"
-        /> */}
         <input
           type="search"
           className={cn(
@@ -41,6 +39,7 @@ const SocialInput = React.forwardRef<HTMLInputElement, InputProps>(
             className,
           )}
           ref={ref}
+          value={inputValue}
           {...props}
         />
       </div>
