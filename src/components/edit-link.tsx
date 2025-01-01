@@ -22,40 +22,37 @@ import ProfileForm from './forms/profile-form';
 import SocialLinksForm from './forms/social-links-form';
 import { useData } from '@/lib/context/link-context';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
-  console.log('[EditShortLink] Render with key:', key);
-  
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasFetchedData, setHasFetchedData] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const t = useTranslations('EditShortLink');
   const { data, setData } = useData();
+  const router = useRouter();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const resetState = useCallback(() => {
-    console.log('[EditShortLink] Resetting state...');
     setHasFetchedData(false);
     setIsLoading(false);
     setData(null);
   }, [setData]);
 
   const fetchData = useCallback(async () => {
-    console.log('[fetchData] Starting with key:', key);
-    
-    if (!key || hasFetchedData) {
-      console.log('[fetchData] Skipping fetch - no key or already fetched');
+    if (!key || hasFetchedData || !isMounted) {
       return;
     }
 
     try {
       setIsLoading(true);
-      console.log('[fetchData] Fetching data from API...');
-      
       const result = await retrieveShortLink(key);
-      console.log('[fetchData] API response:', result);
 
       if (!result?.data?.url) {
-        console.log('[fetchData] No URL in response');
         toast.error(t('FetchError'));
         return;
       }
@@ -64,30 +61,25 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
       const rawData = params.get('data');
       
       if (!rawData) {
-        console.log('[fetchData] No data parameter in URL');
         toast.error(t('FetchError'));
         return;
       }
 
       const decodedData = decodeData(rawData);
       if (decodedData) {
-        console.log('[fetchData] Setting decoded data:', decodedData);
         setData(decodedData);
         setHasFetchedData(true);
       } else {
-        console.log('[fetchData] Failed to decode data');
         toast.error(t('FetchError'));
       }
     } catch (error) {
-      console.error('[fetchData] Error:', error);
       toast.error(t('FetchError'));
     } finally {
       setIsLoading(false);
     }
-  }, [key, hasFetchedData, setData, t]);
+  }, [key, hasFetchedData, setData, t, isMounted]);
 
   const handleDrawerChange = useCallback((open: boolean) => {
-    console.log('[Drawer] onOpenChange:', open);
     if (!open) {
       resetState();
     }
@@ -95,50 +87,44 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
   }, [resetState]);
 
   useEffect(() => {
-    if (isDrawerOpen) {
+    if (isDrawerOpen && isMounted) {
       fetchData();
     }
-  }, [isDrawerOpen, fetchData]);
+  }, [isDrawerOpen, fetchData, isMounted]);
 
   const updateLink = useCallback(async () => {
-    console.log('[updateLink] Starting update with key:', key);
-    console.log('[updateLink] Current data:', data);
-    
-    if (!key || !data) {
-      console.log('[updateLink] Missing key or data');
+    if (!key || !data || !isMounted) {
       toast.error(t('NoDataToUpdate'));
       return;
     }
 
     try {
       setIsLoading(true);
-      console.log('[updateLink] Encoding data...');
-      
       const encodedData = encodeURIComponent(JSON.stringify(data));
       const updateUrl = `${window.location.protocol}//${window.location.host}?data=${encodedData}`;
-      console.log('[updateLink] Update URL:', updateUrl);
 
       const result = await updateShortLink({
         id: key,
         url: updateUrl,
       });
-      
-      console.log('[updateLink] API response:', result);
 
       if (result.success) {
         toast.success(t('UpdateSuccess'));
         handleDrawerChange(false);
+        router.refresh();
       } else {
-        console.log('[updateLink] Update failed:', result.error);
         toast.error(result.error || t('UpdateFailed'));
       }
     } catch (error) {
-      console.error('[updateLink] Error:', error);
       toast.error(t('UpdateFailed'));
     } finally {
       setIsLoading(false);
     }
-  }, [key, data, t, handleDrawerChange]);
+  }, [key, data, t, handleDrawerChange, router, isMounted]);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Drawer open={isDrawerOpen} onOpenChange={handleDrawerChange}>
@@ -146,10 +132,7 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
         <Button 
           variant="ghost" 
           className="flex items-center gap-2"
-          onClick={() => {
-            console.log('[EditButton] Clicked');
-            handleDrawerChange(true);
-          }}
+          onClick={() => handleDrawerChange(true)}
         >
           {t('edit')}
         </Button>
@@ -197,10 +180,7 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
                   <Button 
                     variant="outline" 
                     className="flex-1"
-                    onClick={() => {
-                      console.log('[CancelButton] Clicked');
-                      handleDrawerChange(false);
-                    }}
+                    onClick={() => handleDrawerChange(false)}
                   >
                     {t('cancel')}
                   </Button>
