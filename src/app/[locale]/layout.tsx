@@ -13,6 +13,7 @@ import Header from '@/components/Header';
 import ContactDrawer from '@/components/contact-drawer';
 import { cn } from '@/lib/utils';
 import { Footer } from '../layout';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -114,6 +115,7 @@ export default async function RootLayout({
             </Providers>
           </QueryProvider>
         </NextIntlClientProvider>
+        <Toaster/>
       </body>
     </html>
   );

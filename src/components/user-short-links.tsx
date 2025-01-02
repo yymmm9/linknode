@@ -15,6 +15,7 @@ import { useTranslations } from 'next-intl';
 
 interface LinkData {
   id: string;
+  link_id: string;
   key: string;
   user_id: string;
   created_at: string; // Adjust type based on your actual data structure
@@ -140,7 +141,7 @@ export default function UserShortLinks() {
 
               {/* Edit Button */}
               
-              <EditShortLink linkKey={link.key} />
+              <EditShortLink linkKey={link.key} linkId={link.link_id} />
               
             </div>
           </div>

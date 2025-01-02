@@ -8,6 +8,7 @@ import QueryProvider from '@/components/query-provider';
 import Header from '@/components/Header';
 import ContactDrawer from '@/components/contact-drawer';
 import { cn } from '@/lib/utils';
+import { Toaster } from '@/components/ui/toaster';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -98,7 +99,7 @@ export default function RootLayout({
           </Providers>
         </QueryProvider>
         <Analytics />
-        {/* <Toaster /> */}
+        <Toaster />
       </body>
     </html>
   );

@@ -1,85 +1,117 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
-import { decodeData } from '@/lib/utils';
-import { Button } from './ui/button';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from './ui/drawer';
-import retrieveShortLink from '@/app/_actions/shortlink/retrieve';
-import updateShortLink from '@/app/_actions/shortlink/update';
+import { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import BackgroundShell from './backgrounds/background-shell';
-import ExtraLinksForm from './forms/extra-links-form';
+import { Drawer, DrawerContent, DrawerTrigger, DrawerClose, DrawerFooter } from '@/components/ui/drawer';
+import { Button } from '@/components/ui/button';
+import { Icons } from '@/components/icons';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import ProfileForm from './forms/profile-form';
 import SocialLinksForm from './forms/social-links-form';
 import { useData } from '@/lib/context/link-context';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+import { toast } from "sonner"
+import { decodeData } from '@/lib/utils';
+import retrieveShortLink from '@/app/_actions/shortlink/retrieve';
+import updateShortLink from '@/app/_actions/shortlink/update';
+import BackgroundShell from './backgrounds/background-shell';
+import ExtraLinksForm from './forms/extra-links-form';
 
-export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
+export default function EditShortLink({ 
+  linkKey: key,
+  linkId: id,
+  initialData 
+}: { 
+  linkKey: string
+  linkId: string 
+}) {
+  console.log('[EditShortLink] Render with key:', key);
+  
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasFetchedData, setHasFetchedData] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const t = useTranslations('EditShortLink');
   const { data, setData } = useData();
-  const router = useRouter();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const resetState = useCallback(() => {
+    console.log('[EditShortLink] Resetting state...');
     setHasFetchedData(false);
     setIsLoading(false);
     setData(null);
   }, [setData]);
 
   const fetchData = useCallback(async () => {
-    if (!key || hasFetchedData || !isMounted) {
+    console.log('[fetchData] Starting with key:', key);
+    
+    if (!key || hasFetchedData) {
+      console.log('[fetchData] Skipping fetch - no key or already fetched');
       return;
     }
 
     try {
       setIsLoading(true);
+      console.log('[fetchData] Fetching data from API...');
+      
       const result = await retrieveShortLink(key);
+      console.log('[fetchData] API response:', result);
 
       if (!result?.data?.url) {
-        toast.error(t('FetchError'));
+        console.log('[fetchData] No URL in response');
         return;
       }
 
-      const params = new URLSearchParams(result.data.url.split('?')[1]);
+      console.log('[fetchData] Full URL:', result.data.url);
+
+      const urlParts = result.data.url.split('?');
+      const queryString = urlParts[1];
+      
+      if (!queryString) {
+        console.log('[fetchData] No query string found');
+        return;
+      }
+
+      const params = new URLSearchParams(queryString);
       const rawData = params.get('data');
       
       if (!rawData) {
-        toast.error(t('FetchError'));
+        console.log('[fetchData] No data parameter in URL');
         return;
       }
 
-      const decodedData = decodeData(rawData);
-      if (decodedData) {
-        setData(decodedData);
-        setHasFetchedData(true);
-      } else {
-        toast.error(t('FetchError'));
+      console.log('[fetchData] Raw encoded data:', rawData);
+
+      // 尝试直接解析 JSON
+      try {
+        const parsedData = JSON.parse(decodeURIComponent(rawData));
+        console.log('[fetchData] Parsed data:', parsedData);
+        
+        if (parsedData) {
+          setData(parsedData);
+          setHasFetchedData(true);
+        }
+      } catch (parseError) {
+        // 如果直接解析失败，尝试 Base64 解码
+        try {
+          const decodedData = decodeData(rawData);
+          console.log('[fetchData] Decoded data:', decodedData);
+
+          if (decodedData) {
+            setData(decodedData);
+            setHasFetchedData(true);
+          }
+        } catch (decodeError) {
+          console.log('[fetchData] Failed to decode data:', decodeError);
+        }
       }
     } catch (error) {
-      toast.error(t('FetchError'));
+      console.error('[fetchData] Error:', error);
     } finally {
       setIsLoading(false);
     }
-  }, [key, hasFetchedData, setData, t, isMounted]);
+  }, [key, hasFetchedData, setData, t]);
 
   const handleDrawerChange = useCallback((open: boolean) => {
+    console.log('[Drawer] onOpenChange:', open);
     if (!open) {
       resetState();
     }
@@ -87,44 +119,76 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
   }, [resetState]);
 
   useEffect(() => {
-    if (isDrawerOpen && isMounted) {
+    if (isDrawerOpen) {
       fetchData();
     }
-  }, [isDrawerOpen, fetchData, isMounted]);
+  }, [isDrawerOpen, fetchData]);
 
   const updateLink = useCallback(async () => {
-    if (!key || !data || !isMounted) {
-      toast.error(t('NoDataToUpdate'));
+    console.log('[updateLink] Starting update with key:', key, 'and id:', id);
+    console.log('[updateLink] Current data:', data);
+    
+    // 数据验证
+    if (!key || !data) {
+      console.log('[updateLink] Missing key or data');
+      toast(t('NoDataToUpdate'));
       return;
     }
 
     try {
+      // 防止重复提交
+      if (isLoading) return;
+      
       setIsLoading(true);
+      
+      // 保存原始数据，以便在更新失败时回滚
+      const originalData = { ...data };
+      
+      // 编码数据
       const encodedData = encodeURIComponent(JSON.stringify(data));
       const updateUrl = `${window.location.protocol}//${window.location.host}?data=${encodedData}`;
+      
+      console.log('[updateLink] Update URL:', updateUrl);
 
+      // 立即更新本地状态
+      setData(data);
+
+      // 调用更新 API
       const result = await updateShortLink({
-        id: key,
+        id: id,  
         url: updateUrl,
+        key: key,  
       });
+      
+      console.log('[updateLink] API response:', result);
 
+      // 处理更新结果
       if (result.success) {
-        toast.success(t('UpdateSuccess'));
+        // 成功后的操作
+        toast(t('UpdateSuccess'));
         handleDrawerChange(false);
-        router.refresh();
       } else {
-        toast.error(result.error || t('UpdateFailed'));
+        // 更新失败，回滚到原始数据
+        console.error('[updateLink] Update failed:', result.error);
+        setData(originalData);
+        toast(t('UpdateFailed'));
       }
     } catch (error) {
-      toast.error(t('UpdateFailed'));
+      console.error('[updateLink] Unexpected error:', error);
+      // 发生异常，回滚到原始数据
+      setData(originalData);
+      toast(t('UpdateFailed'));
     } finally {
+      // 确保在任何情况下都重置加载状态
       setIsLoading(false);
     }
-  }, [key, data, t, handleDrawerChange, router, isMounted]);
+  }, [id, key, data, handleDrawerChange, isLoading, setData, t]);
 
-  if (!isMounted) {
-    return null;
-  }
+  // 测试 toast 的函数
+  const testToast = useCallback(() => {
+    // toast('测试成功 Toast');
+    console.log('测试 Toast 按钮被点击');
+  }, []);
 
   return (
     <Drawer open={isDrawerOpen} onOpenChange={handleDrawerChange}>
@@ -132,7 +196,10 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
         <Button 
           variant="ghost" 
           className="flex items-center gap-2"
-          onClick={() => handleDrawerChange(true)}
+          onClick={() => {
+            console.log('[EditButton] Clicked');
+            handleDrawerChange(true);
+          }}
         >
           {t('edit')}
         </Button>
@@ -180,13 +247,26 @@ export default function EditShortLink({ linkKey: key }: { linkKey: string }) {
                   <Button 
                     variant="outline" 
                     className="flex-1"
-                    onClick={() => handleDrawerChange(false)}
+                    onClick={() => {
+                      console.log('[CancelButton] Clicked');
+                      handleDrawerChange(false);
+                    }}
                   >
                     {t('cancel')}
                   </Button>
                 </DrawerClose>
               </div>
             </DrawerFooter>
+
+            <div className="flex justify-between items-center mt-4">
+              <Button 
+                variant="outline" 
+                onClick={testToast} 
+                className="w-full"
+              >
+                测试 Toast 通知
+              </Button>
+            </div>
           </div>
         </DrawerContent>
       )}
