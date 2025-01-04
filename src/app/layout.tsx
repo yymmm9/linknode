@@ -9,6 +9,8 @@ import Header from '@/components/Header';
 import ContactDrawer from '@/components/contact-drawer';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -83,23 +85,31 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const messages = await getMessages();
+
   return (
     <html lang="en">
       <body className={cn(inter.className, 'mt-2 pt-16 md:pt-24')}>
-        <QueryProvider>
-          <Providers>
-            <Header />
-            <div className="flex items-center justify-center">{children}</div>
-            <Footer />
-          </Providers>
-        </QueryProvider>
-        <Analytics />
-        <Toaster />
+        <NextIntlClientProvider messages={messages}>
+          <QueryProvider>
+            <Providers>
+              <div className="relative flex min-h-screen flex-col">
+                <Header />
+                <div className="mb-12"></div>
+
+                <div className="flex-1">{children}</div>
+                <Footer />
+              </div>
+              <Toaster />
+              <Analytics />
+            </Providers>
+          </QueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

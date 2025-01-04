@@ -9,11 +9,18 @@ export default function ProfilePage() {
   const t = useTranslations('Profile');
 
   return (
-    <div className="flex flex-col gap-4 m-4 min-h-96">
-      <ErrorBoundary>
-        <UserProfile />
-        <UserShortLinks />
-      </ErrorBoundary>
-    </div>
+    <main className="container mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6 text-center">
+          {t('PageTitle')}
+        </h1>
+        <section className="space-y-6">
+          <ErrorBoundary>
+            <UserProfile />
+            <UserShortLinks />
+          </ErrorBoundary>
+        </section>
+      </div>
+    </main>
   );
 }

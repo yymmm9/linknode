@@ -4,7 +4,9 @@
     "home": "Home",
     "profile": "Profile",
     "links": "Links",
-    "settings": "Settings"
+    "settings": "Settings",
+    "Navigation": "Navigation Menu",
+    "ExploreOurPages": "Explore our pages"
   },
   "ProfileForm": {
     "Title": "Profile Information",
@@ -20,7 +22,12 @@
   "Profile": {
     "LinksTitle": "Created Links",
     "copy": "Copy link",
-    "Copy": "Copy link"
+    "Copy": "Copy link",
+    "PageTitle": "Profile and Link Management",
+    "PageTitle": "Your Profile",
+    "LinkCopied": "Link copied successfully",
+    "CopyFailed": "Failed to copy link",
+    "Copied": "Copied"
   },
   "SocialLinksForm": {
     "Title": "Social Links",
@@ -113,5 +120,19 @@
     "UpdateFailed": "Update failed",
     "Copied": "Copied",
     "Copy": "Copy"
+  },
+  "Header": {
+    "Home": "Home",
+    "Create": "Create",
+    "Docs": "Docs",
+    "Login": "Login",
+    "Signup": "Signup",
+    "Navigation": "Navigation",
+    "ExploreOurPages": "Explore our pages and features",
+    "ManageAccount": "Manage Account",
+    "Logout": "Logout"
+  },
+  "Create": {
+    "PageTitle": "Create Your Link"
   }
 }

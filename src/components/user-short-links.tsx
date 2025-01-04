@@ -3,7 +3,7 @@
 import useUser from '@/app/hook/useUser';
 // import { supabase } from '@/lib/utils';
 import { Button } from './ui/button';
-import { Check, Copy } from 'lucide-react';
+import { Check, Copy, Plus } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -63,10 +63,9 @@ export default function UserShortLinks() {
       await navigator.clipboard.writeText(url);
       setCopiedUrl(url);
       toast.success(t('LinkCopied'));
-      // Reset after 3 seconds
       setTimeout(() => {
-        setCopiedUrl(null);
-      }, 3000);
+        setCopiedUrl('');
+      }, 2000);
     } catch (error) {
       console.error('Failed to copy:', error);
       toast.error(t('CopyFailed'));
@@ -76,77 +75,94 @@ export default function UserShortLinks() {
   if (userIsLoading) return <div>载入中...</div>;
 
   return (
-    <div className="flex flex-col gap-4">
-      <h3>{t('LinksTitle')}</h3>
-      {links.map((link) => {
-        const url = 'hov.sh/' + link.key;
-        return (
-          <div
-            key={link.id}
-            className="border-gray-200 bg-white border rounded-xl transition-[filter] hover:drop-shadow-card-hover"
-          >
-            <div className="relative py-2.5 px-4 flex items-center gap-5 sm:gap-8 md:gap-12 text-sm justify-between">
-              <div className="flex items-center gap-3">
-                {/* Avatar Image */}
-                <div className="relative shrink-0 items-center justify-center sm:flex">
-                  <div className="absolute inset-0 shrink-0 rounded-full border border-gray-200 opacity-0 transition-opacity opacity-100">
-                    <div className="h-full w-full rounded-full border border-white bg-gradient-to-t from-gray-100"></div>
-                  </div>
-                  <div className="relative p-2">
-                    <img
-                      alt={link.key}
-                      draggable="false"
-                      width="20"
-                      height="20"
-                      className="blur-0 rounded-full h-5 w-5 shrink-0 transition-[width,height] sm:h-6 sm:w-6"
-                      src={'https://avatar.vercel.sh/' + link.key}
-                      style={{ color: 'transparent' }}
-                    />
-                  </div>
-                </div>
+    <div className="w-full max-w-2xl mx-auto space-y-4">
+      {/* 创建链接按钮 */}
+      <Button
+        variant="default"
+        className="w-full flex items-center justify-center gap-2"
+        onClick={() => router.push('/create')}
+      >
+        <Plus className="h-4 w-4" />
+        创建连接
+      </Button>
 
-                {/* Link */}
-                <div className="min-w-0 grow flex flex-col">
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={url}
-                      className="truncate font-semibold leading-6 text-gray-800 transition-colors hover:text-black"
-                    >
-                      {url}
-                    </Link>
-                    <Button
-                      variant={'ghost'}
-                      className="relative group flex items-center !p-1.5 h-fit"
-                      onClick={() => handleCopy(url)}
-                    >
-                      {copiedUrl === url ? (
-                        <>
-                          <Check className="size-4" />
-                          <span className="sr-only">{t('Copied')}</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="size-4" />
-                          <span className="sr-only">{t('Copy')}</span>
-                        </>
-                      )}
-                    </Button>
+      {/* 链接列表 */}
+      
+        <div className="flex flex-col gap-4">
+          <h3>{t('LinksTitle')}</h3>
+          {links?.length && links.map((link) => {
+            const url = 'hov.sh/' + link.key;
+            return (
+              <div
+                key={link.id}
+                className="border-gray-200 bg-white border rounded-xl transition-[filter] hover:drop-shadow-card-hover"
+              >
+                <div className="relative py-2.5 px-4 flex items-center gap-5 sm:gap-8 md:gap-12 text-sm justify-between">
+                  <div className="flex items-center gap-3">
+                    {/* Avatar Image */}
+                    <div className="relative shrink-0 items-center justify-center sm:flex">
+                      <div className="absolute inset-0 shrink-0 rounded-full border border-gray-200 transition-opacity">
+                        <div className="h-full w-full rounded-full border border-white bg-gradient-to-t from-gray-100"></div>
+                      </div>
+                      <div className="relative p-2">
+                        <img
+                          alt={link.key}
+                          draggable="false"
+                          width="20"
+                          height="20"
+                          className="blur-0 rounded-full h-5 w-5 shrink-0 transition-[width,height] sm:h-6 sm:w-6"
+                          src={'https://avatar.vercel.sh/' + link.key}
+                          style={{ color: 'transparent' }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Link */}
+                    <div className="min-w-0 grow flex flex-col">
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={url}
+                          className="truncate font-semibold leading-6 text-gray-800 transition-colors hover:text-black"
+                        >
+                          {url}
+                        </Link>
+                        <Button
+                          variant={'ghost'}
+                          className="relative group flex items-center !p-1.5 h-fit"
+                          onClick={() => handleCopy(url)}
+                        >
+                          {copiedUrl === url ? (
+                            <>
+                              <Check className="size-4" />
+                              <span className="sr-only">{t('Copied')}</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="size-4" />
+                              <span className="sr-only">{t('Copy')}</span>
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                      {/* Timestamps */}
+                      <div className="text-sm text-gray-400 flex gap-2">
+                        <p>{dayjs(link?.created_at).format('YYYY-MM-DD')}</p>
+                      </div>
+                    </div>
                   </div>
-                  {/* Timestamps */}
-                  <div className="text-sm text-gray-400 flex gap-2">
-                    <p>{dayjs(link?.created_at).format('YYYY-MM-DD')}</p>
-                  </div>
+
+                  {/* Edit Button */}
+                  <EditShortLink linkKey={link.key} linkId={link.link_id} />
                 </div>
               </div>
-
-              {/* Edit Button */}
-              
-              <EditShortLink linkKey={link.key} linkId={link.link_id} />
-              
-            </div>
-          </div>
-        );
-      })}
+            );
+          })}
+        </div>
+      {/* ) : (
+        <div className="text-center py-8 text-gray-500">
+          暂无链接，点击上方按钮创建
+        </div>
+      )} */}
     </div>
   );
 }

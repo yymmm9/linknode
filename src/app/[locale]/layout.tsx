@@ -107,10 +107,10 @@ export default async function RootLayout({
             <Providers>
               <div className="relative flex min-h-screen flex-col">
                 <Header />
+                <div className="mb-20"></div>
                 <div className="flex-1">{children}</div>
                 <Footer />
               </div>
-              <ContactDrawer />
               <Analytics />
             </Providers>
           </QueryProvider>

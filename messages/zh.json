@@ -52,11 +52,11 @@
     "can-and-39-t-short-link-with-empty-fields-0": "不能用空字段缩短链接！",
     "shorten-your-link-with-dub-co-and-get-full-control-over-it-0": "使用dub.co缩短链接，并获得对它的完全控制。",
     "powered-by-dub-co-0": "由Dub.co提供支持",
-    "shortener-0": "缩短器",
+    "shortener-0": "发布链接",
     "can-and-39-t-short-link-with-empty-fields": "不能用空字段缩短链接！",
     "shorten-your-link-with-dub-co-and-get-full-control-over-it": "使用dub.co缩短链接，并获得对它的完全控制。",
     "powered-by-dub-co": "由Dub.co提供支持",
-    "shortener": "缩短器"
+    "shortener": "发布链接"
   },
   "MobileMockup": {
     "no-information": "无信息。"
@@ -113,5 +113,25 @@
     "UpdateFailed": "更新失败",
     "Copied": "已复制",
     "Copy": "复制"
+  },
+  "Header": {
+    "Home": "首页",
+    "Create": "创建",
+    "Docs": "文档",
+    "Login": "登录",
+    "Signup": "注册",
+    "Navigation": "导航",
+    "ExploreOurPages": "探索我们的页面和功能",
+    "ManageAccount": "管理账户",
+    "Logout": "退出登录"
+  },
+  "Create": {
+    "PageTitle": "创建您的链接"
+  },
+  "Profile": {
+    "PageTitle": "您的个人资料",
+    "LinkCopied": "链接复制成功",
+    "CopyFailed": "复制链接失败",
+    "Copied": "已复制"
   }
 }
