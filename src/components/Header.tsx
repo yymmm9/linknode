@@ -18,11 +18,11 @@ import {
 } from './ui/drawer';
 import useUser from '@/app/hook/useUser';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { cn } from '@/lib/utils';
 import { Logo } from './brand';
 import { HideOnScroll } from '@/lib/hooks/scroll';
 import UserProfile from './supaauth/user-profile';
-import { User } from '@supabase/supabase-js';
+import { createSupabaseBrowser } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 const menuItems = [
   {
@@ -44,8 +44,15 @@ const menuItems = [
 export default function Header() {
   const t = useTranslations('Header');
   const pathname = usePathname();
-  const { data, signOut } = useUser();
+  const router = useRouter();
+  const { data } = useUser();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const signOut = async () => {
+    const supabase = createSupabaseBrowser();
+    await supabase.auth.signOut();
+    router.push('/login');
+  };
 
   const navItems = [
     { href: '/', label: t('Home') },
@@ -132,7 +139,8 @@ export default function Header() {
                 {isDrawerOpen ? <X /> : <Menu />}
               </button>
             </DrawerTrigger>
-            <DrawerContent>
+            <DrawerContent className=''>
+              <div className='w-full max-w-2xl mx-auto'>
               <DrawerHeader>
                 <DrawerTitle>{t('Navigation')}</DrawerTitle>
                 <DrawerDescription>
@@ -180,21 +188,6 @@ export default function Header() {
 
               <div className="px-4 py-6">
                 {renderNavLinks(true)}
-                <ul className="space-y-4 mt-4">
-                  {menuItems.map((item, index) => (
-                    <li key={index}>
-                      <Link
-                        href={item.url}
-                        className={`
-                          block py-2 px-3 text-gray-600 hover:text-primary
-                          ${pathname === item.url ? 'text-primary font-semibold' : ''}
-                        `}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
               </div>
 
               <DrawerFooter>
@@ -213,6 +206,7 @@ export default function Header() {
                   </div>
                 ) : null}
               </DrawerFooter>
+              </div>
             </DrawerContent>
           </Drawer>
         </div>

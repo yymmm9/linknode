@@ -20,14 +20,15 @@
     "About": "About yourself"
   },
   "Profile": {
-    "LinksTitle": "Created Links",
-    "copy": "Copy link",
-    "Copy": "Copy link",
-    "PageTitle": "Profile and Link Management",
     "PageTitle": "Your Profile",
+    "LinksTitle": "Your Links",
     "LinkCopied": "Link copied successfully",
     "CopyFailed": "Failed to copy link",
-    "Copied": "Copied"
+    "Copied": "Copied",
+    "Copy": "Copy link",
+    "CreateLink": "Create Link",
+    "Loading": "Loading",
+    "NoLinks": "No links yet, click the button above to create one"
   },
   "SocialLinksForm": {
     "Title": "Social Links",

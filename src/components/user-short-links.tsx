@@ -72,7 +72,7 @@ export default function UserShortLinks() {
     }
   };
 
-  if (userIsLoading) return <div>载入中...</div>;
+  if (userIsLoading) return <div>{t('Loading')}...</div>;
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4">
@@ -83,7 +83,7 @@ export default function UserShortLinks() {
         onClick={() => router.push('/create')}
       >
         <Plus className="h-4 w-4" />
-        创建连接
+        {t('CreateLink')}
       </Button>
 
       {/* 链接列表 */}
@@ -160,7 +160,7 @@ export default function UserShortLinks() {
         </div>
       {/* ) : (
         <div className="text-center py-8 text-gray-500">
-          暂无链接，点击上方按钮创建
+          {t('NoLinks')}
         </div>
       )} */}
     </div>
