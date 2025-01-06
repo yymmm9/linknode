@@ -49,7 +49,7 @@ export default function UserShortLinks() {
         .select('*')
         .eq('user_id', user.id);
       if (res.error) {
-        toast.error(`Error fetching links: ${res.error.message}`);
+        // toast.error(`Error fetching links: ${res.error.message}`);
       } else {
         setLinks(res.data as LinkData[]); // Cast to LinkData array
       }
@@ -62,17 +62,17 @@ export default function UserShortLinks() {
     try {
       await navigator.clipboard.writeText(url);
       setCopiedUrl(url);
-      toast.success(t('LinkCopied'));
+      // toast.success(t('LinkCopied'));
       setTimeout(() => {
         setCopiedUrl('');
       }, 2000);
     } catch (error) {
       console.error('Failed to copy:', error);
-      toast.error(t('CopyFailed'));
+      // toast.error(t('CopyFailed'));
     }
   };
 
-  if (userIsLoading) return <div>{t('Loading')}...</div>;
+  if (userIsLoading) return <div>载入中...</div>;
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4">

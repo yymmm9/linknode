@@ -95,15 +95,9 @@
     "Title": "背景"
   },
   "Profile": {
-    "PageTitle": "您的个人资料",
-    "LinksTitle": "您的链接",
-    "LinkCopied": "链接复制成功",
-    "CopyFailed": "复制链接失败",
-    "Copied": "已复制",
-    "Copy": "复制链接",
-    "CreateLink": "创建链接",
-    "Loading": "载入中",
-    "NoLinks": "暂无链接，点击上方按钮创建"
+    "LinksTitle": "创建的链接",
+    "copy": "复制链接",
+    "Copy": "复制链接"
   },
   "EditShortLink": {
     "cancel": "取消",
@@ -133,5 +127,15 @@
   },
   "Create": {
     "PageTitle": "创建您的链接"
+  },
+  "Profile": {
+    "PageTitle": "您的个人资料",
+    "LinksTitle": "您的链接",
+    "Copy": "复制链接",
+    "CreateLink": "创建链接",
+    "NoLinks": "暂无链接，点击上方按钮创建",
+    "LinkCopied": "链接复制成功",
+    "CopyFailed": "复制链接失败",
+    "Copied": "已复制"
   }
 }
