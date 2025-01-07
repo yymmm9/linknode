@@ -3,15 +3,15 @@ import { z } from "zod";
 
 export const env = createEnv({
     server: {
-        DUB_DOT_CO_TOKEN: z.string(),
-        DUB_DOT_CO_SLUG: z.string(),
+        HOV_SH_TOKEN: z.string().optional(),
+        HOV_SH_SLUG: z.string().optional(),
     },
     client: {
-        NEXT_PUBLIC_BASE_SHORT_DOMAIN: z.string(),
+        NEXT_PUBLIC_BASE_SHORT_DOMAIN: z.string().optional(),
     },
     runtimeEnv: {
         NEXT_PUBLIC_BASE_SHORT_DOMAIN: process.env.NEXT_PUBLIC_BASE_SHORT_DOMAIN,
-        DUB_DOT_CO_TOKEN: process.env.DUB_DOT_CO_TOKEN,
-        DUB_DOT_CO_SLUG: process.env.DUB_DOT_CO_SLUG
+        HOV_SH_TOKEN: process.env.HOV_SH_TOKEN,
+        HOV_SH_SLUG: process.env.HOV_SH_SLUG
     },
 });

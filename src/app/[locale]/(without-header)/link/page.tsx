@@ -79,7 +79,7 @@ export default function page({ searchParams }: SearchParamsProps) {
         </div>
         <Link 
           href="/create" 
-          className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+          className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm"
         >
           {t('createYourLinks')}
         </Link>
