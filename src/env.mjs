@@ -11,7 +11,7 @@ export const env = createEnv({
     },
     runtimeEnv: {
         NEXT_PUBLIC_BASE_SHORT_DOMAIN: process.env.NEXT_PUBLIC_BASE_SHORT_DOMAIN,
-        HOV_SH_TOKEN: process.env.DUB_DOT_CO_TOKEN,
-        HOV_SH_SLUG: process.env.DUB_DOT_CO_SLUG
+        DUB_DOT_CO_TOKEN: process.env.DUB_DOT_CO_TOKEN,
+        DUB_DOT_CO_SLUG: process.env.DUB_DOT_CO_SLUG
     },
 });
