@@ -132,11 +132,11 @@ export default function CreateShortlinkForm() {
       
       const isAdmin = user && user.id === 'your-admin-id'; // Replace 'your-admin-id' with the actual admin ID
       const token = isAdmin
-        ? env.HOV_SH_TOKEN
-        : undefined;
+        ? env.HOV_SH_TOKEN ?? ''
+        : '';
       const projectSlug = isAdmin
-        ? env.HOV_SH_SLUG
-        : undefined;
+        ? env.HOV_SH_SLUG ?? ''
+        : '';
 
       setAuthKey(token);
       setProjectSlug(projectSlug);
