@@ -48,7 +48,7 @@ export function generateMetadata({ searchParams }: SearchParamsProps) {
   };
 }
 
-export default function page({ searchParams }: SearchParamsProps) {
+export default function Page({ searchParams }: SearchParamsProps) {
   const t = useTranslations('LinkPage');
 
   if (!searchParams.data) return <NotFound />;
