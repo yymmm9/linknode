@@ -9,8 +9,8 @@ import type { DataProps, ShortLinkProps } from '@/types';
 import { Dub } from 'dub';
 
 export const dub = new Dub({
-  token: process.env.HOV_SH_TOKEN,
-  baseUrl: process.env.NEXT_PUBLIC_BASE_SHORT_DOMAIN,
+  token: process.env.HOV_SH_TOKEN ?? '',
+  domain: process.env.NEXT_PUBLIC_BASE_SHORT_DOMAIN ?? 'hov.sh',
 });
 
 export function cn(...inputs: ClassValue[]) {
