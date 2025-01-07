@@ -50,12 +50,12 @@
   },
   "ShortenerButton": {
     "can-and-39-t-short-link-with-empty-fields-0": "不能用空字段缩短链接！",
-    "shorten-your-link-with-dub-co-and-get-full-control-over-it-0": "使用dub.co缩短链接，并获得对它的完全控制。",
-    "powered-by-dub-co-0": "由Dub.co提供支持",
+    "shorten-your-link-with-dub-co-and-get-full-control-over-it-0": "使用hov.sh缩短链接，并获得对它的完全控制。",
+    "powered-by-dub-co-0": "由hov.sh提供支持",
     "shortener-0": "发布链接",
     "can-and-39-t-short-link-with-empty-fields": "不能用空字段缩短链接！",
-    "shorten-your-link-with-dub-co-and-get-full-control-over-it": "使用dub.co缩短链接，并获得对它的完全控制。",
-    "powered-by-dub-co": "由Dub.co提供支持",
+    "shorten-your-link-with-dub-co-and-get-full-control-over-it": "使用hov.sh缩短链接，并获得对它的完全控制。",
+    "powered-by-dub-co": "由hov.sh提供支持",
     "shortener": "发布链接"
   },
   "MobileMockup": {
@@ -137,5 +137,9 @@
     "LinkCopied": "链接复制成功",
     "CopyFailed": "复制链接失败",
     "Copied": "已复制"
+  },
+  "LinkPage": {
+    "poweredBy": "由 hov.sh 提供支持",
+    "createYourLinks": "创建你的链接"
   }
 }

@@ -25,7 +25,7 @@ export default async function deleteShortLink({
     };
 
     const response = await fetch(
-      `https://api.dub.co/links/${id}?projectSlug=${getProjectSlug}`,
+      `https://api.hov.sh/links/${id}?projectSlug=${getProjectSlug}`,
       options,
     );
 

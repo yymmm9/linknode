@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     // 'link in bio',
     // 'link in bio instagram',
     // 'linktree',
-    // 'dub.co',
+    // 'hov.sh',
     // 'dub',
   ],
   // authors: [

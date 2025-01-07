@@ -53,12 +53,12 @@
   },
   "ShortenerButton": {
     "can-and-39-t-short-link-with-empty-fields-0": "Can&#39;t short link with empty fields!",
-    "shorten-your-link-with-dub-co-and-get-full-control-over-it-0": "Shorten your link with dub.co and get full control over it.",
-    "powered-by-dub-co-0": "Powered by Dub.co",
+    "shorten-your-link-with-dub-co-and-get-full-control-over-it-0": "Shorten your link with hov.sh and get full control over it.",
+    "powered-by-dub-co-0": "Powered by hov.sh",
     "shortener-0": "Shortener",
     "can-and-39-t-short-link-with-empty-fields": "Can&#39;t short link with empty fields!",
-    "shorten-your-link-with-dub-co-and-get-full-control-over-it": "Shorten your link with dub.co and get full control over it.",
-    "powered-by-dub-co": "Powered by Dub.co",
+    "shorten-your-link-with-dub-co-and-get-full-control-over-it": "Shorten your link with hov.sh and get full control over it.",
+    "powered-by-dub-co": "Powered by hov.sh",
     "shortener": "Shortener"
   },
   "MobileMockup": {
@@ -134,5 +134,9 @@
   },
   "Create": {
     "PageTitle": "Create Your Link"
+  },
+  "LinkPage": {
+    "poweredBy": "Powered by hov.sh",
+    "createYourLinks": "Create Your Own Links"
   }
 }

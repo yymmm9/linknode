@@ -5,12 +5,12 @@ import { Providers } from '@/components/providers';
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
 import { QueryProvider } from '@/lib/context/query-provider';
-import Header from '@/components/Header';
 import ContactDrawer from '@/components/contact-drawer';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { headers } from 'next/headers';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     // 'link in bio',
     // 'link in bio instagram',
     // 'linktree',
-    // 'dub.co',
+    // 'hov.sh',
     // 'dub',
   ],
   // authors: [
@@ -99,9 +99,7 @@ export default async function RootLayout({
           <QueryProvider>
             <Providers>
               <div className="relative flex min-h-[60vh] flex-col">
-                <Header />
                 <div className="mb-12"></div>
-
                 <div className="flex-1">{children}</div>
                 {/* <Footer /> */}
               </div>

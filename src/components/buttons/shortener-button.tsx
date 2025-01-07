@@ -51,7 +51,7 @@ export default function ShortenerButtonClient() {
               <CardTitle className="flex select-none items-center justify-between text-xl">
                 {t('powered-by-dub-co')}
                 <Info
-                  onClick={() => handleInfoClick('https://dub.co/')}
+                  onClick={() => handleInfoClick('https://hov.sh/')}
                   className="size-4 cursor-pointer text-muted-foreground hover:text-accent-foreground active:scale-95"
                 />
               </CardTitle>
@@ -87,7 +87,7 @@ export default function ShortenerButtonClient() {
               <CardTitle className="flex select-none items-center justify-between p-0 text-lg">
                 {t('powered-by-dub-co-0')}
                 <Info
-                  onClick={() => handleInfoClick('https://dub.co/')}
+                  onClick={() => handleInfoClick('https://hov.sh/')}
                   className="size-4 cursor-pointer text-muted-foreground hover:text-accent-foreground active:scale-95"
                 />
               </CardTitle>

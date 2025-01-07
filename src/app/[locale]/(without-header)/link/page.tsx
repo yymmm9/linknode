@@ -4,6 +4,8 @@ import { BACKGROUND_OPTIONS } from '@/components/backgrounds/background-snippets
 import DisplayData from '@/components/display-data';
 import DataLoading from './loading';
 import LinkPageError from './error';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 interface SearchParamsProps {
   searchParams: {
@@ -47,7 +49,9 @@ export function generateMetadata({ searchParams }: SearchParamsProps) {
 }
 
 export default function page({ searchParams }: SearchParamsProps) {
-  if (!searchParams.data) return NotFound();
+  const t = useTranslations('LinkPage');
+
+  if (!searchParams.data) return <NotFound />;
 
   const data = decodeData(searchParams.data);
 
@@ -68,6 +72,17 @@ export default function page({ searchParams }: SearchParamsProps) {
       </div>
       <div className="hide_scrollbar p-2 pt-10">
         {data ? <DisplayData acc={data} /> : <DataLoading />}
+      </div>
+      <div className="fixed bottom-0 left-0 w-full text-center p-4 bg-gray-100 flex gap-4 items-center justify-center">
+        <div className="text-sm text-gray-600">
+          {t('poweredBy')}
+        </div>
+        <Link 
+          href="/create" 
+          className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+        >
+          {t('createYourLinks')}
+        </Link>
       </div>
     </>
   );

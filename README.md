@@ -14,7 +14,7 @@
 - Cool icons for your social media links 😎
 - Choose your own icons for any other links 🔧
 - Demo preview to see how your page will turn out 👀
-- URL shortener powered by Dub.co 🌐
+- URL shortener powered by hov.sh 🌐
   - Custom domains support
   - Link cloaking funtionality
 
