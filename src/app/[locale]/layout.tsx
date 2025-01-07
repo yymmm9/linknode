@@ -100,23 +100,20 @@ export default async function RootLayout({
   if (!isValidLocale) notFound();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className={cn('min-h-screen bg-background antialiased', inter.variable)}>
+    <>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <QueryProvider>
             <Providers>
-              <div className="relative flex min-h-screen flex-col">
-                <Header />
-                <div className="mb-20"></div>
+              <div className="relative flex min-h-[60vh] flex-col">
+                {/* <Header /> */}
                 <div className="flex-1">{children}</div>
-                <Footer />
+                {/* <Footer /> */}
               </div>
               <Analytics />
             </Providers>
           </QueryProvider>
         </NextIntlClientProvider>
         <Toaster/>
-      </body>
-    </html>
+        </>
   );
 }

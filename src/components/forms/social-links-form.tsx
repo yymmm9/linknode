@@ -12,7 +12,6 @@ import { TdesignLogoWechatStroke } from '@/components/icon/wechat';
 import {
   FacebookIcon,
   GithubIcon,
-  InstagramIcon,
   LinkedinIcon,
   TwitterIcon,
   YoutubeIcon,
@@ -25,11 +24,12 @@ import { useTranslations } from 'next-intl';
 import { SocialInput } from '@/components/ui/social-input';
 import { useData } from '@/lib/context/link-context';
 import { ScrollArea } from '../ui/scroll-area';
+import { MdiInstagram } from '../icon/instagram';
 
 const socialLinksProvider: SocialLinkProviderProps[] = [
   { name: 'facebook', icon: FacebookIcon, id: 'f', placeholder: '' },
   { name: 'twitter', icon: TwitterIcon, id: 't', placeholder: '' },
-  { name: 'instagram', icon: InstagramIcon, id: 'ig', placeholder: '' },
+  { name: 'instagram', icon: MdiInstagram, id: 'ig', placeholder: '' },
   {
     name: 'telegram',
     icon: AkarIconsTelegramFill,

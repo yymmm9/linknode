@@ -10,6 +10,8 @@ import { IconWrapper } from './ui/social-input';
 import { SaveVcf } from './client/save-as-vcf';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
+import ContactDrawer from './contact-drawer';
 
 function getInitials(firstName: string = '', lastName: string = '') {
   // Check if the name is Chinese
@@ -31,6 +33,17 @@ function getInitials(firstName: string = '', lastName: string = '') {
   }
 }
 
+// 格式化姓名的函数
+function formatName(firstName?: string, lastName?: string, locale?: string): string {
+  if (!firstName && !lastName) return '';
+  if (!firstName) return lastName || '';
+  if (!lastName) return firstName || '';
+  
+  return locale === 'zh' 
+    ? `${lastName}${firstName}` 
+    : `${firstName} ${lastName}`;
+}
+
 export default function DisplayData({ acc }: DisplayDataProps) {
   const allSocialLinksAreEmpty =
     !acc.f &&
@@ -49,8 +62,8 @@ export default function DisplayData({ acc }: DisplayDataProps) {
   const lang = locale || defaultLocale;
   let firstname = acc?.n || acc?.firstName || '';
   let lastname = acc?.ln || acc?.lastName || '';
-  let fullname =
-    lang === 'zh' ? lastname + firstname : firstname + ' ' + lastname;
+  const localeValue = useLocale();
+  let fullname = formatName(firstname, lastname, localeValue);
   console.log(acc);
 
   return (
@@ -63,7 +76,7 @@ export default function DisplayData({ acc }: DisplayDataProps) {
             cta={''} 
           />
 
-          {acc.i && (
+          {/* {acc.i && ( */}
             <Avatar className="size-24 shadow border">
               <AvatarImage
                 alt={fullname}
@@ -74,11 +87,13 @@ export default function DisplayData({ acc }: DisplayDataProps) {
                 {getInitials(firstname, lastname)}
               </AvatarFallback>
             </Avatar>
-          )}
+          
         </div>
-        {acc.n && (
-          <h1 className="mt-4 text-2xl font-bold text-slate-800">{acc.n}</h1>
-        )}
+        
+          <h1 className="mt-4 text-2xl font-bold text-slate-800">
+            {formatName(acc?.n, acc?.ln, localeValue)}
+          </h1>
+        
         {acc.d && <p className="mt-2 text-sm text-slate-600">{acc.d}</p>}
       </div>
       {!allSocialLinksAreEmpty && (
@@ -101,6 +116,28 @@ export default function DisplayData({ acc }: DisplayDataProps) {
                     ? // @ts-ignore
                       names[key as keyof typeof names]?.name
                     : key;
+
+                // 如果是微信，使用 ContactDrawer
+                if (key === 'wc') {
+                  return (
+                    <span className="p-2" key={key}>
+                      {propIcon && (
+                        <ContactDrawer
+                          toCopy={value}
+                          info="微信号："
+                          title={`添加 ${fullname} 的微信`}
+                          description="扫码或复制微信号添加好友"
+                          variant="outline"
+                          cta={
+                            <div className="social-link-icon">
+                              <IconWrapper className="size-6" Icon={propIcon} />
+                            </div>
+                          }
+                        />
+                      )}
+                    </span>
+                  );
+                }
 
                 return (
                   <span className="p-2" key={key}>

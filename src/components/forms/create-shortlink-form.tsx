@@ -18,6 +18,7 @@ import { catchError, checkCustomCredentials, cn, encodeData } from '@/lib/utils'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import useUser from '@/app/hook/useUser';
 import { createClient } from '@supabase/supabase-js';
+import { useLocale } from 'next-intl';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -32,6 +33,8 @@ export default function CreateShortlinkForm() {
   const { setSomeResponseInfo, setAuthKey, setProjectSlug, setShortedLink } = useAPIResponse();
 
   const { data: user } = useUser();
+
+  const locale = useLocale();
 
   const [shortUrlInfoState, setShortUrlInfoState] = React.useState<CreateShortLinkInput>({
     url: '',
@@ -81,7 +84,7 @@ export default function CreateShortlinkForm() {
 
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
-    const url = `${window.location.origin}/1?data=${encodeData(data)}`;
+    const url = `${window.location.origin}/link?data=${encodeData(data)}`;
     form.setValue('url', url);
     setShortUrlInfoState((prevInfo) => ({
       ...prevInfo,
@@ -96,26 +99,33 @@ export default function CreateShortlinkForm() {
       const response = await createShortLink(data);
 
       if (user && response) {
+        const linkName = locale === 'zh' 
+          ? `${data.n} ${data.ln}` 
+          : `${data.ln} ${data.n}`;
+        
         const body = [
           {
             user_id: user.id,
             key: response.data?.key,
+            n: data.n,  
+            ln: data.ln, 
+            link_name: linkName, 
           },
         ];
         const res = await supabase.from('links').insert(body);
       }
 
       if (!response) {
-        toast.error('No response received');
+        // toast.error('No response received');
         return;
       }
 
       if (response.error) {
-        toast.error(response.error);
+        // toast.error(response.error);
         return;
       }
 
-      toast.success('Link created successfully!');
+      // toast.success('Link created successfully!');
 
       setShortedLink(`https://${response.data?.domain}/${response.data?.key}`);
       setSomeResponseInfo(response.data);

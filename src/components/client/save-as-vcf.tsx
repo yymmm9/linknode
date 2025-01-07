@@ -26,7 +26,7 @@ export const SaveVcf = ({
   const website = acc.web || acc.website || '';
 
   const buttonStyles = cn(
-    "flex items-center", 
+    "flex items-center h-fit", 
     variant === "default" ? "gap-2" : "absolute bottom-0 right-0 z-10 size-8 p-1 rounded-full"
   );
 

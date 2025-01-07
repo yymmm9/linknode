@@ -12,13 +12,17 @@ import EditShortLink from './edit-link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 
 interface LinkData {
   id: string;
   link_id: string;
   key: string;
   user_id: string;
-  created_at: string; // Adjust type based on your actual data structure
+  n?: string;  // 名
+  ln?: string; // 姓
+  link_name?: string;
+  created_at: string;
 }
 
 const supabase = createClient(
@@ -34,6 +38,8 @@ export default function UserShortLinks() {
   const { data: user, isLoading: userIsLoading } = useUser();
   const router = useRouter();
   const t = useTranslations('Profile');
+  const locale = useLocale();
+
   useEffect(() => {
     // Redirect if the user is loading or not found
     if (userIsLoading) return; // Loading state
@@ -48,15 +54,39 @@ export default function UserShortLinks() {
         .from('links')
         .select('*')
         .eq('user_id', user.id);
+      
       if (res.error) {
         // toast.error(`Error fetching links: ${res.error.message}`);
       } else {
-        setLinks(res.data as LinkData[]); // Cast to LinkData array
+        // 根据 locale 更新每个链接的显示名称
+        const processedLinks = res.data?.map(link => {
+          if (link.n && link.ln) {
+            const linkName = locale === 'zh' 
+              ? `${link.n} ${link.ln}` 
+              : `${link.ln} ${link.n}`;
+            
+            // 如果显示名称需要更新
+            if (link.link_name !== linkName) {
+              supabase
+                .from('links')
+                .update({ link_name: linkName })
+                .eq('id', link.id)
+                .then(({ error }) => {
+                  if (error) console.error('更新链接名称失败', error);
+                });
+            }
+
+            return { ...link, link_name: linkName };
+          }
+          return link;
+        }) || [];
+
+        setLinks(processedLinks);
       }
     };
 
     fetchLinks();
-  }, [userIsLoading, user, router]);
+  }, [userIsLoading, user, router, locale]);
 
   const handleCopy = async (url: string) => {
     try {
@@ -69,6 +99,29 @@ export default function UserShortLinks() {
     } catch (error) {
       console.error('Failed to copy:', error);
       // toast.error(t('CopyFailed'));
+    }
+  };
+
+  const updateLinkName = async (link: LinkData, newName: string) => {
+    try {
+      const { error } = await supabase
+        .from('links')
+        .update({ link_name: newName })
+        .eq('id', link.id);
+
+      if (error) {
+        toast.error(`更新链接名称失败: ${error.message}`);
+      } else {
+        // 更新本地状态
+        setLinks(prevLinks => 
+          prevLinks.map(l => 
+            l.id === link.id ? { ...l, link_name: newName } : l
+          )
+        );
+      }
+    } catch (error) {
+      console.error('更新链接名称时出错:', error);
+      toast.error('更新链接名称失败');
     }
   };
 
@@ -124,7 +177,7 @@ export default function UserShortLinks() {
                           href={url}
                           className="truncate font-semibold leading-6 text-gray-800 transition-colors hover:text-black"
                         >
-                          {url}
+                          {link?.link_name ?? url}
                         </Link>
                         <Button
                           variant={'ghost'}
@@ -147,6 +200,7 @@ export default function UserShortLinks() {
                       {/* Timestamps */}
                       <div className="text-sm text-gray-400 flex gap-2">
                         <p>{dayjs(link?.created_at).format('YYYY-MM-DD')}</p>
+                        {link.link_name && <p>{url}</p>}
                       </div>
                     </div>
                   </div>

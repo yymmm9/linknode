@@ -26,7 +26,7 @@ export default function PublishButton() {
 
   const copyToClipboard = React.useCallback(async () => {
     try {
-      const url = `${window.location.origin}/1?data=${encodeData(data)}`;
+      const url = `${window.location.origin}/link?data=${encodeData(data)}`;
       await navigator.clipboard.writeText(url);
       return url;
     } catch (error) {

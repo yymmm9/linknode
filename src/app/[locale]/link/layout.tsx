@@ -8,7 +8,6 @@ export default function LinksLayout({ children }: PagesLayoutProps) {
   return (
     <>
       <main className="mb-[10vh] flex-1">{children}</main>
-      <SiteFooter />
     </>
   );
 }

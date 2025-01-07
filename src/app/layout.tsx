@@ -4,7 +4,7 @@ import { siteConfig } from '@/app/page';
 import { Providers } from '@/components/providers';
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
-import QueryProvider from '@/components/query-provider';
+import { QueryProvider } from '@/lib/context/query-provider';
 import Header from '@/components/Header';
 import ContactDrawer from '@/components/contact-drawer';
 import { cn } from '@/lib/utils';
@@ -98,12 +98,12 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
             <Providers>
-              <div className="relative flex min-h-screen flex-col">
+              <div className="relative flex min-h-[60vh] flex-col">
                 <Header />
                 <div className="mb-12"></div>
 
                 <div className="flex-1">{children}</div>
-                <Footer />
+                {/* <Footer /> */}
               </div>
               <Toaster />
               <Analytics />
