@@ -11,7 +11,7 @@ import {
 export default async function createShortLink(shortUrlInfo: CreateShortLinkInput) {
   try {
     // Generate necessary parameters
-    const projectSlug = normalizeShortLinkValue(shortUrlInfo.projectSlug) ?? env.DUB_DOT_CO_SLUG;
+    const projectSlug = normalizeShortLinkValue(shortUrlInfo.projectSlug) ?? env.HOV_SH_SLUG;
     const shortLink = normalizeShortLinkValue(shortUrlInfo.shortLink) ?? generateNanoId();
 
     // Create a short link using the Dub API

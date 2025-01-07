@@ -13,8 +13,8 @@ export default async function deleteShortLink({
   projectSlug: string | null;
 }) {
   try {
-    const getAuthorization = authorization || env.DUB_DOT_CO_TOKEN;
-    const getProjectSlug = projectSlug || env.DUB_DOT_CO_SLUG;
+    const getAuthorization = authorization || env.HOV_SH_TOKEN;
+    const getProjectSlug = projectSlug || env.HOV_SH_SLUG;
 
     const options = {
       method: 'DELETE',

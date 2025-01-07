@@ -130,17 +130,16 @@ export default function CreateShortlinkForm() {
       setShortedLink(`https://${response.data?.domain}/${response.data?.key}`);
       setSomeResponseInfo(response.data);
       
-      // Convert values to strings explicitly
-      setAuthKey(
-        data.authorization && data.authorization !== '' 
-          ? String(data.authorization)
-          : env.DUB_DOT_CO_TOKEN
-      );
-      setProjectSlug(
-        data.projectSlug && data.projectSlug !== ''
-          ? String(data.projectSlug)
-          : env.DUB_DOT_CO_SLUG
-      );
+      const isAdmin = user && user.id === 'your-admin-id'; // Replace 'your-admin-id' with the actual admin ID
+      const token = isAdmin
+        ? env.HOV_SH_TOKEN
+        : undefined;
+      const projectSlug = isAdmin
+        ? env.HOV_SH_SLUG
+        : undefined;
+
+      setAuthKey(token);
+      setProjectSlug(projectSlug);
     } catch (error) {
       catchError(error);
     } finally {
