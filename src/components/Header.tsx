@@ -57,7 +57,7 @@ export default function Header() {
   const navItems = [
     { href: '/', label: t('Home') },
     { href: '/create', label: t('Create') },
-    { href: '/docs', label: t('Docs') },
+    // { href: '/docs', label: t('Docs') },
   ];
 
   const renderNavLinks = (mobile = false) => (
