@@ -19,6 +19,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import useUser from '@/app/hook/useUser';
 import { createClient } from '@supabase/supabase-js';
 import { useLocale } from 'next-intl';
+import { LinkCreationStore } from '@/stores/link-creation-store';
+import { useRouter } from 'next/navigation';
+import { useRedirect } from '@/lib/utils/redirect';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -36,6 +39,8 @@ export default function CreateShortlinkForm() {
 
   const locale = useLocale();
 
+  const { redirect } = useRedirect();
+
   const [shortUrlInfoState, setShortUrlInfoState] = React.useState<CreateShortLinkInput>({
     url: '',
   });
@@ -52,6 +57,8 @@ export default function CreateShortlinkForm() {
       rewrite: false,
     },
   });
+
+  const router = useRouter();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -93,50 +100,61 @@ export default function CreateShortlinkForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  async function onSubmit(data: CreateShortLinkInput) {
+  async function onSubmit(formData: CreateShortLinkInput) {
     try {
       setIsLoading(true);
-      const response = await createShortLink(data);
 
-      if (user && response) {
-        const linkName = locale === 'zh' 
-          ? `${data.n} ${data.ln}` 
-          : `${data.ln} ${data.n}`;
+      // Check if user is logged in before making any API calls
+      if (!user) {
+        // Store form data for later
+        LinkCreationStore.setLinkData({
+          destination: formData.url,
+          customDomain: formData.domain,
+          shortLink: formData.shortLink,
+          n: formData.n,
+          ln: formData.ln
+        });
         
-        const body = [
-          {
-            user_id: user.id,
-            key: response.data?.key,
-            n: data.n,  
-            ln: data.ln, 
-            link_name: linkName, 
-          },
-        ];
-        const res = await supabase.from('links').insert(body);
+        // Use redirect utility to handle locale
+        redirect('signup?next=/create')
+        return;
       }
 
+      // Only proceed with API calls if user is logged in
+      const response = await createShortLink(formData);
+
       if (!response) {
-        // toast.error('No response received');
         return;
       }
 
       if (response.error) {
-        // toast.error(response.error);
         return;
       }
 
-      // toast.success('Link created successfully!');
+      // Save to user's links if successful
+      if (response.data?.key) {
+        const linkName = locale === 'zh' 
+          ? `${formData.n} ${formData.ln}` 
+          : `${formData.ln} ${formData.n}`;
+        
+        const body = [
+          {
+            user_id: user.id,
+            key: response.data.key,
+            n: formData.n,  
+            ln: formData.ln, 
+            link_name: linkName, 
+          },
+        ];
+        await supabase.from('links').insert(body);
+      }
 
       setShortedLink(`https://${response.data?.domain}/${response.data?.key}`);
       setSomeResponseInfo(response.data);
       
-      const isAdmin = user && user.id === 'your-admin-id'; // Replace 'your-admin-id' with the actual admin ID
-      const token = isAdmin
-        ? env.DUB_DOT_CO_TOKEN ?? ''
-        : '';
-      const projectSlug = isAdmin
-        ? env.DUB_DOT_CO_SLUG ?? ''
-        : '';
+      const isAdmin = user.id === 'your-admin-id'; // Replace with actual admin ID
+      const token = isAdmin ? env.DUB_DOT_CO_TOKEN ?? '' : '';
+      const projectSlug = isAdmin ? env.DUB_DOT_CO_SLUG ?? '' : '';
 
       setAuthKey(token);
       setProjectSlug(projectSlug);

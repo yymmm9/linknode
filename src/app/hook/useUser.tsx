@@ -10,10 +10,7 @@ export default function useUser() {
     queryFn: async () => {
       const supabase = createSupabaseBrowser();
       const { data } = await supabase.auth.getUser();
-      if (data.user) {
-        return data.user;
-      }
-      return {} as User;
+      return data.user || null;
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
     cacheTime: 1000 * 60 * 30, // 30 minutes

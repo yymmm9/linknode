@@ -31,8 +31,8 @@ export default function ManageProfile() {
   const [activeTab, setActiveTab] = useState('profile');
   const { data } = useUser();
 
-  const AuthProviderIcon = data?.app_metadata.provider
-    ? authProvider[data?.app_metadata.provider as IconKey].Icon
+  const AuthProviderIcon = data?.app_metadata?.provider
+    ? authProvider[data.app_metadata.provider as IconKey]?.Icon || MdOutlineMarkEmailRead
     : MdOutlineMarkEmailRead;
 
   return (
@@ -83,9 +83,9 @@ export default function ManageProfile() {
             <div className="flex-1 space-y-5 ">
               <div className="flex items-center gap-2 px-3">
                 <AuthProviderIcon />
-                <p className="capitalize">{data?.app_metadata.provider}</p>
+                <p className="capitalize">{data?.app_metadata?.provider}</p>
                 <p className="text-sm text-gray-400">
-                  {data?.user_metadata.user_name}
+                  {data?.user_metadata?.user_name}
                 </p>
               </div>
             </div>

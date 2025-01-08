@@ -129,7 +129,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 
 	return (
 		<div
-			className={` whitespace-nowrap p-5 space-x-5 overflow-hidden  items-center align-top   ${
+			className={` whitespace-nowrap p-5 space-x-5 overflow-hidden flex flex-col items-center align-top   ${
 				isPending ? "animate-pulse" : ""
 			}`}
 		>
