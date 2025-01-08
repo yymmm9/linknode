@@ -10,20 +10,11 @@ import { FaGithub, FaDiscord } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import Avatar from './avatar';
 
-export type IconKey = 'email' | 'github' | 'discord' | 'google';
+export type IconKey = 'email';
 
-export const authProvider = {
+export const authProvider: Record<IconKey, { Icon: any }> = {
   email: {
     Icon: MdOutlineMarkEmailRead,
-  },
-  github: {
-    Icon: FaGithub,
-  },
-  discord: {
-    Icon: FaDiscord,
-  },
-  google: {
-    Icon: FcGoogle,
   },
 };
 

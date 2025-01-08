@@ -30,6 +30,9 @@ import { cn } from "@/lib/utils";
 import { verifyOtp } from "@/actions/auth";
 import { toast } from "sonner";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 const FormSchema = z
 	.object({
@@ -126,6 +129,14 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 			});
 		}
 	}
+
+	const t = useTranslations('Auth');
+	const locale = useLocale();
+	const searchParams = useSearchParams();
+	const next = searchParams.get('next');
+  
+  // Ensure next parameter is properly formatted
+  const formattedNext = next?.startsWith('/') ? next : `/${next}`;
 
 	return (
 		<div
@@ -255,16 +266,12 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 					</Button>
 					<div className="text-center text-sm">
 						<h1>
-							Already have account?{" "}
+							{t('already-have-an-account')}{' '}
 							<Link
-								href={
-									redirectTo
-										? `/signin?next=` + redirectTo
-										: "/signin"
-								}
+								href={`/${locale}/signin${formattedNext ? `?next=${formattedNext}` : ''}`}
 								className="text-blue-400"
 							>
-								Signin
+								Sign in
 							</Link>
 						</h1>
 					</div>

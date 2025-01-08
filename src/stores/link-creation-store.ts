@@ -1,10 +1,9 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-
 export interface LinkCreationState {
   destination?: string;
   customDomain?: string;
   shortLink?: string;
+  n?: string;
+  ln?: string;
   tags?: string[];
 }
 

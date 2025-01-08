@@ -48,10 +48,19 @@ export function isEmptyValues(obj: DataProps): boolean {
     return true;
   }
 
-  type Keys = keyof DataProps;
-
-  for (const key of Object.keys(obj) as Keys[]) {
-    if (obj[key] !== '' && obj?.[key]?.length !== 0) {
+  // 检查是否有任何非空的属性
+  const relevantKeys: (keyof DataProps)[] = ['ls', 'firstName', 'lastName', 'url'];
+  
+  for (const key of relevantKeys) {
+    const value = obj[key];
+    
+    // 检查数组是否非空
+    if (Array.isArray(value) && value.length > 0) {
+      return false;
+    }
+    
+    // 检查字符串是否非空
+    if (typeof value === 'string' && value.trim() !== '') {
       return false;
     }
   }

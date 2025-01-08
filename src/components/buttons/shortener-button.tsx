@@ -3,7 +3,6 @@
 import React from 'react';
 import { Drawer } from 'vaul';
 import useWindow from '@/hooks/use-window';
-import { isEmptyValues } from '@/lib/utils';
 import { Info, LinkIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useData } from '@/lib/context/link-context';
@@ -22,6 +21,7 @@ import { LinkCreationStore } from '@/stores/link-creation-store';
 import useUser from '@/app/hook/useUser';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 
 interface ShortenerButtonProps {
   destination: string;
@@ -30,12 +30,7 @@ interface ShortenerButtonProps {
   tags?: string[];
   disabled?: boolean;
   className?: string;
-  onCreateLink?: (data: {
-    destination: string;
-    customDomain?: string;
-    shortLink?: string;
-    tags?: string[];
-  }) => Promise<void>;
+  handleCreateLink?: () => Promise<void>;
 }
 
 export default function ShortenerButtonClient({
@@ -45,44 +40,55 @@ export default function ShortenerButtonClient({
   tags,
   disabled,
   className,
-  onCreateLink,
+  handleCreateLink,
 }: ShortenerButtonProps) {
   const t = useTranslations('ShortenerButton');
+  const locale = useLocale();
 
-  const { isDesktop } = useWindow();
   const { data } = useData();
-  const isEmpty = isEmptyValues(data);
-  const { shortedLink, isOpen, setOpen } = useAPIResponse();
-  const router = useRouter();
+  const { isDesktop } = useWindow();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { setSomeResponseInfo, setAuthKey, setProjectSlug, setShortedLink } = useAPIResponse();
+
   const { data: user } = useUser();
+  const router = useRouter();
+
+  const { shortedLink, isOpen, setOpen } = useAPIResponse();
 
   const handleInfoClick = (link: string) => {
     window.open(link, '_blank');
   };
 
-  const handleCreateLink = async () => {
-    if (!user) {
-      // Store link data for post-signup restoration
-      LinkCreationStore.setLinkData({
-        destination,
-        customDomain,
-        shortLink,
-        tags,
-      });
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
 
-      // Redirect to signup/login
-      router.push('/signup');
-      return;
-    }
+      if (!user) {
+        // Store link data for post-signup restoration
+        LinkCreationStore.setLinkData({
+          destination,
+          customDomain,
+          shortLink,
+          tags
+        });
+        
+        // Redirect to signup with locale and next path
+        router.push(`/${locale}/signup?next=/${locale}/create`);
+        return;
+      }
 
-    // If onCreateLink prop is provided, use it
-    if (onCreateLink) {
-      await onCreateLink({
-        destination,
-        customDomain,
-        shortLink,
-        tags,
-      });
+      // If external handleCreateLink is provided, use it
+      if (handleCreateLink) {
+        await handleCreateLink();
+        return;
+      }
+
+      // Default link creation logic
+      // TODO: Implement default link creation logic
+    } catch (error) {
+      console.error('Link creation error:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -96,11 +102,10 @@ export default function ShortenerButtonClient({
               {t('shortener')}
             </Button>
           </DialogTrigger>
-          <DialogContent
+          <DialogContent 
             className="overflow-hidden p-0 sm:max-w-[450px]"
-            // showClose={false}
           >
-            <CardHeader className="p-6  pb-0">
+            <CardHeader className="p-6 pb-0">
               <CardTitle className="flex select-none items-center justify-between text-xl">
                 {t('powered-by-dub-co')}
                 <Info
@@ -109,26 +114,22 @@ export default function ShortenerButtonClient({
                 />
               </CardTitle>
               <CardDescription>
-                {t(
-                  'shorten-your-link-with-dub-co-and-get-full-control-over-it',
-                )}
+                {t('shorten-your-link-with-dub-co-and-get-full-control-over-it')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2 p-6 pt-0">
-              {isEmpty ? (
-                <Button className="w-full">
-                  {t('can-and-39-t-short-link-with-empty-fields')}
-                </Button>
-              ) : shortedLink ? (
+              {shortedLink ? (
                 <DeleteShortlinkForm />
               ) : (
-                <CreateShortlinkForm handleCreateLink={handleCreateLink} />
+                <CreateShortlinkForm 
+                  handleCreateLink={handleSubmit} 
+                />
               )}
             </CardContent>
           </DialogContent>
         </Dialog>
       ) : (
-        <Drawer.Root>
+        <Drawer.Root open={isOpen} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
             <Button className="w-full">
               <LinkIcon className="mr-2 size-4" />
@@ -145,23 +146,19 @@ export default function ShortenerButtonClient({
                 />
               </CardTitle>
               <CardDescription>
-                {t(
-                  'shorten-your-link-with-dub-co-and-get-full-control-over-it-0',
-                )}
+                {t('shorten-your-link-with-dub-co-and-get-full-control-over-it-0')}
               </CardDescription>
             </CardHeader>
-            {isEmpty ? (
-              <Button className="w-full">
-                {t('can-and-39-t-short-link-with-empty-fields-0')}
-              </Button>
-            ) : shortedLink ? (
+            {shortedLink ? (
               <DeleteShortlinkForm />
             ) : (
-              <CreateShortlinkForm handleCreateLink={handleCreateLink} />
+              <CreateShortlinkForm 
+                handleCreateLink={handleSubmit} 
+              />
             )}
           </DrawerContent>
         </Drawer.Root>
       )}
     </>
-  );
+  )
 }

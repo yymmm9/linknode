@@ -28,7 +28,11 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export default function CreateShortlinkForm() {
+interface CreateShortlinkFormProps {
+  handleCreateLink?: () => Promise<void>;
+}
+
+export default function CreateShortlinkForm({ handleCreateLink }: CreateShortlinkFormProps) {
   const { data } = useData();
   const { shortUrlInfo } = useShortener();
   const isValid = checkCustomCredentials(shortUrlInfo);
@@ -100,6 +104,13 @@ export default function CreateShortlinkForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  // Utility function to convert value to string or undefined
+  const convertToStringOrUndefined = (value: string | number | boolean | undefined): string | undefined => {
+    if (value === undefined) return undefined;
+    if (typeof value === 'string') return value;
+    return String(value);
+  };
+
   async function onSubmit(formData: CreateShortLinkInput) {
     try {
       setIsLoading(true);
@@ -107,20 +118,34 @@ export default function CreateShortlinkForm() {
       // Check if user is logged in before making any API calls
       if (!user) {
         // Store form data for later
-        LinkCreationStore.setLinkData({
-          destination: formData.url,
-          customDomain: formData.domain,
-          shortLink: formData.shortLink,
-          n: formData.n,
-          ln: formData.ln
-        });
-        
-        // Use redirect utility to handle locale
-        redirect('signup?next=/create')
+      LinkCreationStore.setLinkData({
+        destination: formData.url,
+        customDomain: formData.domain,
+        shortLink: formData.shortLink,
+        n: formData.n !== undefined 
+            ? typeof formData.n === 'string' 
+                ? formData.n 
+                : String(formData.n)
+            : undefined,
+        ln: formData.ln !== undefined 
+             ? typeof formData.ln === 'string' 
+                 ? formData.ln 
+                 : String(formData.ln)
+             : undefined
+      });
+      
+      // Redirect to signup with locale and next path
+      router.push(`/${locale}/signup?next=/${locale}/create`);
         return;
       }
 
-      // Only proceed with API calls if user is logged in
+      // If external handleCreateLink is provided, use it
+      if (handleCreateLink) {
+        await handleCreateLink()
+        return
+      }
+
+      // Normal submission logic
       const response = await createShortLink(formData);
 
       if (!response) {
