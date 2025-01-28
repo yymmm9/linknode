@@ -1,5 +1,27 @@
 {
-  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "Auth": {
+    "create-account": "Create Account",
+    "welcome-message": "Welcome! Please fill in the following information to get started.",
+    "or": "or",
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "welcome-back": "Welcome Back",
+    "dont-have-account": "Don't have an account?",
+    "invalid-email": "Invalid email address",
+    "password-too-short": "Password must be at least 6 characters",
+    "passwords-dont-match": "Passwords do not match",
+    "email": "Email",
+    "password": "Password",
+    "confirm-password": "Confirm Password",
+    "continue": "Continue",
+    "already-have-an-account": "Already have an account?",
+    "verify-email": "Verify Email",
+    "verification-code-sent": "Verification code sent",
+    "didnt-work": "Didn't work?",
+    "send-another-code": "Send another code",
+    "change-email": "Change email",
+    "sign-in-failed": "Sign in failed. Please check your credentials."
+  },
   "Navigation": {
     "home": "Home",
     "profile": "Profile",
