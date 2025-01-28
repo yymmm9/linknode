@@ -59,7 +59,12 @@
     "can-and-39-t-short-link-with-empty-fields": "Can&#39;t short link with empty fields!",
     "shorten-your-link-with-dub-co-and-get-full-control-over-it": "Shorten your link with hov.sh and get full control over it.",
     "powered-by-dub-co": "Powered by hov.sh",
-    "shortener": "Shortener"
+    "shortener": "Shortener",
+    "createLink": "Create Short Link",
+    "deleteLink": "Delete Short Link",
+    "placeholder": "Enter link to shorten",
+    "submit": "Generate Short Link",
+    "cancel": "Cancel"
   },
   "MobileMockup": {
     "no-information": "No information."

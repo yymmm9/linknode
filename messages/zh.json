@@ -56,7 +56,12 @@
     "can-and-39-t-short-link-with-empty-fields": "不能用空字段缩短链接！",
     "shorten-your-link-with-dub-co-and-get-full-control-over-it": "使用hov.sh缩短链接，并获得对它的完全控制。",
     "powered-by-dub-co": "由hov.sh提供支持",
-    "shortener": "发布链接"
+    "shortener": "发布链接",
+    "createLink": "创建短链接",
+    "deleteLink": "删除短链接",
+    "placeholder": "输入要缩短的链接",
+    "submit": "生成短链接",
+    "cancel": "取消"
   },
   "MobileMockup": {
     "no-information": "无信息。"

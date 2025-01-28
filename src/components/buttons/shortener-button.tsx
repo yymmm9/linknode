@@ -24,7 +24,7 @@ import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 
 interface ShortenerButtonProps {
-  destination: string;
+  destination?: string;
   customDomain?: string;
   shortLink?: string;
   tags?: string[];
@@ -34,7 +34,7 @@ interface ShortenerButtonProps {
 }
 
 export default function ShortenerButtonClient({
-  destination,
+  destination = '',
   customDomain,
   shortLink,
   tags,
