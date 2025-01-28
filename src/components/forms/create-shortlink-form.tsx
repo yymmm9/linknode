@@ -31,6 +31,14 @@ interface CreateShortlinkFormProps {
   handleCreateLink?: () => Promise<void>;
 }
 
+type CreateShortlinkFormData = {
+  url: string;
+  domain?: string;
+  shortLink: string;
+  n?: number | string;
+  ln?: number | string;
+};
+
 export default function CreateShortlinkForm({
   handleCreateLink,
 }: {
@@ -48,20 +56,17 @@ export default function CreateShortlinkForm({
 
   const { redirect } = useRedirect();
 
-  const [shortUrlInfoState, setShortUrlInfoState] = React.useState<CreateShortLinkInput>({
+  const [shortUrlInfoState, setShortUrlInfoState] = React.useState<CreateShortlinkFormData>({
     url: '',
+    shortLink: '',
   });
 
-  const form = useForm<CreateShortLinkInput>({
+  const form = useForm<CreateShortlinkFormData>({
     resolver: zodResolver(shortlinkSchema),
     defaultValues: {
       url: '',
-      authorization: '',
-      projectSlug: '',
       domain: '',
       shortLink: '',
-      password: '',
-      rewrite: false,
     },
   });
 
@@ -70,33 +75,37 @@ export default function CreateShortlinkForm({
   const t = useTranslations('CreateShortLink');
   const tCommon = useTranslations('Common');
 
+  // Utility function to convert value to string or undefined
+  const convertToStringOrUndefined = (value: string | number | boolean | undefined): string | undefined => {
+    if (value === undefined || value === '') return undefined;
+    return String(value);
+  };
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     
-    if (isValidShortLinkKey(name)) {
-      form.setValue(name, value);
+    if (name in form.getValues()) {
+      form.setValue(name as keyof CreateShortlinkFormData, value);
       setShortUrlInfoState((prevData) => ({
         ...prevData,
-        [name]: normalizeShortLinkValue(value) ?? value,
+        [name]: convertToStringOrUndefined(value) ?? value,
       }));
     }
   }
 
-  function handleGlobalState(name: string, value: string | number | boolean | undefined) {
-    if (isValidShortLinkKey(name)) {
-      const normalizedValue = normalizeShortLinkValue(value);
-      
-      if (normalizedValue !== '') {
-        form.setValue(name, normalizedValue ?? '');
-        setShortUrlInfoState((prevInfo) => ({
-          ...prevInfo,
-          [name]: normalizedValue ?? value,
-        }));
-        return;
-      }
-      
-      form.resetField(name, { defaultValue: '' });
+  function handleGlobalState(name: keyof CreateShortlinkFormData, value: string | number | boolean | undefined) {
+    const stringValue = convertToStringOrUndefined(value);
+    
+    if (stringValue !== undefined) {
+      form.setValue(name, stringValue);
+      setShortUrlInfoState((prevInfo) => ({
+        ...prevInfo,
+        [name]: stringValue,
+      }));
+      return;
     }
+    
+    form.resetField(name, { defaultValue: '' });
   }
 
   React.useEffect(() => {
@@ -110,14 +119,7 @@ export default function CreateShortlinkForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  // Utility function to convert value to string or undefined
-  const convertToStringOrUndefined = (value: string | number | boolean | undefined): string | undefined => {
-    if (value === undefined) return undefined;
-    if (typeof value === 'string') return value;
-    return String(value);
-  };
-
-  async function onSubmit(formData: CreateShortLinkInput) {
+  async function onSubmit(formData: CreateShortlinkFormData) {
     try {
       setIsLoading(true);
 
@@ -126,7 +128,9 @@ export default function CreateShortlinkForm({
         // Store form data for later
       LinkCreationStore.setLinkData({
         destination: formData.url,
-        customDomain: formData.domain,
+        customDomain: formData.domain !== undefined 
+            ? String(formData.domain) 
+            : undefined,
         shortLink: formData.shortLink,
         n: formData.n !== undefined 
             ? typeof formData.n === 'string' 

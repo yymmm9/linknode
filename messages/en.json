@@ -20,7 +20,13 @@
     "didnt-work": "Didn't work?",
     "send-another-code": "Send another code",
     "change-email": "Change email",
-    "sign-in-failed": "Sign in failed. Please check your credentials."
+    "sign-in-failed": "Sign in failed. Please check your credentials.",
+    "sign-up-success": "Sign up successful! Please verify your email.",
+    "sign-up-failed": "Sign up failed. Please try again.",
+    "verification-success": "Email verification successful!",
+    "verification-failed": "Email verification failed. Please try again.",
+    "resend-code-success": "Verification code sent successfully.",
+    "resend-code-failed": "Failed to send verification code. Please try again."
   },
   "Navigation": {
     "home": "Home",
@@ -174,7 +180,9 @@
   },
   "Common": {
     "creating": "Creating",
-    "createShortLink": "Create short link"
+    "createShortLink": "Create short link",
+    "customShortLink": "Custom Short Link",
+    "enterCustomShortLink": "Enter custom short link"
   },
   "SortableLinks": {
     "iconKey": "Icon Key",

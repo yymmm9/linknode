@@ -20,7 +20,13 @@
     "didnt-work": "没有收到？",
     "send-another-code": "重新发送验证码",
     "change-email": "更改邮箱",
-    "sign-in-failed": "登录失败，请检查您的凭据。"
+    "sign-in-failed": "登录失败，请检查您的凭据。",
+    "sign-up-success": "注册成功！请验证您的邮箱。",
+    "sign-up-failed": "注册失败，请重试。",
+    "verification-success": "邮箱验证成功！",
+    "verification-failed": "邮箱验证失败，请重试。",
+    "resend-code-success": "验证码发送成功。",
+    "resend-code-failed": "验证码发送失败，请重试。"
   },
   "Navigation": {
     "home": "首页",
@@ -156,8 +162,6 @@
     "description": "高效的后台链接管理"
   },
   "EditShortLink": {
-    "cancel": "取消",
-    "submit": "提交",
     "no-data-available": "无数据可用",
     "modify-your-short-link-settings": "修改你的短链接设置。",
     "edit-short-link": "编辑短链接",
@@ -211,7 +215,9 @@
     "save": "保存",
     "cancel": "取消",
     "edit": "编辑",
-    "delete": "删除"
+    "delete": "删除",
+    "customShortLink": "自定义短链接",
+    "enterCustomShortLink": "输入自定义短链接"
   },
   "SortableLinks": {
     "iconKey": "图标键",

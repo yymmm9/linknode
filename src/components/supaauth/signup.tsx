@@ -64,13 +64,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 			"confirm-pass": z.string().min(6, { message: t('password-too-short') }),
 		})
 		.refine(
-			(data) => {
-				if (data["confirm-pass"] !== data.password) {
-					return false;
-				} else {
-					return true;
-				}
-			},
+			(data) => data["confirm-pass"] === data.password,
 			{ message: t('passwords-dont-match'), path: ["confirm-pass"] }
 		);
 
@@ -313,8 +307,10 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 								});
 								const { error } = JSON.parse(res);
 								if (error) {
+									toast.error(t('verification-failed'));
 									setVerifyStatus("failed");
 								} else {
+									toast.success(t('verification-success'));
 									setVerifyStatus("success");
 									router.push(redirectTo);
 								}
@@ -354,13 +350,9 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 											});
 
 											if (json.error) {
-												toast.error(
-													"Fail to resend email"
-												);
+												toast.error(t('resend-code-failed'));
 											} else {
-												toast.success(
-													"Please check your email."
-												);
+												toast.success(t('resend-code-success'));
 											}
 										} else {
 											router.replace(

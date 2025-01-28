@@ -72,7 +72,7 @@ export default function SignIn() {
 			});
 
 			if (error) {
-				toast.error(error.message);
+				toast.error(t('sign-in-failed'));
 				return;
 			}
 
