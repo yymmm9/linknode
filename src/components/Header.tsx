@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from './ui/button';
@@ -24,22 +25,11 @@ import UserProfile from './supaauth/user-profile';
 import { createSupabaseBrowser } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
-const menuItems = [
-  {
-    name: '敬拜工具',
-    description: '敬拜主带领 / 歌谱 / 敬拜历史记录',
-    url: '/tools/worship',
-    icon: <Menu className="h-5 w-5 xl:h-7 xl:w-7" />,
-    className: 'bg-white',
-  },
-  {
-    name: '雅比斯团契',
-    description: '团契活动 / 小组 / 服事',
-    url: '/ministry/jabez',
-    icon: <Menu className="h-5 w-5 xl:h-7 xl:w-7" />,
-    className: 'bg-white',
-  },
-];
+// 定义导航项的类型
+type NavItem = {
+  href: string;
+  label: string;
+};
 
 export default function Header() {
   const t = useTranslations('Header');
@@ -47,19 +37,28 @@ export default function Header() {
   const router = useRouter();
   const { data } = useUser();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const locale = useLocale();
 
+  // 防御性编程：安全的登出函数
   const signOut = async () => {
-    const supabase = createSupabaseBrowser();
-    await supabase.auth.signOut();
-    router.push('/login');
+    try {
+      const supabase = createSupabaseBrowser();
+      await supabase.auth.signOut();
+      // 使用可选链确保安全
+      router.push(`/${locale ?? 'en'}/signin`);
+    } catch (error) {
+      console.error('登出失败:', error);
+      // 可以添加错误通知
+    }
   };
 
-  const navItems = [
+  // 定义导航项，使用类型安全的方式
+  const navItems: NavItem[] = [
     { href: '/', label: t('Home') },
     { href: '/create', label: t('Create') },
-    // { href: '/docs', label: t('Docs') },
   ];
 
+  // 渲染导航链接的函数，支持移动和桌面视图
   const renderNavLinks = (mobile = false) => (
     <ul className={`${mobile ? 'space-y-4' : 'flex items-center space-x-4'}`}>
       {navItems.map((item) => (
@@ -79,6 +78,13 @@ export default function Header() {
       ))}
     </ul>
   );
+
+  // 安全地获取用户头像和名称
+  const getUserAvatar = () => {
+    const avatarUrl = data?.user_metadata?.avatar_url ?? '/default-avatar.png';
+    const userName = data?.user_metadata?.name ?? 'U';
+    return { avatarUrl, userName };
+  };
 
   return (
     <HideOnScroll
@@ -104,7 +110,7 @@ export default function Header() {
                 <>
                   <li>
                     <Link
-                      href="/login"
+                      href={`/${locale ?? 'en'}/signin`}
                       className="block font-medium text-gray-400"
                     >
                       {t('Login')}
@@ -112,7 +118,7 @@ export default function Header() {
                   </li>
                   <li>
                     <Link
-                      href="/signup"
+                      href={`/${locale ?? 'en'}/register`}
                       className="block font-medium text-gray-400"
                     >
                       {t('Signup')}
@@ -154,14 +160,14 @@ export default function Header() {
                     <div className="flex gap-5 items-center">
                       <Avatar>
                         <AvatarImage 
-                          src={data.user_metadata?.avatar_url || '/default-avatar.png'} 
-                          alt={data.user_metadata?.name || 'User Avatar'} 
+                          src={getUserAvatar().avatarUrl} 
+                          alt={getUserAvatar().userName} 
                         />
-                        <AvatarFallback>{data.user_metadata?.name?.[0] || 'U'}</AvatarFallback>
+                        <AvatarFallback>{getUserAvatar().userName[0]}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <h2 className="text-lg font-semibold">{data.user_metadata?.name}</h2>
-                        <p className="text-sm text-gray-500">{data.email}</p>
+                        <h2 className="text-lg font-semibold">{getUserAvatar().userName}</h2>
+                        <p className="text-sm text-gray-500">{data.email ?? '未知邮箱'}</p>
                       </div>
                     </div>
                     <div className="mt-4 space-y-2">
@@ -191,20 +197,20 @@ export default function Header() {
               </div>
 
               <DrawerFooter>
-                {!data ? (
+                {!data && (
                   <div className="space-y-2">
-                    <Link href="/login" className="w-full">
+                    <Link href={`/${locale ?? 'en'}/signin`} className="w-full">
                       <Button variant="outline" className="w-full">
                         {t('Login')}
                       </Button>
                     </Link>
-                    <Link href="/signup" className="w-full">
+                    <Link href={`/${locale ?? 'en'}/register`} className="w-full">
                       <Button className="w-full">
                         {t('Signup')}
                       </Button>
                     </Link>
                   </div>
-                ) : null}
+                )}
               </DrawerFooter>
               </div>
             </DrawerContent>

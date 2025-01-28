@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 
 type ButtonVariant = 'primary' | 'outline' | 'secondary';
 
@@ -27,20 +28,30 @@ interface ContactDrawerProps {
 }
 
 export default function ContactDrawer({
-  cta = '立即咨询',
-  copyCta = '复制微信号',
+  cta,
+  copyCta,
   toCopy = 'yimmmmin',
-  info = '微信号：',
-  title = '添加微信，开启服务',
-  description = '平面设计、印刷广告、灯箱立体字、网站、电商及线上点单，一站式解决方案，等你来体验！',
+  info,
+  title,
+  description,
   variant = 'primary',
 }: ContactDrawerProps) {
+  // 使用国际化翻译
+  const t = useTranslations('ContactDrawer');
+
+  // 设置默认值，优先使用传入的参数，否则使用翻译
+  const ctaText = cta || t('cta');
+  const copyCataText = copyCta || t('copyCta');
+  const infoText = info || t('info');
+  const titleText = title || t('title');
+  const descriptionText = description || t('description');
+
   const copyToClipboard = async (link: string) => {
     try {
       await navigator.clipboard.writeText(link);
-      toast.success('复制成功');
+      toast.success(t('copy-success'));
     } catch (error) {
-      toast.error('Failed to copy to clipboard');
+      toast.error(t('copy-error'));
       return null;
     }
   };
@@ -60,29 +71,31 @@ export default function ContactDrawer({
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        {typeof cta === 'string' ? (
+        {typeof ctaText === 'string' ? (
           <Button
             className={cn(getButtonStyles(variant))}
           >
-            {cta}
+            {ctaText}
           </Button>
         ) : (
-          cta
+          ctaText
         )}
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>{title}</DrawerTitle>
-            <DrawerDescription>{description}</DrawerDescription>
+            <DrawerTitle>{titleText}</DrawerTitle>
+            <DrawerDescription>{descriptionText}</DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
-            <p>{info + toCopy}</p>
+            <p>{infoText + toCopy}</p>
           </div>
           <DrawerFooter className="">
-            <Button onClick={() => copyToClipboard(toCopy)}>{copyCta}</Button>
+            <Button onClick={() => copyToClipboard(toCopy)}>{copyCataText}</Button>
             <DrawerClose asChild>
-              <Button variant="outline">关闭</Button>
+              <Button variant="outline">
+                {t('close')}
+              </Button>
             </DrawerClose>
           </DrawerFooter>
         </div>

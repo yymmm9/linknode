@@ -22,7 +22,7 @@ export default function Home({ params }: { params: any }) {
         <div className="max-w-screen-xl px-8 pt-24 mx-auto md:px-12 lg:pt-32 lg:px-32">
           <div className="text-center flex flex-col items-center">
             <span className="font-mono text-sm font-medium tracking-tight text-violet-600 uppercase">
-              会员卡 APP 预计12月上线
+              会员卡 APP 预计6月上线
             </span>
             <h1 className="mt-4 text-4xl font-semibold tracking-tighter text-violet-950 md:text-6xl">
               {/* <TextEffectWithExit

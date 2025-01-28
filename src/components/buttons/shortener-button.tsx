@@ -140,10 +140,10 @@ export default function ShortenerButtonClient({
             <CardHeader className="p-0 pb-4 pt-1">
               <CardTitle className="flex select-none items-center justify-between p-0 text-lg">
                 {t('powered-by-dub-co-0')}
-                <Info
+                {/* <Info
                   onClick={() => handleInfoClick('https://on.hov.sh/')}
                   className="size-4 cursor-pointer text-muted-foreground hover:text-accent-foreground active:scale-95"
-                />
+                /> */}
               </CardTitle>
               <CardDescription>
                 {t('shorten-your-link-with-dub-co-and-get-full-control-over-it-0')}

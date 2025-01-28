@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useData } from '@/lib/context/link-context';
 import type { ExtraLinkProps } from '@/types';
 import { Trash2Icon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface SortableLinksProps {
   id: ExtraLinkProps;
@@ -16,6 +17,7 @@ interface SortableLinksProps {
 }
 
 export default function SortableLinks({ id, index }: SortableLinksProps) {
+  const t = useTranslations('SortableLinks');
   const uniqueID = id.id;
 
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -35,12 +37,12 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
           <div className="grid gap-2 md:grid-cols-2">
             <div className="hidden">
               <div className="grid gap-2">
-                <Label htmlFor={`link-icon-${uniqueID}`}>Icon Key</Label>
+                <Label htmlFor={`link-icon-${uniqueID}`}>{t('iconKey')}</Label>
                 <Input
                   id={`link-icon-${uniqueID}`}
                   name="i"
                   type="text"
-                  placeholder="ri:4k-fill"
+                  placeholder={t('placeholderIcon')}
                   value={id.i}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     const newLinks = [...data.ls];
@@ -59,12 +61,12 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor={`link-name-${uniqueID}`}>Label</Label>
+              <Label htmlFor={`link-name-${uniqueID}`}>{t('label')}</Label>
               <Input
                 id={`link-name-${uniqueID}`}
                 name="l"
                 type="text"
-                placeholder="Amazon"
+                placeholder={t('placeholderLabel')}
                 value={id.l}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   const newLinks = [...data.ls];
@@ -76,12 +78,12 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor={`link-name-${uniqueID}`}>Destination URL</Label>
+              <Label htmlFor={`link-name-${uniqueID}`}>{t('destinationUrl')}</Label>
               <Input
                 id={`link-url-${uniqueID}`}
                 name="u"
                 type="url"
-                placeholder="https://example.com"
+                placeholder={t('placeholderUrl')}
                 value={id.u}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   const newLinks = [...data.ls];

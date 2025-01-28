@@ -1,10 +1,7 @@
 'use client';
 
 import React from 'react';
-import { z } from 'zod';
-import { toast } from 'sonner';
 import { env } from '@/env.mjs';
-import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,13 +12,15 @@ import createShortLink from '@/app/_actions/shortlink/create';
 import { CreateShortLinkInput, shortlinkSchema, isValidShortLinkKey, normalizeShortLinkValue } from '@/types';
 import { useAPIResponse } from '@/lib/context/api-response-context';
 import { catchError, checkCustomCredentials, cn, encodeData } from '@/lib/utils';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import useUser from '@/app/hook/useUser';
 import { createClient } from '@supabase/supabase-js';
 import { useLocale } from 'next-intl';
 import { LinkCreationStore } from '@/stores/link-creation-store';
 import { useRouter } from 'next/navigation';
 import { useRedirect } from '@/lib/utils/redirect';
+import { useTranslations } from 'next-intl';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -32,7 +31,11 @@ interface CreateShortlinkFormProps {
   handleCreateLink?: () => Promise<void>;
 }
 
-export default function CreateShortlinkForm({ handleCreateLink }: CreateShortlinkFormProps) {
+export default function CreateShortlinkForm({
+  handleCreateLink,
+}: {
+  handleCreateLink?: () => Promise<void>;
+}) {
   const { data } = useData();
   const { shortUrlInfo } = useShortener();
   const isValid = checkCustomCredentials(shortUrlInfo);
@@ -63,6 +66,9 @@ export default function CreateShortlinkForm({ handleCreateLink }: CreateShortlin
   });
 
   const router = useRouter();
+
+  const t = useTranslations('CreateShortLink');
+  const tCommon = useTranslations('Common');
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -201,37 +207,44 @@ export default function CreateShortlinkForm({ handleCreateLink }: CreateShortlin
           name="shortLink"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Short Link</FormLabel>
+              <FormLabel>{t('customShortLink')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter custom short link"
+                  placeholder={t('enterCustomShortLink')}
                   {...field}
                   value={
                     shortUrlInfoState.shortLink 
-                      ? String(shortUrlInfoState.shortLink) 
-                      : ''
+                      ?? field.value 
+                      ?? ''
                   }
                   onChange={(e) => {
-                    const inputValue = e.target.value;
-                    field.onChange(inputValue);
+                    field.onChange(e);
                     handleChange(e);
                   }}
+                  name="shortLink"
+                  className="h-8"
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading} className="mt-2 w-full">
+        <Button
+          type="submit"
+          // className="w-full h-8 bg-indigo-500 hover:bg-indigo-600 transition-all text-white flex items-center gap-2"
+        >
           {isLoading ? (
             <>
-              <Loader2
-                className="mr-2 size-4 animate-spin"
+              <AiOutlineLoading3Quarters
+                className={cn(
+                  !isLoading ? "hidden" : "block animate-spin"
+                )}
                 aria-hidden="true"
               />
-              Creating
+              {tCommon('creating')}
             </>
           ) : (
-            'Create short link'
+            t('createShortLink')
           )}
         </Button>
       </form>

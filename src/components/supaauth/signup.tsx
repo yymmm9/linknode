@@ -34,24 +34,6 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 
-const FormSchema = z
-	.object({
-		email: z.string().email({ message: "Invalid Email Address" }),
-		password: z.string().min(6, { message: "Password is too short" }),
-		"confirm-pass": z.string().min(6, { message: "Password is too short" }),
-	})
-	.refine(
-		(data) => {
-			if (data["confirm-pass"] !== data.password) {
-				console.log("running");
-				return false;
-			} else {
-				return true;
-			}
-		},
-		{ message: "Password does't match", path: ["confirm-pass"] }
-	);
-
 export default function SignUp({ redirectTo }: { redirectTo: string }) {
 	const queryString =
 		typeof window !== "undefined" ? window.location.search : "";
@@ -67,6 +49,31 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 	const [isSendAgain, startSendAgain] = useTransition();
 	const pathname = usePathname();
 	const router = useRouter();
+	const t = useTranslations('Auth');
+	const locale = useLocale();
+	const searchParams = useSearchParams();
+	const next = searchParams.get('next');
+  
+    // Ensure next parameter is properly formatted
+    const formattedNext = next?.startsWith('/') ? next : `/${next}`;
+
+	const FormSchema = z
+		.object({
+			email: z.string().email({ message: t('invalid-email') }),
+			password: z.string().min(6, { message: t('password-too-short') }),
+			"confirm-pass": z.string().min(6, { message: t('password-too-short') }),
+		})
+		.refine(
+			(data) => {
+				if (data["confirm-pass"] !== data.password) {
+					return false;
+				} else {
+					return true;
+				}
+			},
+			{ message: t('passwords-dont-match'), path: ["confirm-pass"] }
+		);
+
 	const form = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
 		defaultValues: {
@@ -130,14 +137,6 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 		}
 	}
 
-	const t = useTranslations('Auth');
-	const locale = useLocale();
-	const searchParams = useSearchParams();
-	const next = searchParams.get('next');
-  
-  // Ensure next parameter is properly formatted
-  const formattedNext = next?.startsWith('/') ? next : `/${next}`;
-
 	return (
 		<div
 			className={` whitespace-nowrap p-5 space-x-5 overflow-hidden flex flex-col items-center align-top   ${
@@ -160,7 +159,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className=" font-semibold  test-sm">
-									Email Address
+									{t('email')}
 								</FormLabel>
 								<FormControl>
 									<Input
@@ -180,7 +179,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className="text-sm font-semibold">
-									Password
+									{t('password')}
 								</FormLabel>
 								<FormControl>
 									<div className=" relative">
@@ -219,7 +218,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className="text-sm font-semibold">
-									Confirm Password
+									{t('confirm-password')}
 								</FormLabel>
 								<FormControl>
 									<div className=" relative">
@@ -261,7 +260,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 								!isPending ? "hidden" : "block animate-spin"
 							)}
 						/>
-						Continue
+						{t('continue')}
 						<RiArrowRightSFill className=" size-4" />
 					</Button>
 					<div className="text-center text-sm">
@@ -271,7 +270,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 								href={`/${locale}/signin${formattedNext ? `?next=${formattedNext}` : ''}`}
 								className="text-blue-400"
 							>
-								Sign in
+								{t('sign-in')}
 							</Link>
 						</h1>
 					</div>
@@ -288,10 +287,10 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 					<SiMinutemailer className=" size-8" />
 
 					<h1 className="text-2xl font-semibold text-center">
-						Verify email
+						{t('verify-email')}
 					</h1>
 					<p className="text-center text-sm">
-						{" A verification code has been sent to "}
+						{t('verification-code-sent')}{' '}
 						<span className="font-bold">
 							{verify === "true"
 								? existEmail
@@ -303,11 +302,12 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						pattern={REGEXP_ONLY_DIGITS}
 						id="input-otp"
 						maxLength={6}
+						value=""
 						onChange={async (value) => {
 							if (value.length === 6) {
 								document.getElementById("input-otp")?.blur();
 								const res = await verifyOtp({
-									email: form.getValues("email"),
+									email: verify === "true" ? existEmail || "" : form.getValues("email"),
 									otp: value,
 									type: "email",
 								});
@@ -340,7 +340,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						</InputOTPGroup>
 					</InputOTP>
 					<div className="text-sm flex gap-2">
-						<p>{"Didn't work?"} </p>
+						<p>{t('didnt-work')} </p>
 						<span
 							className="text-blue-400 cursor-pointer hover:underline transition-all flex items-center gap-2 "
 							onClick={async () => {
@@ -384,7 +384,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 										: "block animate-spin"
 								}`}
 							/>
-							Send me another code.
+							{t('send-another-code')}
 						</span>
 					</div>
 					<Button
@@ -395,7 +395,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						}}
 					>
 						<RiArrowDropLeftFill className=" size-5" />
-						Change Email
+						{t('change-email')}
 					</Button>
 				</div>
 			</div>

@@ -72,7 +72,7 @@
     "xia-hua-yue-du-xiang-qing": "Slide down to read details",
     "bu-huo-ke-hu-zhen-shi-fan-kui-ping-lun-shu-liang-zeng-chang-bi-chuan-tong-fang-shi-gao-chu-534-zhu-ni-kuai-su-ti-sheng-pin-pai-ying-xiang-li": "Capture real customer feedback, increase the number of comments by 534% compared to traditional methods, and help you quickly increase brand influence.",
     "yi-chu-ji-fa-qing-song-huo-qu-ke-hu-hao-ping": "Ready to go, easily get customer praise",
-    "caption": "Membership card APP is expected to be launched in December",
+    "caption": "Loyalty APP is launching in June",
     "hov-links": "hov - links"
   },
   "Features": {
@@ -138,5 +138,33 @@
   "LinkPage": {
     "poweredBy": "Powered by hov.sh",
     "createYourLinks": "Create Your Own Links"
+  },
+  "CreateShortLink": {
+    "shortLink": "Short Link",
+    "customShortLink": "Custom Short Link",
+    "enterCustomShortLink": "Enter custom short link",
+    "createShortLink": "Create short link"
+  },
+  "Common": {
+    "creating": "Creating",
+    "createShortLink": "Create short link"
+  },
+  "SortableLinks": {
+    "iconKey": "Icon Key",
+    "label": "Label",
+    "destinationUrl": "Destination URL",
+    "placeholderLabel": "Amazon",
+    "placeholderUrl": "https://example.com",
+    "placeholderIcon": "ri:4k-fill"
+  },
+  "ContactDrawer": {
+    "cta": "Consult Now",
+    "copyCta": "Copy WeChat ID",
+    "info": "WeChat ID: ",
+    "title": "Add WeChat, Start Service",
+    "description": "One-stop solution for graphic design, print advertising, 3D light box lettering, websites, e-commerce, and online ordering. Come and experience it!",
+    "close": "Close",
+    "copy-success": "Copied successfully",
+    "copy-error": "Failed to copy"
   }
 }
