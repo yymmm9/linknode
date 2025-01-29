@@ -34,6 +34,7 @@ export const names = {
   o: 'Organization',
 
   b: 'Birthday',
+  url: 'URL', // 添加 url 键
 };
 
 // 使用 typeof names 来生成 DataProps，ls 需要手动添加
