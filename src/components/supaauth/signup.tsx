@@ -155,18 +155,24 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 
 	return (
 		<div
-			className={`relative whitespace-nowrap p-5 space-x-5 overflow-hidden flex flex-col items-center align-top ${
+			className={cn(`relative whitespace-nowrap p-5 space-x-5 overflow-hidden flex flex-col items-center align-top w-full sm:mx-auto sm:w-full sm:max-w-sm ${
 				isPending ? "animate-pulse" : ""
-			}`}
+			}`, 'shadow sm:p-5 border dark:border-zinc-800 rounded-md')}
 		>
+
+<div className="text-center space-y-3 w-full whitespace-normal">
+							<h1 className="font-bold text-xl">{t('create-account')}</h1>
+							<p className="text-sm text-gray-600">{t('welcome-message')}</p>
+						</div>
+
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}
 					className={cn(
 						`space-y-3 inline-block w-full transform transition-all duration-300`,
 						{
-							"translate-x-0": !isConfirmed,
-							"-translate-x-[110%] absolute": isConfirmed,
+							"block": !isConfirmed,
+							"hidden": isConfirmed,
 						}
 					)}
 				>
@@ -175,18 +181,15 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						name="email"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel className=" font-semibold  test-sm">
-									{t('email')}
-								</FormLabel>
+								<FormLabel>{t('email')}</FormLabel>
 								<FormControl>
 									<Input
-										className="h-8"
-										placeholder="example@gmail.com"
+										placeholder={t('email')}
 										type="email"
 										{...field}
 									/>
 								</FormControl>
-								<FormMessage className="text-red-500" />
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -195,37 +198,24 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						name="password"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel className="text-sm font-semibold">
-									{t('password')}
-								</FormLabel>
+								<FormLabel>{t('password')}</FormLabel>
 								<FormControl>
-									<div className=" relative">
+									<div className="relative">
 										<Input
-											className="h-8"
-											type={
-												passwordReveal
-													? "text"
-													: "password"
-											}
+											placeholder={t('password')}
+											type={passwordReveal ? "text" : "password"}
 											{...field}
 										/>
-										<div
-											className="absolute right-2 top-[30%] cursor-pointer group"
-											onClick={() =>
-												setPasswordReveal(
-													!passwordReveal
-												)
-											}
+										<button
+											type="button"
+											className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+											onClick={() => setPasswordReveal(!passwordReveal)}
 										>
-											{passwordReveal ? (
-												<FaRegEye className=" group-hover:scale-105 transition-all" />
-											) : (
-												<FaRegEyeSlash className=" group-hover:scale-105 transition-all" />
-											)}
-										</div>
+											{passwordReveal ? <FaRegEye /> : <FaRegEyeSlash />}
+										</button>
 									</div>
 								</FormControl>
-								<FormMessage className="text-red-500" />
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -234,89 +224,62 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						name="confirm-pass"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel className="text-sm font-semibold">
-									{t('confirm-password')}
-								</FormLabel>
+								<FormLabel>{t('confirm-password')}</FormLabel>
 								<FormControl>
-									<div className=" relative">
+									<div className="relative">
 										<Input
-											className="h-8"
-											type={
-												passwordReveal
-													? "text"
-													: "password"
-											}
+											placeholder={t('confirm-password')}
+											type={passwordReveal ? "text" : "password"}
 											{...field}
 										/>
-										<div
-											className="absolute right-2 top-[30%] cursor-pointer group"
-											onClick={() =>
-												setPasswordReveal(
-													!passwordReveal
-												)
-											}
+										<button
+											type="button"
+											className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+											onClick={() => setPasswordReveal(!passwordReveal)}
 										>
-											{passwordReveal ? (
-												<FaRegEye className=" group-hover:scale-105 transition-all" />
-											) : (
-												<FaRegEyeSlash className=" group-hover:scale-105 transition-all" />
-											)}
-										</div>
+											{passwordReveal ? <FaRegEye /> : <FaRegEyeSlash />}
+										</button>
 									</div>
 								</FormControl>
-								<FormMessage className="text-red-500" />
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
 					<Button
 						type="submit"
-						className="w-full h-8 bg-indigo-500 hover:bg-indigo-600 transition-all text-white flex items-center gap-2"
+						className="w-full"
+						disabled={isPending}
 					>
-						<AiOutlineLoading3Quarters
-							className={cn(
-								!isPending ? "hidden" : "block animate-spin"
-							)}
-						/>
+						{isPending && <AiOutlineLoading3Quarters className="mr-2 animate-spin" />}
 						{t('continue')}
-						<RiArrowRightSFill className=" size-4" />
 					</Button>
-					<div className="text-center text-sm">
-						<h1>
-							{t('already-have-an-account')}{' '}
-							<Link
-								href={`/${locale}/signin${formattedNext ? `?next=${formattedNext}` : ''}`}
-								className="text-blue-400"
-							>
-								{t('sign-in')}
-							</Link>
-						</h1>
-					</div>
 				</form>
 			</Form>
-			{/* verify email */}
+
+			{/* 验证邮箱部分 */}
 			<div
 				className={cn(
-					`w-full inline-block h-80 text-wrap align-top transform transition-all duration-300 space-y-3`,
+					`space-y-4`,
 					{
-						"translate-x-[110%] absolute": !isConfirmed,
-						"translate-x-0": isConfirmed,
+						"hidden": !isConfirmed,
+						"block": isConfirmed,
 					}
 				)}
 			>
-				<div className="flex h-full items-center justify-center flex-col space-y-5">
-					<SiMinutemailer className=" size-8" />
+				<div className="flex flex-col items-center space-y-4">
+					<SiMinutemailer className="h-12 w-12 text-violet-500" />
 
-					<h1 className="text-2xl font-semibold text-center">
-						{t('verify-email')}
-					</h1>
-					<p className="text-center text-sm">
-						{t('verification-code-sent')}{' '}
-						<span className="font-bold">
-							{verify === "true"
-								? existEmail
-								: form.getValues("email")}
-						</span>
-					</p>
+					<div className="text-center space-y-2">
+						<h2 className="text-xl font-semibold">
+							{t('verify-email')}
+						</h2>
+						<p className="text-sm text-gray-600">
+							{t('verification-code-sent')}{' '}
+							<span className="font-medium">
+								{verify === "true" ? existEmail : form.getValues("email")}
+							</span>
+						</p>
+					</div>
 
 					<InputOTP
 						pattern={REGEXP_ONLY_DIGITS}
@@ -351,28 +314,24 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 						<InputOTPSeparator />
 						<InputOTPGroup>
 							<InputOTPSlot index={3} className={inputOptClass} />
-							<InputOTPSlot
-								index={4}
-								className={cn(inputOptClass)}
-							/>
-							<InputOTPSlot
-								index={5}
-								className={cn(inputOptClass)}
-							/>
+							<InputOTPSlot index={4} className={inputOptClass} />
+							<InputOTPSlot index={5} className={inputOptClass} />
 						</InputOTPGroup>
 					</InputOTP>
-					<div className="text-sm flex gap-2">
-						<p>{t('didnt-work')} </p>
-						<span
-							className="text-blue-400 cursor-pointer hover:underline transition-all flex items-center gap-2 "
+
+					<div className="text-sm flex items-center gap-2">
+						<span>{t('didnt-work')}</span>
+						<button
+							type="button"
+							className="text-violet-600 hover:underline disabled:opacity-50"
+							disabled={isSendAgain}
 							onClick={async () => {
 								if (!isSendAgain) {
 									startSendAgain(async () => {
 										if (!form.getValues("password")) {
 											const json = await postEmail({
 												email: form.getValues("email"),
-												password:
-													form.getValues("password"),
+												password: form.getValues("password"),
 											});
 
 											if (json.error) {
@@ -381,13 +340,8 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 												toast.success(t('resend-code-success'));
 											}
 										} else {
-											router.replace(
-												pathname || "/signup"
-											);
-											form.setValue(
-												"email",
-												existEmail || ""
-											);
+											router.replace(pathname || "/signup");
+											form.setValue("email", existEmail || "");
 											form.setValue("password", "");
 											setIsConfirmed(false);
 										}
@@ -395,26 +349,13 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 								}
 							}}
 						>
-							<AiOutlineLoading3Quarters
-								className={`${
-									!isSendAgain
-										? "hidden"
-										: "block animate-spin"
-								}`}
-							/>
-							{t('send-another-code')}
-						</span>
+							{isSendAgain ? (
+								<AiOutlineLoading3Quarters className="animate-spin" />
+							) : (
+								t('try-again')
+							)}
+						</button>
 					</div>
-					<Button
-						type="submit"
-						className="w-full h-8 bg-indigo-500 hover:bg-indigo-600 transition-all text-white flex items-center gap-2"
-						onClick={async () => {
-							setIsConfirmed(false);
-						}}
-					>
-						<RiArrowDropLeftFill className=" size-5" />
-						{t('change-email')}
-					</Button>
 				</div>
 			</div>
 		</div>
