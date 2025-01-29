@@ -126,26 +126,30 @@ export default function CreateShortlinkForm({
       // Check if user is logged in before making any API calls
       if (!user) {
         // Store form data for later
-      LinkCreationStore.setLinkData({
-        destination: formData.url,
-        customDomain: formData.domain !== undefined 
-            ? String(formData.domain) 
+        LinkCreationStore.setLinkData({
+          destination: formData.url,
+          // 使用类型守卫确保 domain 正确转换为字符串或保持 undefined
+          customDomain: formData.domain !== undefined 
+            ? typeof formData.domain === 'string' 
+              ? formData.domain 
+              : String(formData.domain) 
             : undefined,
-        shortLink: formData.shortLink,
-        n: formData.n !== undefined 
+          shortLink: formData.shortLink,
+          // 对 n 和 ln 使用相同的类型转换逻辑
+          n: formData.n !== undefined 
             ? typeof formData.n === 'string' 
-                ? formData.n 
-                : String(formData.n)
+              ? formData.n 
+              : String(formData.n)
             : undefined,
-        ln: formData.ln !== undefined 
-             ? typeof formData.ln === 'string' 
-                 ? formData.ln 
-                 : String(formData.ln)
-             : undefined
-      });
-      
-      // Redirect to signup with locale and next path
-      router.push(`/${locale}/signup?next=/${locale}/create`);
+          ln: formData.ln !== undefined 
+            ? typeof formData.ln === 'string' 
+              ? formData.ln 
+              : String(formData.ln)
+            : undefined
+        });
+        
+        // Redirect to signup with locale and next path
+        router.push(`/${locale}/signup?next=/${locale}/create`);
         return;
       }
 
