@@ -44,8 +44,10 @@ export default function Header() {
     try {
       const supabase = createSupabaseBrowser();
       await supabase.auth.signOut();
-      // 使用可选链确保安全
-      router.push(`/${locale ?? 'en'}/signin`);
+      // 强制刷新页面以更新状态
+      router.refresh();
+      // 使用 replace 而不是 push，防止返回到登录页面
+      router.replace(`/${locale ?? 'en'}/signin`);
     } catch (error) {
       console.error('登出失败:', error);
       // 可以添加错误通知

@@ -1,141 +1,190 @@
 import {
-	Body,
-	Container,
-	Head,
-	Heading,
-	Hr,
-	Html,
-	Img,
-	Link,
-	Preview,
-	Section,
-	Text,
+  Body,
+  Container,
+  Head,
+  Heading,
+  Html,
+  Img,
+  Link,
+  Preview,
+  Section,
+  Text,
 } from "@react-email/components";
 import * as React from "react";
 
-interface SupaAuthVerifyEmailProp {
-	verificationCode?: string;
+// 定义邮件模板的属性接口
+interface SupaAuthVerifyEmailProps {
+  verificationCode?: string;
+  logoUrl?: string;
+  brandName?: string;
 }
+
+// 品牌配色和样式常量
+const BRAND_COLORS = {
+  primary: '#6D28D9', // 紫色，与项目主题一致
+  background: '#F5F3FF', // 浅紫色背景
+  text: '#1F2937', // 深灰色文字
+  accent: '#8B5CF6', // 较亮的紫色
+};
+
+// 定义样式类型
+type StyleObject = React.CSSProperties;
 
 export default function SupaAuthVerifyEmail({
-	verificationCode = "596853",
-}: SupaAuthVerifyEmailProp) {
-	return (
-		<Html>
-			<Head />
-			<Preview>Supauth Email Verification</Preview>
-			<Body style={main}>
-				<Container style={container}>
-					<Section style={coverSection}>
-						<Section style={imageSection}></Section>
-						<Section style={upperSection}>
-							<Heading style={h1}>
-								SupaAuth Verify your email address
-							</Heading>
-							<Text style={mainText}>
-								{
-									"Thanks for starting the new account creation process. We want to make sure it's really you. Please enter the following verification code when prompted. If you don&apos;t want to create an account, you can ignore this message."
-								}
-							</Text>
-							<Section style={verificationSection}>
-								<Text style={verifyText}>
-									Verification code
-								</Text>
+  verificationCode = "000000", // 提供默认值，防止 null
+  logoUrl = "/logo.svg", // 提供默认 Logo
+  brandName = "LinkNode", // 提供默认品牌名
+}: SupaAuthVerifyEmailProps) {
+  return (
+    <Html lang="zh-CN">
+      <Head />
+      <Preview>{ brandName } 邮箱验证</Preview>
+      <Body style={mainStyles}>
+        <Container style={containerStyles}>
+          {/* 品牌 Logo 部分 */}
+          <Section style={logoSectionStyles}>
+            <Img 
+              src={logoUrl} 
+              alt={`${brandName} Logo`} 
+              width="120" 
+              height="40" 
+              style={logoStyles} 
+            />
+          </Section>
 
-								<Text style={codeText}>{verificationCode}</Text>
-								<Text style={validityText}>
-									(This code is valid for 1 hour)
-								</Text>
-							</Section>
-						</Section>
-					</Section>
-				</Container>
-			</Body>
-		</Html>
-	);
+          {/* 主要内容区域 */}
+          <Section style={contentSectionStyles}>
+            <Heading style={headingStyles}>
+              验证您的邮箱地址
+            </Heading>
+
+            <Text style={paragraphStyles}>
+              感谢您注册 { brandName }。为了确保账户安全，请使用以下验证码完成注册：
+            </Text>
+
+            {/* 验证码区域 */}
+            <Section style={verificationCodeSectionStyles}>
+              <Text style={verificationCodeTextStyles}>
+                { verificationCode }
+              </Text>
+              <Text style={verificationCodeHintStyles}>
+                验证码将在 1 小时后过期
+              </Text>
+            </Section>
+
+            <Text style={paragraphStyles}>
+              如果您没有发起此注册，请忽略此邮件。
+            </Text>
+
+
+            {/* 支持链接 */}
+            {/* <Section style={supportSectionStyles}>
+              <Link 
+                href="https://linknode.vercel.app/support" 
+                style={linkStyles}
+              >
+                需要帮助？联系我们
+              </Link>
+            </Section> */}
+          </Section>
+
+          {/* 页脚 */}
+          <Section style={footerStyles}>
+            <Text style={footerTextStyles}>
+              { new Date().getFullYear() } { brandName }. 保留所有权利。
+            </Text>
+          </Section>
+        </Container>
+      </Body>
+    </Html>
+  );
 }
 
-const main = {
-	backgroundColor: "#fff",
-	color: "#212121",
+// 样式定义
+const mainStyles: StyleObject = {
+  backgroundColor: BRAND_COLORS.background,
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
 };
 
-const container = {
-	padding: "20px",
-	margin: "0 auto",
-	backgroundColor: "#eee",
+const containerStyles: StyleObject = {
+  maxWidth: '480px',
+  margin: '0 auto',
+  padding: '20px',
+  backgroundColor: 'white',
+  borderRadius: '8px',
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
 };
 
-const h1 = {
-	color: "#333",
-	fontFamily:
-		"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-	fontSize: "20px",
-	fontWeight: "bold",
-	marginBottom: "15px",
+const logoSectionStyles: StyleObject = {
+  textAlign: 'center',
+  marginBottom: '20px',
 };
 
-const link = {
-	color: "#2754C5",
-	fontFamily:
-		"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-	fontSize: "14px",
-	textDecoration: "underline",
+const logoStyles: StyleObject = {
+  maxWidth: '150px',
+  height: 'auto',
 };
 
-const text = {
-	color: "#333",
-	fontFamily:
-		"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-	fontSize: "14px",
-	margin: "24px 0",
+const contentSectionStyles: StyleObject = {
+  padding: '20px',
+  backgroundColor: 'white',
+  borderRadius: '8px',
 };
 
-const imageSection = {
-	backgroundColor: "#252f3d",
-	display: "flex",
-	padding: "20px 0",
-	alignItems: "center",
-	justifyContent: "center",
+const headingStyles: StyleObject = {
+  color: BRAND_COLORS.primary,
+  fontSize: '24px',
+  marginBottom: '20px',
+  textAlign: 'center',
 };
 
-const coverSection = { backgroundColor: "#fff" };
-
-const upperSection = { padding: "25px 35px" };
-
-const lowerSection = { padding: "25px 35px" };
-
-const footerText = {
-	...text,
-	fontSize: "12px",
-	padding: "0 20px",
+const paragraphStyles: StyleObject = {
+  color: BRAND_COLORS.text,
+  lineHeight: '1.5',
+  marginBottom: '20px',
 };
 
-const verifyText = {
-	...text,
-	margin: 0,
-	fontWeight: "bold",
-	textAlign: "center" as const,
+const verificationCodeSectionStyles: StyleObject = {
+  backgroundColor: BRAND_COLORS.background,
+  padding: '20px',
+  borderRadius: '8px',
+  textAlign: 'center',
+  marginBottom: '20px',
 };
 
-const codeText = {
-	...text,
-	fontWeight: "bold",
-	fontSize: "36px",
-	margin: "10px 0",
-	textAlign: "center" as const,
+const verificationCodeTextStyles: StyleObject = {
+  fontSize: '32px',
+  fontWeight: 'bold',
+  color: BRAND_COLORS.primary,
+  letterSpacing: '8px',
+  margin: '10px 0',
 };
 
-const validityText = {
-	...text,
-	margin: "0px",
-	textAlign: "center" as const,
+const verificationCodeHintStyles: StyleObject = {
+  color: BRAND_COLORS.text,
+  fontSize: '14px',
+  opacity: 0.7,
 };
 
-const verificationSection = {
-	display: "flex",
-	alignItems: "center",
-	justifyContent: "center",
+const supportSectionStyles: StyleObject = {
+  textAlign: 'center',
+  marginTop: '20px',
 };
 
-const mainText = { ...text, marginBottom: "14px" };
+const linkStyles: StyleObject = {
+  color: BRAND_COLORS.accent,
+  textDecoration: 'none',
+};
+
+const footerStyles: StyleObject = {
+  marginTop: '20px',
+  textAlign: 'center',
+  borderTop: `1px solid ${BRAND_COLORS.background}`,
+  paddingTop: '10px',
+};
+
+const footerTextStyles: StyleObject = {
+  color: BRAND_COLORS.text,
+  fontSize: '12px',
+  opacity: 0.6,
+};

@@ -133,7 +133,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 
 	return (
 		<div
-			className={` whitespace-nowrap p-5 space-x-5 overflow-hidden flex flex-col items-center align-top   ${
+			className={`relative whitespace-nowrap p-5 space-x-5 overflow-hidden flex flex-col items-center align-top ${
 				isPending ? "animate-pulse" : ""
 			}`}
 		>
@@ -141,9 +141,10 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}
 					className={cn(
-						`space-y-3 inline-block w-full transform transition-all`,
+						`space-y-3 inline-block w-full transform transition-all duration-300`,
 						{
-							"-translate-x-[110%]": isConfirmed,
+							"translate-x-0": !isConfirmed,
+							"-translate-x-[110%] absolute": isConfirmed,
 						}
 					)}
 				>
@@ -273,8 +274,11 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 			{/* verify email */}
 			<div
 				className={cn(
-					`w-full inline-block h-80 text-wrap align-top  transform transition-all space-y-3`,
-					isConfirmed ? "-translate-x-[105%]" : "translate-x-0"
+					`w-full inline-block h-80 text-wrap align-top transform transition-all duration-300 space-y-3`,
+					{
+						"translate-x-[110%] absolute": !isConfirmed,
+						"translate-x-0": isConfirmed,
+					}
 				)}
 			>
 				<div className="flex h-full items-center justify-center flex-col space-y-5">

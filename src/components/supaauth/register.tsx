@@ -26,8 +26,8 @@ export default function Register() {
 
 	return (
 		<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-			<div className="sm:mx-auto sm:w-full sm:max-w-sm">
-				<Logo className="text-violet-500 h-5 mx-auto mb-3" />
+			<div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col itens-center justify-center">
+				{/* <Logo className="text-violet-500 h-5 mx-auto mb-3" /> */}
 				<div className="w-full sm:w-[26rem] shadow sm:p-5  border dark:border-zinc-800 rounded-md">
 					<div className="p-5 space-y-5">
 						<div className="text-center space-y-3">
