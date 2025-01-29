@@ -356,7 +356,7 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 											}
 										} else {
 											router.replace(
-												pathname || "/register"
+												pathname || "/signup"
 											);
 											form.setValue(
 												"email",

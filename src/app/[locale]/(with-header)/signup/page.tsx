@@ -1,4 +1,4 @@
-import Register from '@/components/supaauth/register';
+import Register from '@/components/supaauth/signup';
 
 export default function page() {
   return (

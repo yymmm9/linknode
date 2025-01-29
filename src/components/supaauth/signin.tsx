@@ -168,7 +168,7 @@ export default function SignIn() {
 							<p className="text-gray-600">
 								{t('dont-have-account')}{' '}
 								<Link 
-									href={`/${locale}/register`} 
+									href={`/${locale}/signup`} 
 									className="text-violet-600 hover:underline"
 								>
 									{t('sign-up')}

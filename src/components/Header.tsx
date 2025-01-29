@@ -118,7 +118,7 @@ export default function Header() {
                   </li>
                   <li>
                     <Link
-                      href={`/${locale ?? 'en'}/register`}
+                      href={`/${locale ?? 'en'}/signup`}
                       className="block font-medium text-gray-400"
                     >
                       {t('Signup')}
@@ -204,7 +204,7 @@ export default function Header() {
                         {t('Login')}
                       </Button>
                     </Link>
-                    <Link href={`/${locale ?? 'en'}/register`} className="w-full">
+                    <Link href={`/${locale ?? 'en'}/signup`} className="w-full">
                       <Button className="w-full">
                         {t('Signup')}
                       </Button>
