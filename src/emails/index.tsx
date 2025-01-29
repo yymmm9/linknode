@@ -1,3 +1,4 @@
+import { Logo } from "@/components/brand";
 import {
   Body,
   Container,
@@ -33,7 +34,7 @@ type StyleObject = React.CSSProperties;
 export default function SupaAuthVerifyEmail({
   verificationCode = "000000", // 提供默认值，防止 null
   logoUrl = "/logo.svg", // 提供默认 Logo
-  brandName = "LinkNode", // 提供默认品牌名
+  brandName = "hov.sh", // 提供默认品牌名
 }: SupaAuthVerifyEmailProps) {
   return (
     <Html lang="zh-CN">
@@ -43,13 +44,14 @@ export default function SupaAuthVerifyEmail({
         <Container style={containerStyles}>
           {/* 品牌 Logo 部分 */}
           <Section style={logoSectionStyles}>
-            <Img 
+            <Logo className="h-5"/>
+            {/* <Img 
               src={logoUrl} 
               alt={`${brandName} Logo`} 
               width="120" 
               height="40" 
               style={logoStyles} 
-            />
+            /> */}
           </Section>
 
           {/* 主要内容区域 */}

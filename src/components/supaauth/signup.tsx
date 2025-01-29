@@ -84,38 +84,60 @@ export default function SignUp({ redirectTo }: { redirectTo: string }) {
 		email: string;
 		password: string;
 	}) => {
-		const requestOptions = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ email, password }),
-		};
-		// Send the POST request
-		const res = await fetch("/api/signup", requestOptions);
-		const json = await res.json();
-		return json;
+		try {
+			const requestOptions = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ email, password }),
+			};
+			
+			const res = await fetch("/api/signup", requestOptions);
+			if (!res.ok) {
+				const errorData = await res.json().catch(() => ({ 
+					error: { message: '请求失败', details: `状态码: ${res.status}` }
+				}));
+				return { error: errorData.error };
+			}
+			
+			const data = await res.json().catch(() => null);
+			if (!data) {
+				return { error: { message: '解析响应失败', details: '服务器返回了无效的数据' } };
+			}
+			
+			return data;
+		} catch (error) {
+			console.error('注册请求失败:', error);
+			return { 
+				error: { 
+					message: '请求失败',
+					details: error instanceof Error ? error.message : '未知错误'
+				}
+			};
+		}
 	};
 
 	const sendVerifyEmail = async (data: z.infer<typeof FormSchema>) => {
-		const json = await postEmail({
+		const response = await postEmail({
 			email: data.email,
 			password: data.password,
 		});
-		if (!json.error) {
-			router.replace(
-				(pathname || "/") +
-					"?verify=true&email=" +
-					form.getValues("email")
-			);
-			setIsConfirmed(true);
-		} else {
-			if (json.error.code) {
-				toast.error(json.error.code);
-			} else if (json.error.message) {
-				toast.error(json.error.message);
+
+		if (response.error) {
+			toast.error(response.error.message);
+			if (response.error.details) {
+				console.error('详细错误:', response.error.details);
 			}
+			return;
 		}
+
+		router.replace(
+			(pathname || "/") +
+				"?verify=true&email=" +
+				form.getValues("email")
+		);
+		setIsConfirmed(true);
 	};
 
 	const inputOptClass = cn({

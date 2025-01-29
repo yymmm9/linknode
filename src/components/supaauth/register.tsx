@@ -1,10 +1,7 @@
 "use client";
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from "next/navigation";
-import { Logo } from "../brand";
 import SignUp from "./signup";
 import Social from "./social";
 
