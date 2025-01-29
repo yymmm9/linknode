@@ -49,6 +49,7 @@ export type DataProps = {
   email?: string;
   workPhone?: string;
   website?: string;
+  url?: string; // 添加 url 字段
 };
 
 export interface ExtraLinkProps {

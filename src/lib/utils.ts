@@ -48,15 +48,18 @@ export function isEmptyValues(obj: DataProps): boolean {
     return true;
   }
 
-  // 检查是否有任何非空的属性
+  // 更新相关键的类型检查
   const relevantKeys: (keyof DataProps)[] = ['ls', 'firstName', 'lastName', 'url'];
   
   for (const key of relevantKeys) {
     const value = obj[key];
     
-    // 检查数组是否非空
-    if (Array.isArray(value) && value.length > 0) {
-      return false;
+    // 特殊处理 ls 数组
+    if (key === 'ls') {
+      if (Array.isArray(value) && value.length > 0) {
+        return false;
+      }
+      continue;
     }
     
     // 检查字符串是否非空
