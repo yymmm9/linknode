@@ -20,35 +20,33 @@ export default function CreatePageContent() {
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-2xl mx-auto lg:max-w-5xl">
         <h1 className="text-3xl font-bold mb-6 text-center">
           {t('PageTitle')}
         </h1>
-        <section className="flex min-h-[60vh] flex-col items-center justify-center gap-6 pb-6 lg:col-span-2 lg:px-20 lg:pb-0">
-          <div className="hide_scrollbar flex w-full flex-col gap-5 overflow-y-auto pb-12 lg:pb-0">
-            {/* todo edit link button, check if logged in */}
-            {/* <div className="flex justify-end w-full">
-              <EditShortLink linkKey="" />
-            </div> */}
-
-            <ProfileForm />
-            <SocialLinksForm />
-            <ExtraLinksForm />
-
-            <BackgroundShell />
-
-            <div className="grid w-full grid-cols-2 items-center justify-center gap-2 md:grid-cols-4 ">
-              <DemoButton />
-              {/* <PublishButton /> */}
-              <Shortener />
-              {/* <GithubButton /> */}
+        <div className="lg:flex w-full relative">
+          <section className="flex min-h-[60vh] flex-col items-center justify-center gap-6 pb-6 lg:col-span-2 lg:px-20 lg:pb-0">
+            <div className="hide_scrollbar flex w-full flex-col gap-5 overflow-y-auto pb-12 lg:pb-0">
+              {/* todo edit link button, check if logged in */}
+              {/* <div className="flex justify-end w-full">
+                <EditShortLink linkKey="" />
+              </div> */}
+              <ProfileForm />
+              <SocialLinksForm />
+              <ExtraLinksForm />
+              <BackgroundShell />
+              <div className="grid w-full grid-cols-2 items-center justify-center gap-2 md:grid-cols-4 ">
+                <DemoButton />
+                {/* <PublishButton /> */}
+                <Shortener />
+                {/* <GithubButton /> */}
+              </div>
             </div>
-          </div>
-        </section>
-
-        <section className="hidden items-center justify-end lg:flex">
-          <MobileMockup />
-        </section>
+          </section>
+          <section className="lg:h-fit hidden items-center justify-end lg:flex sticky top-4">
+            <MobileMockup />
+          </section>
+        </div>
 
         <div className="lg:hidden">
           <PreviewButton />

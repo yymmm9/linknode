@@ -32,7 +32,7 @@ const initialData: DataProps = {
 
 const demoData: DataProps = {
   n: 'James Smith',
-  i: 'https://cdn.discordapp.com/attachments/1084897258920738839/1148135723782914078/christian-buehner-DItYlc26zVI-unsplash1.jpg',
+  i: '',
   d: "I'm a self-taught developer who is always learning and creating cool stuffs.",
   f: 'https://www.facebook.com/james_smith',
   t: 'https://twitter.com/james_smith',

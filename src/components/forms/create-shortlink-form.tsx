@@ -239,6 +239,15 @@ export default function CreateShortlinkForm({
         />
         <Button
           type="submit"
+          className="w-full h-8 bg-indigo-500 hover:bg-indigo-600 transition-all text-white flex items-center justify-center gap-2"
+          onClick={(e) => {
+            e.preventDefault(); // 防止默认行为
+            if (!isLoading) {
+              form.handleSubmit(onSubmit)(e);
+            }
+          }}
+          disabled={isLoading} // 防止重复提交
+        
           // className="w-full h-8 bg-indigo-500 hover:bg-indigo-600 transition-all text-white flex items-center gap-2"
         >
           {isLoading ? (
