@@ -261,15 +261,18 @@ export default function CreateShortlinkForm({
   const tCreateShortlink = useTranslations('CreateShortlink');
   const tError = useTranslations('Errors');
   
-  // 修复 useRedirect 类型问题
-  const redirectFn = useRedirect();
+  // 安全地获取用户数据
+  const { data: userData, isLoading } = useUser();
+  const user = userData ?? null;
 
-  // 始终初始化 Supabase 和用户信息
+  // 修复重定向函数类型
+  const redirectFn = useRedirect() as { redirect: (path: string, locale?: string) => void };
+
+  // 始终初始化 Supabase
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
-  const { data: { user } } = useUser();
 
   // 使用 useLinkCreation Hook，确保传入安全的用户信息
   const { createLink, isCreationLoading } = useLinkCreation(
@@ -366,8 +369,13 @@ export default function CreateShortlinkForm({
         toast.success(tCommon('linkCreatedSuccessfully'));
         form.reset();
         
-        // 修复重定向函数调用
-        redirectFn(`/link?data=${safeEncodeData(formData)}`);
+        // 修复重定向函数调用，增加安全性检查
+        if (redirectFn && typeof redirectFn.redirect === 'function') {
+          redirectFn.redirect(`/link?data=${safeEncodeData(formData)}`, locale);
+        } else {
+          console.warn('重定向函数不可用');
+          router.push(`/${locale}/link?data=${safeEncodeData(formData)}`);
+        }
       } else {
         // 处理创建链接失败的情况
         toast.error(tError('linkCreationFailed'));
@@ -381,6 +389,10 @@ export default function CreateShortlinkForm({
   };
 
   // 未登录时的渲染
+  if (isLoading) {
+    return <div>{tCommon('loading')}</div>;
+  }
+
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center space-y-4">
