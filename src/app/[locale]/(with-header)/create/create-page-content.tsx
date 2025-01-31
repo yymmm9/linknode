@@ -24,8 +24,8 @@ export default function CreatePageContent() {
         <h1 className="text-3xl font-bold mb-6 text-center">
           {t('PageTitle')}
         </h1>
-        <div className="lg:flex w-full relative">
-          <section className="flex min-h-[60vh] flex-col items-center justify-center gap-6 pb-6 lg:col-span-2 lg:px-20 lg:pb-0">
+        <div className="lg:flex lg:gap-10 w-full relative">
+          <section className="flex min-h-[60vh] flex-col items-center justify-center gap-6 pb-6 lg:col-span-2 px-2 lg:px-0 lg:pb-0">
             <div className="hide_scrollbar flex w-full flex-col gap-5 overflow-y-auto pb-12 lg:pb-0">
               {/* todo edit link button, check if logged in */}
               {/* <div className="flex justify-end w-full">

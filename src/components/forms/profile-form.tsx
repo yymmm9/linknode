@@ -59,17 +59,6 @@ export default function ProfileForm() {
               autoComplete="family-name"
             />
           </div>
-          {/* <div>
-            <Label htmlFor="Profile-url">Profile Url</Label>
-            <Input
-              id="Profile-url"
-              name="i"
-              type="url"
-              placeholder="https://example.com"
-              value={data.i}
-              onChange={handleInputChange}
-            />
-          </div> */}
         </div>
         <div className="grid gap-2 md:grid-cols-2">
           <div>
@@ -95,12 +84,49 @@ export default function ProfileForm() {
             />
           </div>
         </div>
+        <div className="grid gap-2 md:grid-cols-2">
+          <div>
+            <Label htmlFor="title">{t('Title')}</Label>
+            <Input
+              id="title"
+              name="ti"
+              type="text"
+              placeholder={t('TitlePlaceholder')}
+              value={data.ti}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <Label htmlFor="organization">{t('Organization')}</Label>
+            <Input
+              id="organization"
+              name="o"
+              type="text"
+              placeholder={t('OrganizationPlaceholder')}
+              value={data.o}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+        <div className="grid gap-2 md:grid-cols-2">
+          <div>
+            <Label htmlFor="role">{t('Role')}</Label>
+            <Input
+              id="role"
+              name="r"
+              type="text"
+              placeholder={t('RolePlaceholder')}
+              value={data.r}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
         <div>
-          <Label htmlFor="description">{t('About')}</Label>
+          <Label htmlFor="about">{t('About')}</Label>
           <Textarea
-            id="description"
+            id="about"
             name="d"
-            // placeholder="type something here..."
+            placeholder={t('About')}
             value={data.d}
             onChange={handleInputChange}
           />

@@ -29,9 +29,9 @@ export const names = {
   },
   web: 'Website',
 
-  r: 'Role',
-  ti: 'Title',
-  o: 'Organization',
+  r: 'Role', // 角色
+  ti: 'Job Title', // 职位
+  o: 'Organization', // 组织
 
   b: 'Birthday',
   url: 'URL', // 添加 url 键

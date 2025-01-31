@@ -48,7 +48,14 @@
     "About": "关于",
     "title": "个人资料设置",
     "update": "更新资料",
-    "cancel": "取消"
+    "cancel": "取消",
+    "Role": "角色",
+    "RolePlaceholder": "选择您的角色",
+    "TitlePlaceholder": "输入您的职位",
+    "Organization": "组织",
+    "OrganizationPlaceholder": "输入您的组织",
+    "Title": "职位",
+    "TitlePlaceholder": "输入您的职位"
   },
   "Profile": {
     "LinksTitle": "创建的链接",
@@ -217,7 +224,15 @@
     "edit": "编辑",
     "delete": "删除",
     "customShortLink": "自定义短链接",
-    "enterCustomShortLink": "输入自定义短链接"
+    "enterCustomShortLink": "输入自定义短链接",
+    "linkCreatedSuccessfully": "短链接创建成功！",
+    "createLinkFailed": "创建短链接失败，请重试。",
+    "createShortlink": {
+      "loginRequired": "请登录以创建短链接"
+    },
+    "auth": {
+      "signIn": "登录"
+    }
   },
   "SortableLinks": {
     "iconKey": "图标键",

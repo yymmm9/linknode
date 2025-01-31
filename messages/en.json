@@ -45,7 +45,12 @@
     "LastnamePlaceholder": "Doe",
     "Phone": "Phone",
     "Email": "Email",
-    "About": "About yourself"
+    "About": "About yourself",
+    "Organization": "Organization",
+    "OrganizationPlaceholder": "Enter your organization",
+    "TitlePlaceholder": "Enter your job title",
+    "Role": "Role",
+    "RolePlaceholder": "Select your role"
   },
   "Profile": {
     "PageTitle": "Your Profile",
@@ -182,7 +187,15 @@
     "creating": "Creating",
     "createShortLink": "Create short link",
     "customShortLink": "Custom Short Link",
-    "enterCustomShortLink": "Enter custom short link"
+    "enterCustomShortLink": "Enter custom short link",
+    "linkCreatedSuccessfully": "Short link created successfully!",
+    "createLinkFailed": "Failed to create short link. Please try again.",
+    "createShortlink": {
+      "loginRequired": "Please log in to create a short link"
+    },
+    "auth": {
+      "signIn": "Sign In"
+    }
   },
   "SortableLinks": {
     "iconKey": "Icon Key",

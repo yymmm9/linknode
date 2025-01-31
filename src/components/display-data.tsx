@@ -56,12 +56,12 @@ export default function DisplayData({ acc }: DisplayDataProps) {
     !acc.gh &&
     !acc.l;
 
-  const excludedKeys = ['i', 'n', 'd', 'bg', 'ln', 'em', 'p'];
+  const excludedKeys = ['i', 'n', 'd', 'bg', 'ln', 'em', 'p', 'o', 'ti', 'r'];
 
   const { locale, defaultLocale } = useParams();
   const lang = locale || defaultLocale;
-  let firstname = acc?.n || acc?.firstName || '';
-  let lastname = acc?.ln || acc?.lastName || '';
+  let firstname = acc?.firstName || acc?.n || '';
+  let lastname = acc?.lastName || acc?.ln || '';
   const localeValue = useLocale();
   let fullname = formatName(firstname, lastname, localeValue);
   console.log(acc);
@@ -76,25 +76,41 @@ export default function DisplayData({ acc }: DisplayDataProps) {
             cta={''} 
           />
 
-          {/* {acc.i && ( */}
-            <Avatar className="size-24 shadow border">
-              <AvatarImage
-                alt={fullname}
-                src={acc?.i}
-                className="size-full object-cover"
-              />
-              <AvatarFallback className="font-monoo font-bold text-lg">
-                {getInitials(firstname, lastname)}
-              </AvatarFallback>
-            </Avatar>
-          
+          <Avatar className="size-24 shadow border">
+            <AvatarImage
+              alt={fullname}
+              src={acc?.i}
+              className="size-full object-cover"
+            />
+            <AvatarFallback className="font-monoo font-bold text-lg">
+              {getInitials(firstname, lastname)}
+            </AvatarFallback>
+          </Avatar>
         </div>
         
-          <h1 className="mt-4 text-2xl font-bold text-slate-800">
-            {formatName(acc?.n, acc?.ln, localeValue)}
+        <div className="mt-4 text-center">
+          <h1 className="text-2xl font-bold text-slate-800">
+            {formatName(acc?.firstName, acc?.lastName, localeValue)}
           </h1>
-        
-        {acc.d && <p className="mt-2 text-sm text-slate-600">{acc.d}</p>}
+
+          <div className="mt-1 text-sm text-slate-600">
+            {acc.ti && <span>{acc.ti}</span>}
+            {acc.o && (
+              <>
+                {acc.ti && <span className="mx-2 opacity-50">·</span>}
+                <span>{acc.o}</span>
+              </>
+            )}
+            {acc.r && (
+              <>
+                {(acc.ti || acc.o) && <span className="mx-2 opacity-50">·</span>}
+                <span>{acc.r}</span>
+              </>
+            )}
+          </div>
+
+          {acc.d && <p className="mt-2 text-sm text-slate-600">{acc.d}</p>}
+        </div>
       </div>
       {!allSocialLinksAreEmpty && (
         <div className="flex flex-wrap items-center justify-center gap-1">
