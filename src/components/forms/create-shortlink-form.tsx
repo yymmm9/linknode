@@ -8,7 +8,7 @@ import { useData } from '@/lib/context/link-context';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useShortener } from '@/lib/context/shortlink-context';
 import createShortLink from '@/app/_actions/shortlink/create';
-import { CreateShortLinkInput, shortlinkSchema, isValidShortLinkKey, normalizeShortLinkValue } from '@/types';
+import { CreateShortLinkInput, shortlinkSchema, isValidShortLinkKey, normalizeShortLinkValue, DataProps } from '@/types';
 import { useAPIResponse } from '@/lib/context/api-response-context';
 import { catchError, checkCustomCredentials, cn, encodeData } from '@/lib/utils';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -31,12 +31,13 @@ interface CreateShortlinkFormProps {
   handleCreateLink?: () => Promise<void>;
 }
 
+// 更新类型定义，确保 url 为必填且非可选
 type CreateShortlinkFormData = {
-  url: string;
+  url: string;  // 明确指定为必填 string
   domain?: string;
   shortLink: string;
-  n?: number | string;
-  ln?: number | string;
+  n?: string;  // 更改为 string 类型
+  ln?: string;  // 更改为 string 类型
 };
 
 // 添加新的类型定义
@@ -117,17 +118,22 @@ const safeLinkNameGeneration = (
 };
 
 // 安全的数据编码函数，防止编码失败
-const safeEncodeData = (data: CreateShortlinkFormData): string => {
+const safeEncodeData = (data: CreateShortlinkFormData | DataProps): string => {
+  // 如果传入的是 DataProps，先转换为 CreateShortlinkFormData
+  const formData = 'url' in data 
+    ? data as CreateShortlinkFormData 
+    : convertToCreateShortlinkFormData(data as DataProps);
+
   try {
-    // 使用可选链和默认值确保数据安全
-    const safeData = {
-      url: data.url ?? '',
-      shortLink: data.shortLink ?? '',
-      domain: data.domain ?? ''
-    };
-    return btoa(JSON.stringify(safeData));
+    // 确保 url 非空
+    if (!formData.url) {
+      throw new Error('URL 不能为空');
+    }
+    
+    // 使用 JSON.stringify 进行安全编码
+    return encodeURIComponent(JSON.stringify(formData));
   } catch (error) {
-    console.warn('数据编码失败:', error);
+    console.error('编码数据时发生错误:', error);
     return '';
   }
 };
@@ -198,6 +204,17 @@ const useLinkCreation = (supabase: SupabaseClient, user: User | null) => {
     isCreationLoading 
   };
 };
+
+// 安全地将 DataProps 转换为 CreateShortlinkFormData
+function convertToCreateShortlinkFormData(data: DataProps): CreateShortlinkFormData {
+  return {
+    url: data.url || data.website || '', // 确保返回非 undefined 的字符串
+    shortLink: data.shortLink || '',
+    domain: data.o,
+    n: data.n ? String(data.n) : undefined,  // 安全转换为字符串
+    ln: data.ln ? String(data.ln) : undefined  // 安全转换为字符串
+  };
+}
 
 export default function CreateShortlinkForm({
   handleCreateLink,
@@ -278,10 +295,16 @@ export default function CreateShortlinkForm({
     console.groupEnd();
   };
 
-  async function onSubmit(formData: CreateShortlinkFormData) {
+  async function onSubmit(formData: CreateShortlinkFormData | DataProps) {
     try {
       console.group('🚀 提交短链接');
-      console.log('提交数据:', formData);
+      
+      // 转换数据为 CreateShortlinkFormData
+      const safeFormData: CreateShortlinkFormData = 'url' in formData 
+        ? formData as CreateShortlinkFormData 
+        : convertToCreateShortlinkFormData(formData as DataProps);
+
+      console.log('提交数据:', safeFormData);
       debugFormState();
 
       // 安全地处理外部函数
@@ -294,14 +317,19 @@ export default function CreateShortlinkForm({
       }
 
       // 安全地生成 URL
-      const url = formData.url || 
+      const url = safeFormData.url?.trim() || 
         (typeof window !== 'undefined' 
-          ? `${window.location.origin}/link?data=${safeEncodeData(formData)}` 
+          ? `${window.location.origin}/link?data=${safeEncodeData(safeFormData)}` 
           : '');
 
-      // 使用新的创建链接方法
-      const response = await createLink(formData, url, locale);
+      // 安全检查：如果 url 仍为空，抛出错误
+      if (!url) {
+        console.error('无法生成有效的 URL');
+        return;  // 提前返回，避免继续执行
+      }
 
+      // 后续处理逻辑
+      const response = await createLink(safeFormData, url, locale);
       if (response.success) {
         toast.success(tCommon('linkCreatedSuccessfully'));
         form.reset();

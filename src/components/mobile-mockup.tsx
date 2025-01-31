@@ -36,11 +36,7 @@ const MobileMockup = React.memo(() => {
           { 'bg-white': !data.bg },
         )}
       >
-        {isEmpty ? (
-          <div className="z-20 flex size-full items-center justify-center bg-white text-sm text-muted-foreground">
-            {t('no-information')}
-          </div>
-        ) : (
+        {(
           <>
             {!isEmpty && selectedBgComponent}
             <div className="h-full px-2 pt-10">

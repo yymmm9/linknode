@@ -44,6 +44,9 @@ const demoData: DataProps = {
   w: '+916666666666',
   y: 'https://youtube.com/@james_smith',
   bg: '#4F4F4F',
+  ti: 'Software Engineer',
+  o: 'Code Inc.',
+  // r: 'Full Stack Developer',
   ls: [
     {
       id: 1,
@@ -62,18 +65,6 @@ const demoData: DataProps = {
       i: 'fluent:brain-circuit-20-regular',
       l: 'My Machine Learning Project',
       u: 'https://example.com/ml',
-    },
-    {
-      id: 4,
-      i: 'icon-park-outline:blockchain',
-      l: 'My Blockchain Project',
-      u: 'https://example.com/blockchain',
-    },
-    {
-      id: 5,
-      i: 'ph:pencil-duotone',
-      l: 'My Blog Posts',
-      u: 'https://example.com/blog',
     },
   ],
 };

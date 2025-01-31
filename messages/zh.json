@@ -49,13 +49,15 @@
     "title": "个人资料设置",
     "update": "更新资料",
     "cancel": "取消",
-    "Role": "角色",
-    "RolePlaceholder": "选择您的角色",
-    "TitlePlaceholder": "输入您的职位",
+    "Role": "职务",
+    "RolePlaceholder": "选择您的职务",
     "Organization": "组织",
     "OrganizationPlaceholder": "输入您的组织",
-    "Title": "职位",
-    "TitlePlaceholder": "输入您的职位"
+    "formTitle": "职位",
+    "TitlePlaceholder": "输入您的职位",
+    "NoInformationTitle": "尚未添加个人信息",
+    "NoInformationDescription": "添加您的个人信息，让别人更好地了解您",
+    "AddInformation": "添加信息"
   },
   "Profile": {
     "LinksTitle": "创建的链接",
@@ -217,6 +219,14 @@
     "tags": "标签"
   },
   "Common": {
+    "Common": {
+      "createShortlink": {
+        "loginRequired": "请登录以创建短链接"
+      },
+      "auth": {
+        "signIn": "登录"
+      }
+    },
     "creating": "创建中",
     "createShortLink": "创建短链接",
     "save": "保存",

@@ -40,11 +40,7 @@ export default function PreviewButton() {
           </Button>
         </DrawerTrigger>
         <DrawerContent className="h-[75%] pb-2">
-          {isEmpty ? (
-            <div className="flex h-[90%] w-full items-center justify-center text-sm text-muted-foreground">
-              {t('no-information')}
-            </div>
-          ) : (
+          {(
             <>
               {!isEmpty && selectedBgComponent}
               <div className="h-full px-2 pt-10 relative">

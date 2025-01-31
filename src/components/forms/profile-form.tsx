@@ -86,7 +86,7 @@ export default function ProfileForm() {
         </div>
         <div className="grid gap-2 md:grid-cols-2">
           <div>
-            <Label htmlFor="title">{t('Title')}</Label>
+            <Label htmlFor="title">{t('formTitle')}</Label>
             <Input
               id="title"
               name="ti"

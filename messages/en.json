@@ -48,9 +48,13 @@
     "About": "About yourself",
     "Organization": "Organization",
     "OrganizationPlaceholder": "Enter your organization",
-    "TitlePlaceholder": "Enter your job title",
+    "formTitle": "Title",
+    "TitlePlaceholder": "Enter your title",
     "Role": "Role",
-    "RolePlaceholder": "Select your role"
+    "RolePlaceholder": "Select your role",
+    "NoInformationTitle": "No Personal Information",
+    "NoInformationDescription": "Add your personal information to help others understand you better",
+    "AddInformation": "Add Information"
   },
   "Profile": {
     "PageTitle": "Your Profile",
@@ -184,6 +188,14 @@
     "createShortLink": "Create short link"
   },
   "Common": {
+    "Common": {
+      "createShortlink": {
+        "loginRequired": "Please log in to create a short link"
+      },
+      "auth": {
+        "signIn": "Sign In"
+      }
+    },
     "creating": "Creating",
     "createShortLink": "Create short link",
     "customShortLink": "Custom Short Link",

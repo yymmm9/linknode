@@ -51,6 +51,7 @@ export type DataProps = {
   workPhone?: string;
   website?: string;
   url?: string; // 添加 url 字段
+  shortLink?: string; // 添加 shortLink 字段
 };
 
 export interface ExtraLinkProps {
