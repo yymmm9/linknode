@@ -414,7 +414,58 @@ export default function CreateShortlinkForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        {/* 表单内容 */}
+          <FormField
+            control={form.control}
+            name="shortLink"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{tCommon('customShortLink')}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={tCommon('enterCustomShortLink')}
+                    {...field}
+                    value={
+                      shortUrlInfoState.shortLink 
+                        ?? field.value 
+                        ?? ''
+                    }
+                    onChange={(e) => {
+                      field.onChange(e);
+                    }}
+                    name="shortLink"
+                    className="h-8"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            className="w-full h-8 bg-indigo-500 hover:bg-indigo-600 transition-all text-white flex items-center justify-center gap-2"
+            onClick={(e) => {
+              e.preventDefault();
+              console.log('🖱️ 点击提交按钮');
+              debugFormState(); // 点击时显示调试信息
+              if (!isLoading) {
+                form.handleSubmit(onSubmit)(e);
+              }
+            }}
+            disabled={isCreationLoading}
+          >
+            {isCreationLoading ? (
+              <>
+                <AiOutlineLoading3Quarters
+                  className="block animate-spin"
+                  aria-hidden="true"
+                />
+                <span>{tCommon('creating')}</span>
+              </>
+            ) : (
+              tCommon('createShortLink')
+            )}
+          </Button>
+        
       </form>
     </Form>
   );
