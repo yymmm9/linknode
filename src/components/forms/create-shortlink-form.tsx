@@ -120,22 +120,34 @@ export default function CreateShortlinkForm({
   }, [data]);
 
   async function onSubmit(formData: CreateShortlinkFormData) {
+    console.group('🔍 短链接创建调试');
+    console.log('🚀 提交数据:', formData);
+    console.log('👤 用户信息:', user);
+    console.log('🌐 当前语言:', locale);
+
     try {
+      console.log('🔒 开始创建短链接流程');
       setIsLoading(true);
 
-      // Check if user is logged in before making any API calls
+      // 详细的输入验证日志
+      if (!formData.url || formData.url.trim() === '') {
+        console.error('❌ URL 验证失败: URL 为空');
+        console.log('表单数据:', formData);
+        console.groupEnd();
+        return;
+      }
+
+      // 用户登录状态检查
       if (!user) {
-        // Store form data for later
+        console.warn('⚠️ 用户未登录，重定向到登录页');
         LinkCreationStore.setLinkData({
           destination: formData.url,
-          // 使用类型守卫确保 domain 正确转换为字符串或保持 undefined
           customDomain: formData.domain !== undefined 
             ? typeof formData.domain === 'string' 
               ? formData.domain 
               : String(formData.domain) 
             : undefined,
           shortLink: formData.shortLink,
-          // 对 n 和 ln 使用相同的类型转换逻辑
           n: formData.n !== undefined 
             ? typeof formData.n === 'string' 
               ? formData.n 
@@ -148,33 +160,46 @@ export default function CreateShortlinkForm({
             : undefined
         });
         
-        // Redirect to signup with locale and next path
+        console.log('🔄 重定向到:', `/${locale}/signup?next=/${locale}/create`);
         router.push(`/${locale}/signup?next=/${locale}/create`);
+        console.groupEnd();
         return;
       }
 
-      // If external handleCreateLink is provided, use it
+      // 外部处理函数
       if (handleCreateLink) {
-        await handleCreateLink()
-        return
+        console.log('🔧 执行外部 handleCreateLink');
+        await handleCreateLink();
+        console.groupEnd();
+        return;
       }
 
-      // Normal submission logic
+      // 主要提交逻辑
+      console.log('📤 调用 createShortLink');
       const response = await createShortLink(formData);
+      console.log('📥 createShortLink 响应:', response);
 
       if (!response) {
+        console.error('❌ 创建短链接返回空响应');
+        console.groupEnd();
         return;
       }
 
       if (response.error) {
+        console.error('❌ 创建短链接错误:', response.error);
+        console.groupEnd();
         return;
       }
 
-      // Save to user's links if successful
+      // 成功创建链接后的处理
       if (response.data?.key) {
+        console.log('✅ 成功生成短链接 Key:', response.data.key);
+        
         const linkName = locale === 'zh' 
           ? `${formData.n} ${formData.ln}` 
           : `${formData.ln} ${formData.n}`;
+        
+        console.log('📝 链接名称:', linkName);
         
         const body = [
           {
@@ -185,19 +210,38 @@ export default function CreateShortlinkForm({
             link_name: linkName, 
           },
         ];
-        await supabase.from('links').insert(body);
+
+        console.log('💾 准备保存到 Supabase:', body);
+        const { error: supabaseError } = await supabase.from('links').insert(body);
+        
+        if (supabaseError) {
+          console.error('❌ Supabase 插入错误:', supabaseError);
+        }
       }
 
-      setShortedLink(`https://${response.data?.domain}/${response.data?.key}`);
+      // 更新状态
+      const shortLink = `https://${response.data?.domain}/${response.data?.key}`;
+      console.log('🔗 生成的短链接:', shortLink);
+      
+      setShortedLink(shortLink);
       setSomeResponseInfo(response.data);
       
-      const isAdmin = user.id === 'your-admin-id'; // Replace with actual admin ID
+      // 管理员特殊处理
+      const isAdmin = user.id === 'your-admin-id';
       const token = isAdmin ? env.DUB_DOT_CO_TOKEN ?? '' : '';
       const projectSlug = isAdmin ? env.DUB_DOT_CO_SLUG ?? '' : '';
 
+      console.log('🔑 管理员信息:', { isAdmin, token, projectSlug });
+
       setAuthKey(token);
       setProjectSlug(projectSlug);
+
+      console.log('✨ 短链接创建流程完成');
+      console.groupEnd();
+
     } catch (error) {
+      console.error('❌ 创建短链接异常:', error);
+      console.groupEnd();
       catchError(error);
     } finally {
       setIsLoading(false);
