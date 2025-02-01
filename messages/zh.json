@@ -213,6 +213,18 @@
     "customShortLink": "自定义短链接",
     "enterCustomShortLink": "输入自定义短链接",
     "createShortLink": "创建短链接",
+    "errors": {
+      "invalidUrl": "无效的 URL",
+      "urlRequired": "请输入有效的目标链接",
+      "creationFailed": "短链接创建失败",
+      "unknownError": "发生未知错误",
+      "databaseSaveFailed": "保存链接到数据库失败",
+      "submissionFailed": "提交过程中发生错误"
+    },
+    "success": {
+      "linkCreated": "短链接创建成功",
+      "linkCreatedDescription": "您的短链接已成功生成"
+    },
     "title": "创建短链接",
     "destination": "目标 URL",
     "custom-domain": "自定义域名",
