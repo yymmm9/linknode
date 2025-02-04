@@ -205,9 +205,11 @@ export default function CreateShortlinkForm({
           {
             user_id: user.id,
             key: response.data.key,
-            n: formData.n,  
-            ln: formData.ln, 
+            // n: formData.n,  
+            // ln: formData.ln, 
+            link_id: response.data.id, 
             link_name: linkName, 
+            locale: locale,
           },
         ];
 
