@@ -72,7 +72,7 @@ export default function DeleteShortlinkForm() {
         readOnly
       />
       <div className="flex w-full items-center justify-between gap-2">
-        {/* <Button
+        <Button
           disabled={isLoading}
           variant={'destructive'}
           className="w-full"
@@ -92,7 +92,7 @@ export default function DeleteShortlinkForm() {
               {t('delete')}
             </>
           )}
-        </Button> */}
+        </Button>
         <Button
           disabled={isLoading}
           className="w-full"

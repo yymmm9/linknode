@@ -1,7 +1,6 @@
 'use server';
 
-import { env } from '@/env.mjs';
-import { catchError, dub, generateNanoId } from '@/lib/utils';
+import { dub } from '@/lib/utils';
 import type { APIResponse, ShortLinkProps } from '@/types';
 
 export default async function retrieveShortLink(key: string) {

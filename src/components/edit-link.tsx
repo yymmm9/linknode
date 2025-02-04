@@ -23,6 +23,7 @@ import ExtraLinksForm from './forms/extra-links-form';
 import ProfileForm from './forms/profile-form';
 import SocialLinksForm from './forms/social-links-form';
 import { toast } from "sonner"
+import { encodeData } from '@/lib/utils';
 
 interface EditShortLinkProps {
   linkKey: string;
@@ -31,18 +32,49 @@ interface EditShortLinkProps {
 
 // 解析链接数据的函数
 const parseLinkData = (url: string) => {
+  console.log("parseLinkData 输入", {url})
   try {
+    // 尝试多种解析方式
     const urlParts = url.split('?');
     const queryString = urlParts[1];
-    if (!queryString) return null;
+    
+    // 方法1：查询参数解析
+    if (queryString) {
+      const params = new URLSearchParams(queryString);
+      const rawData = params.get('data');
+      if (rawData) {
+        const parsedData = JSON.parse(decodeURIComponent(rawData));
+        console.log("parseLinkData 查询参数解析结果", parsedData);
+        return parsedData;
+      }
+    }
 
-    const params = new URLSearchParams(queryString);
-    const rawData = params.get('data');
-    if (!rawData) return null;
+    // 方法2：尝试直接解析 URL
+    try {
+      const parsedUrl = new URL(url);
+      const dataParam = parsedUrl.searchParams.get('data');
+      if (dataParam) {
+        const parsedData = JSON.parse(decodeURIComponent(dataParam));
+        console.log("parseLinkData URL解析结果", parsedData);
+        return parsedData;
+      }
+    } catch (urlError) {
+      console.warn("URL 解析失败", urlError);
+    }
 
-    return JSON.parse(decodeURIComponent(rawData));
+    // 方法3：尝试直接解析 JSON
+    try {
+      const parsedData = JSON.parse(decodeURIComponent(url));
+      console.log("parseLinkData JSON解析结果", parsedData);
+      return parsedData;
+    } catch (jsonError) {
+      console.warn("JSON 解析失败", jsonError);
+    }
+
+    console.warn("无法解析链接数据");
+    return null;
   } catch (error) {
-    console.error('[parseLinkData] Error:', error);
+    console.error('[parseLinkData] 解析错误:', error);
     return null;
   }
 };
@@ -58,10 +90,21 @@ export default function EditShortLink({ linkKey: key, linkId: id }: EditShortLin
     queryKey: ['link', key],
     queryFn: async () => {
       const result = await retrieveShortLink(key);
-      if (!result?.data?.url) return null;
-      return parseLinkData(result.data.url);
+      console.log('retrieveShortLink 结果', {result, key});
+      
+      // 如果没有 URL，返回 null
+      if (!result?.data?.url) {
+        console.warn('没有找到链接 URL');
+        return null;
+      }
+
+      // 解析链接数据
+      const parsedData = parseLinkData(result.data.url);
+      console.log('解析后的链接数据', parsedData);
+      
+      return parsedData;
     },
-    enabled: Boolean(key) && isDrawerOpen, // 只在抽屉打开时获取数据
+    enabled: Boolean(key), // 只要有 key 就获取数据，不依赖抽屉状态
     staleTime: 1000 * 60 * 5, // 5分钟内认为数据是新鲜的
     cacheTime: 1000 * 60 * 30, // 缓存30分钟
   });
@@ -74,8 +117,9 @@ export default function EditShortLink({ linkKey: key, linkId: id }: EditShortLin
     }
 
     try {
-      const encodedData = encodeURIComponent(JSON.stringify(contextData));
-      const updateUrl = `${window.location.protocol}//${window.location.host}?data=${encodedData}`;
+      const encodedData = encodeData(contextData);
+      console.log({encodedData})
+      const updateUrl = `${window.location.protocol}//${window.location.host}/link?data=${encodedData}`;
       
       const result = await updateShortLink({
         id,
@@ -100,6 +144,7 @@ export default function EditShortLink({ linkKey: key, linkId: id }: EditShortLin
   const handleDrawerChange = useCallback((open: boolean) => {
     setIsDrawerOpen(open);
     if (open && linkData) {
+      // 如果有数据，更新 context
       setData(linkData);
     }
   }, [linkData, setData]);
@@ -126,7 +171,7 @@ export default function EditShortLink({ linkKey: key, linkId: id }: EditShortLin
       </DrawerTrigger>
 
       <DrawerContent>
-        <div className="mx-auto w-full max-w-sm">
+        <div className="mx-auto w-full max-w-2xl">
           <DrawerHeader>
             <DrawerTitle>{t('edit-short-link')}</DrawerTitle>
             <DrawerDescription>
@@ -153,7 +198,7 @@ export default function EditShortLink({ linkKey: key, linkId: id }: EditShortLin
             )}
           </div>
 
-          <DrawerFooter className="mt-4">
+          <DrawerFooter className="">
             <div className="flex w-full gap-2">
               <Button
                 className="flex-1"
@@ -177,7 +222,7 @@ export default function EditShortLink({ linkKey: key, linkId: id }: EditShortLin
             </div>
           </DrawerFooter>
 
-          <div className="flex justify-between items-center mt-4">
+          {/* <div className="flex justify-between items-center mt-4">
             <Button 
               variant="outline" 
               onClick={testToast} 
@@ -185,7 +230,7 @@ export default function EditShortLink({ linkKey: key, linkId: id }: EditShortLin
             >
               测试 Toast 通知
             </Button>
-          </div>
+          </div> */}
         </div>
       </DrawerContent>
     </Drawer>

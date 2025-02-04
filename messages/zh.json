@@ -64,7 +64,10 @@
     "copy": "复制链接",
     "Copy": "复制链接",
     "personal-info": "个人信息",
-    "account-settings": "账户设置"
+    "account-settings": "账户设置",
+    "PageTitle": "个人资料",
+    "CreateLink": "创建链接",
+    "Copied": "已复制"
   },
   "SocialLinksForm": {
     "Title": "社交链接",
@@ -184,11 +187,13 @@
     "Copy": "复制",
     "title": "编辑短链接",
     "save": "保存更改",
-    "cancel": "取消"
+    "cancel": "取消",
+    "submit": "提交"
   },
   "Header": {
     "Home": "首页",
     "Create": "创建您的链接",
+    "Profile":"您的链接们",
     "Docs": "文档",
     "Login": "登录",
     "Signup": "注册",

@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { customAlphabet } from 'nanoid';
 import { encode, decode } from 'js-base64';
-import { toast } from 'sonner';
+
 import type { DataProps, ShortLinkProps } from '@/types';
 // import { createClient } from '@supabase/supabase-js';
 

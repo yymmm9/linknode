@@ -58,6 +58,7 @@ export default function Header() {
   const navItems: NavItem[] = [
     { href: '/', label: t('Home') },
     { href: '/create', label: t('Create') },
+    { href: '/profile', label: t('Profile') },
   ];
 
   // 渲染导航链接的函数，支持移动和桌面视图
