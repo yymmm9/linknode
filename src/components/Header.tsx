@@ -92,7 +92,7 @@ export default function Header() {
   return (
     <HideOnScroll
       id="site-header"
-      className="fixed top-2 md:top-6 w-full z-30 max-w-screen-xl px-8 mx-auto md:px-12 lg:px-32"
+      className="fixed top-2 md:top-6 w-full z-30 max-w-screen-xl px-8 mx-auto md:px-12 lg:px-32 left-1/2 -translate-x-1/2"
     >
       <div className="flex items-center justify-between gap-3 h-14 rounded-2xl px-3 backdrop-blur-md bg-white bg-opacity-80 ring-violet-50 ring-2">
         <div>
