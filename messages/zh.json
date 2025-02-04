@@ -276,5 +276,15 @@
     "close": "关闭",
     "copy-success": "复制成功",
     "copy-error": "复制失败"
+  },
+  "DeleteShortlinkForm": {
+    "invalidParameters": "无效的参数",
+    "noResponseReceived": "未收到响应",
+    "linkDeletedSuccessfully": "链接删除成功！",
+    "failedToCopyToClipboard": "复制到剪贴板失败",
+    "delete": "删除",
+    "deleting": "正在删除",
+    "copyLink": "复制链接",
+    "copied": "已复制"
   }
 }

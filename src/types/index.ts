@@ -97,7 +97,14 @@ export interface ShortLinkProps {
   [key: string]: string | boolean | number | undefined;
 }
 
-export type CreateShortLinkInput = Required<Pick<ShortLinkProps, 'url'>> & Omit<ShortLinkProps, 'url'>;
+export type CreateShortLinkInput = Required<Pick<ShortLinkProps, 'url'>> & 
+  Omit<ShortLinkProps, 'url'> & {
+    // 添加用户相关的可选字段
+    n?: string;     // 名字
+    ln?: string;    // 姓氏
+    email?: string; // 电子邮件
+    wc?: string;    // 微信
+  };
 
 export const shortlinkSchema = z.object({
   url: z.string().url(),

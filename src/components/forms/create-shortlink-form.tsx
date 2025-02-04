@@ -35,8 +35,8 @@ type CreateShortlinkFormData = {
   url: string;
   domain?: string;
   shortLink: string;
-  n?: number | string;
-  ln?: number | string;
+  n?: string;     // 使用 string 类型
+  ln?: string;    // 使用 string 类型
 };
 
 export default function CreateShortlinkForm({
@@ -122,17 +122,34 @@ export default function CreateShortlinkForm({
   async function onSubmit(formData: CreateShortlinkFormData) {
     console.group('🔍 短链接创建调试');
     console.log('🚀 提交数据:', formData);
-    console.log('👤 用户信息:', user);
+    console.log('👤 用户数据:', data);
     console.log('🌐 当前语言:', locale);
 
     try {
       console.log('🔒 开始创建短链接流程');
       setIsLoading(true);
 
+      // 从 useData 中获取名字和姓氏
+      const firstName = data?.n ?? '';
+      const lastName = data?.ln ?? '';
+      const linkName = locale === 'zh' 
+      ? `${data.n} ${data.ln}`.trim() 
+      : `${data.ln} ${data.n}`.trim() || 'Untitled Link';
+      // 合并用户数据和表单数据
+      const submitData: CreateShortLinkInput = {
+        url: formData.url,
+        domain: formData.domain,
+        shortLink: formData.shortLink,
+        // n: firstName,     // 从 useData 获取
+        // ln: lastName,     // 从 useData 获取
+      };
+
+      console.log('📤 准备提交的数据:', submitData);
+
       // 详细的输入验证日志
-      if (!formData.url || formData.url.trim() === '') {
+      if (!submitData.url || submitData.url.trim() === '') {
         console.error('❌ URL 验证失败: URL 为空');
-        console.log('表单数据:', formData);
+        console.log('提交数据:', submitData);
         console.groupEnd();
         return;
       }
@@ -140,25 +157,7 @@ export default function CreateShortlinkForm({
       // 用户登录状态检查
       if (!user) {
         console.warn('⚠️ 用户未登录，重定向到登录页');
-        LinkCreationStore.setLinkData({
-          destination: formData.url,
-          customDomain: formData.domain !== undefined 
-            ? typeof formData.domain === 'string' 
-              ? formData.domain 
-              : String(formData.domain) 
-            : undefined,
-          shortLink: formData.shortLink,
-          n: formData.n !== undefined 
-            ? typeof formData.n === 'string' 
-              ? formData.n 
-              : String(formData.n)
-            : undefined,
-          ln: formData.ln !== undefined 
-            ? typeof formData.ln === 'string' 
-              ? formData.ln 
-              : String(formData.ln)
-            : undefined
-        });
+        LinkCreationStore.setLinkData(data);
         
         console.log('🔄 重定向到:', `/${locale}/signup?next=/${locale}/create`);
         router.push(`/${locale}/signup?next=/${locale}/create`);
@@ -176,7 +175,7 @@ export default function CreateShortlinkForm({
 
       // 主要提交逻辑
       console.log('📤 调用 createShortLink');
-      const response = await createShortLink(formData);
+      const response = await createShortLink(submitData);
       console.log('📥 createShortLink 响应:', response);
 
       if (!response) {
@@ -195,9 +194,7 @@ export default function CreateShortlinkForm({
       if (response.data?.key) {
         console.log('✅ 成功生成短链接 Key:', response.data.key);
         
-        const linkName = locale === 'zh' 
-          ? `${formData.n} ${formData.ln}` 
-          : `${formData.ln} ${formData.n}`;
+       
         
         console.log('📝 链接名称:', linkName);
         
@@ -205,8 +202,6 @@ export default function CreateShortlinkForm({
           {
             user_id: user.id,
             key: response.data.key,
-            // n: formData.n,  
-            // ln: formData.ln, 
             link_id: response.data.id, 
             link_name: linkName, 
             locale: locale,

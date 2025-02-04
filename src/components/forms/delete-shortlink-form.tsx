@@ -8,18 +8,21 @@ import { Button } from '@/components/ui/button';
 import { Check, Copy, Loader2, Trash2 } from 'lucide-react';
 import deleteShortLink from '@/app/_actions/shortlink/delete';
 import { useAPIResponse } from '@/lib/context/api-response-context';
+import { useTranslations } from 'next-intl';
 
 export default function DeleteShortlinkForm() {
   const [hasCopied, setHasCopied] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const { someResponseInfo, authKey, projectSlug, setOpen, setShortedLink } =
     useAPIResponse();
+  
+  const t = useTranslations('DeleteShortlinkForm');
 
   async function handleDelete() {
     try {
       setIsLoading(true);
       if (!someResponseInfo?.id) {
-        toast.error('Invalid parameters');
+        toast.error(t('invalidParameters'));
         return;
       }
 
@@ -30,7 +33,7 @@ export default function DeleteShortlinkForm() {
       });
 
       if (!response) {
-        toast.error('No response received');
+        toast.error(t('noResponseReceived'));
         return;
       }
 
@@ -39,7 +42,7 @@ export default function DeleteShortlinkForm() {
         return;
       }
 
-      toast.success('Link deleted successfully!');
+      toast.success(t('linkDeletedSuccessfully'));
 
       setOpen(false);
       setShortedLink(null);
@@ -56,10 +59,10 @@ export default function DeleteShortlinkForm() {
       await navigator.clipboard.writeText(shortedLink);
       setHasCopied(true);
     } catch (error) {
-      toast.error('Failed to copy to clipboard');
+      toast.error(t('failedToCopyToClipboard'));
       return null;
     }
-  }, [someResponseInfo]);
+  }, [someResponseInfo, t]);
 
   return (
     <div className="grid gap-2">
@@ -69,7 +72,7 @@ export default function DeleteShortlinkForm() {
         readOnly
       />
       <div className="flex w-full items-center justify-between gap-2">
-        <Button
+        {/* <Button
           disabled={isLoading}
           variant={'destructive'}
           className="w-full"
@@ -81,15 +84,15 @@ export default function DeleteShortlinkForm() {
                 className="mr-2 size-4 animate-spin"
                 aria-hidden="true"
               />
-              Deleting
+              {t('deleting')}
             </>
           ) : (
             <>
               <Trash2 className="mr-2 size-4" />
-              Delete
+              {t('delete')}
             </>
           )}
-        </Button>
+        </Button> */}
         <Button
           disabled={isLoading}
           className="w-full"
@@ -98,12 +101,12 @@ export default function DeleteShortlinkForm() {
           {hasCopied ? (
             <>
               <Check className="mr-2 size-4" />
-              Copied
+              {t('copied')}
             </>
           ) : (
             <>
               <Copy className="mr-2 size-4" />
-              Copy Link
+              {t('copyLink')}
             </>
           )}
         </Button>

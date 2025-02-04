@@ -7,71 +7,80 @@ import {
   CreateShortLinkInput, 
   normalizeShortLinkValue 
 } from '@/types';
+import { z } from 'zod';
 
-/**
- * 创建短链接
- * @param shortUrlInfo - 短链接创建所需的信息
- * @returns 包含创建结果的响应对象
- */
+// 定义输入验证模式
+const ShortLinkInputSchema = z.object({
+  url: z.string().url('请提供有效的目标链接'),
+  domain: z.string().optional(),
+  shortLink: z.string().optional(),
+  projectSlug: z.string().optional(),
+  n: z.string().optional(),
+  ln: z.string().optional()
+});
+
 export default async function createShortLink(shortUrlInfo: CreateShortLinkInput) {
+  // 日志记录输入信息
+  console.group('🔗 创建短链接');
+  console.log('📥 输入信息:', shortUrlInfo);
+
   try {
-    // 验证必要参数
-    if (!shortUrlInfo?.url) {
+    // 输入验证
+    const validationResult = ShortLinkInputSchema.safeParse(shortUrlInfo);
+    if (!validationResult.success) {
+      console.error('❌ 输入验证失败:', validationResult.error.errors);
       return {
         success: false,
-        error: '目标 URL 不能为空',
+        error: '输入验证失败：' + validationResult.error.errors.map(e => e.message).join(', '),
         data: null,
       };
     }
 
-    // 规范化和生成必要参数
+    // 生成必要参数
     const projectSlug = normalizeShortLinkValue(shortUrlInfo.projectSlug) ?? env.DUB_DOT_CO_SLUG;
     const shortLink = normalizeShortLinkValue(shortUrlInfo.shortLink) ?? generateNanoId();
-    const domain = normalizeShortLinkValue(shortUrlInfo.domain) ?? env.NEXT_PUBLIC_BASE_SHORT_DOMAIN;
 
-    // 构建 API 请求参数
-    const createParams = {
-      url: shortUrlInfo.url.trim(),
+    console.log('🔧 生成参数:', { projectSlug, shortLink });
+
+    // 使用 Dub API 创建短链接
+    const response = await dub.links.create({
+      url: shortUrlInfo.url,
       key: shortLink,
-      domain,
-      ...(projectSlug && { projectSlug }),
-    };
+      domain: normalizeShortLinkValue(shortUrlInfo.domain) ?? env.NEXT_PUBLIC_BASE_SHORT_DOMAIN,
+      ...(shortUrlInfo.projectSlug && { projectSlug }),
+    });
 
-    console.log('🔍 创建短链接参数:', createParams);
+    console.log('✅ Dub API 响应:', response);
 
-    // 调用 Dub API 创建短链接
-    const response = await dub.links.create(createParams);
-
-    if (!response) {
-      throw new Error('API 响应为空');
-    }
-
-    // 返回成功响应
+    // 返回 Dub API 响应
+    console.groupEnd();
     return {
       success: true,
       error: null,
       data: response as unknown as APIResponse,
-      // data: {
-      //   key: response.key,
-      //   url: response.url,
-      //   domain: response.domain,
-      //   ...(response.projectSlug && { projectSlug: response.projectSlug }),
-      // } as APIResponse,
     };
-
   } catch (error) {
-    // 错误日志记录
-    console.error('❌ 创建短链接失败:', error);
-    catchError(error);
+    // 详细的错误处理和日志记录
+    console.error('❌ 创建短链接错误:', error);
 
-    // 返回用户友好的错误信息
     const errorMessage = error instanceof Error 
       ? error.message 
       : '创建短链接时发生未知错误';
 
+    // 根据错误类型提供更具体的错误信息
+    let detailedError = '创建短链接失败';
+    if (errorMessage.includes('invalid_url')) {
+      detailedError = '无效的目标链接';
+    } else if (errorMessage.includes('rate_limit')) {
+      detailedError = '创建链接频率超限，请稍后再试';
+    } else if (errorMessage.includes('unauthorized')) {
+      detailedError = '未授权的操作，请检查您的权限';
+    }
+
+    console.groupEnd();
     return {
       success: false,
-      error: errorMessage,
+      error: detailedError,
       data: null,
     };
   }
