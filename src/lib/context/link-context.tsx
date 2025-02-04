@@ -51,19 +51,19 @@ const demoData: DataProps = {
     {
       id: 1,
       i: 'ph:laptop-duotone',
-      l: 'My Portfolio Website',
+      l: 'Latest Project',
       u: 'https://example.com',
     },
     {
       id: 2,
       i: 'ant-design:robot-outlined',
-      l: 'My Chatbot Project',
+      l: 'Customer Support',
       u: 'https://example.com/chatbot',
     },
     {
       id: 3,
       i: 'fluent:brain-circuit-20-regular',
-      l: 'My Machine Learning Project',
+      l: '2024 Report',
       u: 'https://example.com/ml',
     },
   ],
