@@ -39,13 +39,18 @@
   "ProfileForm": {
     "Title": "个人信息",
     "Description": "简介",
-    "NamePlaceholder": "三",
-    "Lastname": "姓",
-    "Name": "名",
-    "LastnamePlaceholder": "张",
+    "FirstName": "名字",
+    "FirstNamePlaceholder": "请输入名字",
+    "LastName": "姓氏",
+    "LastNamePlaceholder": "请输入姓氏",
     "Phone": "电话",
     "Email": "邮箱",
     "About": "关于",
+    "Address": "地址",
+    "AddressPlaceholder": "请输入地址",
+    "Remarks": "备注",
+    "RemarksPlaceholder": "请输入备注",
+    "SaveVCard": "保存联系人",
     "title": "个人资料设置",
     "update": "更新资料",
     "cancel": "取消",
@@ -57,7 +62,16 @@
     "TitlePlaceholder": "输入您的职位",
     "NoInformationTitle": "尚未添加个人信息",
     "NoInformationDescription": "添加您的个人信息，让别人更好地了解您",
-    "AddInformation": "添加信息"
+    "AddInformation": "添加信息",
+    "FirstName": "名字",
+    "FirstNamePlaceholder": "请输入名字",
+    "LastName": "姓氏", 
+    "LastNamePlaceholder": "请输入姓氏",
+    "Address": "地址",
+    "AddressPlaceholder": "请输入地址",
+    "Remarks": "备注",
+    "RemarksPlaceholder": "请输入备注",
+    "SaveVCard": "保存联系人"
   },
   "Profile": {
     "LinksTitle": "创建的链接",
@@ -85,7 +99,7 @@
     "title": "社交链接",
     "add-link": "添加链接",
     "placeholder-label": "亚马逊",
-    "placeholder-url": "https://example.com",
+    "placeholder-url": "example.com",
     "placeholder-icon": "ri:4k-fill"
   },
   "Description": {
@@ -266,7 +280,7 @@
     "label": "标签",
     "destinationUrl": "目标网址",
     "placeholderLabel": "亚马逊",
-    "placeholderUrl": "https://example.com",
+    "placeholderUrl": "example.com",
     "placeholderIcon": "ri:4k-fill",
     "sort-by": "排序方式",
     "date": "日期",
@@ -291,5 +305,8 @@
     "deleting": "正在删除",
     "copyLink": "复制链接",
     "copied": "已复制"
+  },
+  "CreatePage": {
+    "title": "创建页面"
   }
 }

@@ -1,18 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useData } from '@/lib/context/link-context';
+import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
+import { useData } from '@/lib/context/link-context';
 
 type InputChangeEvent = React.ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement
@@ -21,11 +23,11 @@ type InputChangeEvent = React.ChangeEvent<
 export default function ProfileForm() {
   const { data, updateProfileInfo } = useData();
   const t = useTranslations('ProfileForm');
-
   const handleInputChange = (event: InputChangeEvent) => {
     const { name, value } = event.target;
     updateProfileInfo(name, value);
-  };
+  }
+
 
   return (
     <Card className="w-full">
@@ -36,61 +38,47 @@ export default function ProfileForm() {
       <CardContent className="grid gap-2">
         <div className="grid gap-2 grid-cols-2">
           <div>
-            <Label htmlFor="name">{t('Name')}</Label>
+            <Label htmlFor="firstName">{t('FirstName')}</Label>
             <Input
-              id="name"
+              id="firstName"
               name="n"
-              type="text"
-              placeholder={t('NamePlaceholder')}
+              placeholder={t('FirstNamePlaceholder')}
               value={data.n}
               onChange={handleInputChange}
-              autoComplete="name"
+              autoComplete="given-name"
             />
           </div>
           <div>
-            <Label htmlFor="lastname">{t('Lastname')}</Label>
+            <Label htmlFor="lastName">{t('LastName')}</Label>
             <Input
-              id="lastname"
+              id="lastName"
               name="ln"
-              type="text"
-              placeholder={t('LastnamePlaceholder')}
+              placeholder={t('LastNamePlaceholder')}
               value={data.ln}
               onChange={handleInputChange}
               autoComplete="family-name"
             />
           </div>
-        </div>
-        <div className="grid gap-2 md:grid-cols-2">
+        
           <div>
             <Label htmlFor="phone">{t('Phone')}</Label>
             <Input
               id="phone"
               name="p"
-              type="text"
+              type="tel"
               placeholder="+34 ..."
               value={data.p}
               onChange={handleInputChange}
+              autoComplete="tel"
             />
           </div>
-          <div>
-            <Label htmlFor="email">{t('Email')}</Label>
-            <Input
-              id="email"
-              name="em"
-              type="email"
-              placeholder="https://example.com"
-              value={data.em}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <div className="grid gap-2 md:grid-cols-2">
+        
+        
           <div>
             <Label htmlFor="title">{t('formTitle')}</Label>
             <Input
               id="title"
               name="ti"
-              type="text"
               placeholder={t('TitlePlaceholder')}
               value={data.ti}
               onChange={handleInputChange}
@@ -107,8 +95,7 @@ export default function ProfileForm() {
               onChange={handleInputChange}
             />
           </div>
-        </div>
-        <div className="grid gap-2 md:grid-cols-2">
+        
           <div>
             <Label htmlFor="role">{t('Role')}</Label>
             <Input
@@ -117,6 +104,17 @@ export default function ProfileForm() {
               type="text"
               placeholder={t('RolePlaceholder')}
               value={data.r}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <Label htmlFor="address">{t('Address')}</Label>
+            <Input
+              id="address"
+              name="addr"
+              type="text"
+              placeholder={t('AddressPlaceholder')}
+              value={data.addr}
               onChange={handleInputChange}
             />
           </div>

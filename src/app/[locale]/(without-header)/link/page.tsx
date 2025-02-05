@@ -28,10 +28,10 @@ export function generateMetadata({ searchParams }: SearchParamsProps) {
     openGraph: {
       type: 'website',
       locale: 'en_US',
-      url: 'https://hov.vercel.app',
+      url: 'https://on.hov.sh',
       title: `${data.n}'s - hov`,
       description: `Find all of ${data.n}'s links in one place.`,
-      images: `https://hov.vercel.app/api/og?data=${encodeURI(
+      images: `https://on.hov.sh/api/og?data=${encodeURI(
         data.n ? data.n : 'Made with hov',
       )}`,
       siteName: `${data.n}'s - hov`,
@@ -40,7 +40,7 @@ export function generateMetadata({ searchParams }: SearchParamsProps) {
       card: 'summary_large_image',
       title: `${data.n} - hov`,
       description: `Find all of ${data.n}'s links in one place.`,
-      images: `https://hov.vercel.app/api/og?data=${encodeURI(
+      images: `https://on.hov.sh/api/og?data=${encodeURI(
         data.n ? data.n : 'Made with hov',
       )}`,
       creator: '@',
@@ -52,8 +52,9 @@ export default function Page({ searchParams }: SearchParamsProps) {
   const t = useTranslations('LinkPage');
 
   if (!searchParams.data) return <NotFound />;
-
-  const data = decodeData(searchParams.data);
+console.log("searchParams.data",searchParams.data)
+const data = decodeData(searchParams.data);
+console.log("decode.data",data)
 
   if (!data) return <LinkPageError />;
 
@@ -71,7 +72,13 @@ export default function Page({ searchParams }: SearchParamsProps) {
         {selectedBgComponent}
       </div>
       <div className="hide_scrollbar p-2 pt-10">
-        {data ? <DisplayData acc={data} /> : <DataLoading />}
+        {data ? (
+          <DisplayData 
+            acc={data} 
+          />
+        ) : (
+          <DataLoading />
+        )}
       </div>
       <div className="fixed bottom-0 left-0 w-full text-center p-4 bg-gray-100 flex gap-4 items-center justify-center">
         <div className="text-sm text-gray-600">

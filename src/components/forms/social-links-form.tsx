@@ -17,32 +17,34 @@ import {
   YoutubeIcon,
   MailIcon,
 } from 'lucide-react';
-import { WhatsappIcon } from '../icon/whatsapp';
-import { AkarIconsTelegramFill } from '../icon/telegram';
+import { MdiWhatsapp } from '../icon/whatsapp';
+import { TablerBrandTelegram } from '../icon/telegram';
 import { useTranslations } from 'next-intl';
 
 import { SocialInput } from '@/components/ui/social-input';
 import { useData } from '@/lib/context/link-context';
 import { ScrollArea } from '../ui/scroll-area';
 import { MdiInstagram } from '../icon/instagram';
+import { MdiLinkedin } from '../icon/linkedin';
+import { MdiTwitter } from '../icon/twitter';
 
 const socialLinksProvider: SocialLinkProviderProps[] = [
   { name: 'facebook', icon: FacebookIcon, id: 'f', placeholder: '' },
-  { name: 'twitter', icon: TwitterIcon, id: 't', placeholder: '' },
+  { name: 'twitter', icon: MdiTwitter, id: 't', placeholder: '' },
   { name: 'instagram', icon: MdiInstagram, id: 'ig', placeholder: '' },
   {
     name: 'telegram',
-    icon: AkarIconsTelegramFill,
+    icon: TablerBrandTelegram,
     id: 'tg',
     placeholder: '',
   },
   { name: 'youtube', icon: YoutubeIcon, id: 'y', placeholder: '' },
   { name: 'email', icon: MailIcon, id: 'e', placeholder: '' },
   { name: 'github', icon: GithubIcon, id: 'gh', placeholder: '' },
-  { name: 'linkedin', icon: LinkedinIcon, id: 'l', placeholder: '' },
+  { name: 'linkedin', icon: MdiLinkedin, id: 'l', placeholder: '' },
   {
     name: 'whatsapp',
-    icon: WhatsappIcon,
+    icon: MdiWhatsapp,
     id: 'w',
     placeholder: 'wa.me/+34627620232',
   },

@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Tooltip, TooltipTrigger, TooltipContent } from './ui/tooltip';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip';
 import { Button } from './ui/button';
 import { CopyIcon, CheckIcon } from 'lucide-react';
 import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 
 export const stripSpecialPrefixes = (url: string): string => {
   return url.replace(/^(tel:|mailto:)/i, '');
@@ -71,10 +72,12 @@ export function CopyToClipboardWrapper({
   url,
   children,
   message,
+  className
 }: {
   url: any;
   children: any;
   message?: string;
+  className?: string;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -96,6 +99,7 @@ export function CopyToClipboardWrapper({
   };
 
   return (
+    <TooltipProvider>
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
@@ -103,7 +107,7 @@ export function CopyToClipboardWrapper({
           // size="icon"
           onClick={copyToClipboard}
           disabled={copied}
-          className="w-full p-0 bg-transparent hover:bg-transparent"
+          className={cn("w-full p-0 bg-transparent hover:bg-transparent", className)}
           // className="relative size-4 disabled:opacity-100"
         >
           {children}
@@ -131,5 +135,6 @@ export function CopyToClipboardWrapper({
         <p>Copy</p>
       </TooltipContent>
     </Tooltip>
+    </TooltipProvider>
   );
 }

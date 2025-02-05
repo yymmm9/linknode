@@ -17,7 +17,7 @@ export default function Home() {
       {/* <section className="flex h-screen flex-col items-center justify-center gap-6 pb-6 lg:col-span-2 lg:px-20 lg:pb-0"></section> */}
 
       <section className="relative overflow-hidden border-b">
-        <div className="max-w-screen-xl px-8 py-16 mx-auto md:px-12 lg:px-32 lg:py-24">
+        <div className="max-w-screen-xl px-8 py-16 mx-auto md:px-12 lg:px-32 lg:py-24 !pt-16">
           <div className="text-center flex flex-col items-center">
             <span className="font-mono text-sm font-medium tracking-tight text-violet-600 uppercase">
               会员卡 APP 预计6月上线

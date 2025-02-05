@@ -13,7 +13,16 @@ import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import ContactDrawer from './contact-drawer';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+import { cn } from "@/lib/utils";
+import { 
+  MapPin, 
+  Phone, 
+  Mail, 
+  User, 
+  FileText,
+  Briefcase 
+} from "lucide-react";
+import { CopyToClipboardWrapper } from './copy-to-clipboard';
 
 function getInitials(firstName: string = '', lastName: string = '') {
   // Check if the name is Chinese
@@ -51,7 +60,7 @@ export default function DisplayData({ acc }: DisplayDataProps) {
   const t = useTranslations('ProfileForm');
   const localeValue = useLocale();
 
-  // 优化信息检查逻辑，使用更简洁的方法
+  // 优化信息检查逻辑，直接从 acc 获取
   const hasNoInformation = React.useMemo(() => {
     const infoFields = [
       acc?.n, 
@@ -61,13 +70,68 @@ export default function DisplayData({ acc }: DisplayDataProps) {
       acc?.r, 
       acc?.d
     ];
-    return infoFields.every(field => !field || field.trim() === '');
+    return infoFields.every(field => !field || (typeof field === 'string' && field.trim() === ''));
   }, [acc]);
+
+  // 直接从 acc 获取姓名
+  const firstname = acc?.firstName || acc?.n || '';
+  const lastname = acc?.lastName || acc?.ln || '';
+  const fullname = formatName(firstname, lastname, localeValue);
+
+  // 重构社交链接检查逻辑
+  const socialLinks = React.useMemo(() => [
+    acc.f, acc.t, acc.ig, acc.tg, 
+    acc.gh, acc.l, acc.e, acc.w, acc.y
+  ], [acc]);
+  
+  const allSocialLinksAreEmpty = socialLinks.every(link => !link);
+
+  const dataFields = React.useMemo(() => [
+    // { 
+    //   icon: User, 
+    //   label: t('Name'), 
+    //   value: fullname 
+    // },
+    // { 
+    //   icon: Briefcase, 
+    //   label: t('Title'), 
+    //   value: acc.ti || '' 
+    // },
+    // { 
+    //   icon: Phone, 
+    //   label: t('Phone'), 
+    //   value: acc.p || '' 
+    // },
+    // { 
+    //   icon: Mail, 
+    //   label: t('Email'), 
+    //   value: acc.em || '' 
+    // },
+    { 
+      icon: MapPin, 
+      label: t('Address'), 
+      value: acc.addr || '' 
+    },
+    // { 
+    //   icon: FileText, 
+    //   label: t('Remarks'), 
+    //   value: acc.r || '' 
+    // }
+  ], [acc, t]);
+
+  // 添加 useEffect 用于调试
+  React.useEffect(() => {
+    console.log('DisplayData updated:', { 
+      acc, 
+      hasNoInformation, 
+      fullname 
+    });
+  }, [acc, hasNoInformation, fullname]);
 
   // 如果没有信息，渲染邀请添加信息的界面
   if (hasNoInformation) {
     return (
-      <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-8 overflow-y-scroll p-4 text-center">
+      <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-4 overflow-y-scroll p-4 text-center">
         <div className="flex flex-col items-center justify-center h-full space-y-4">
           <div className="bg-gray-100 rounded-full w-24 h-24 flex items-center justify-center mb-4">
             <svg 
@@ -105,20 +169,8 @@ export default function DisplayData({ acc }: DisplayDataProps) {
     );
   }
 
-  // 重构社交链接检查逻辑
-  const socialLinks = [
-    acc.f, acc.t, acc.ig, acc.tg, 
-    acc.gh, acc.l, acc.e, acc.w, acc.y
-  ];
-  const allSocialLinksAreEmpty = socialLinks.every(link => !link);
-
-  // 姓名处理逻辑
-  const firstname = acc?.firstName || acc?.n || '';
-  const lastname = acc?.lastName || acc?.ln || '';
-  const fullname = formatName(firstname, lastname, localeValue);
-
   return (
-    <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-8 overflow-y-scroll p-4">
+    <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-4 overflow-y-scroll p-4">
       <div className="z-50 text-center flex flex-col items-center">
         {/* 头像和个人信息渲染 */}
         <div className="relative mb-4">
@@ -138,10 +190,10 @@ export default function DisplayData({ acc }: DisplayDataProps) {
               {getInitials(firstname, lastname)}
             </AvatarFallback>
           </Avatar>
-        </div>
-        
-        <div className="mt-4 text-center">
-          <h1 className="text-2xl font-bold text-slate-800">
+          </div>
+          <div className="relative">
+
+          <h1 className="mt-2 text-xl font-bold text-gray-800">
             {fullname}
           </h1>
 
@@ -169,11 +221,32 @@ export default function DisplayData({ acc }: DisplayDataProps) {
         </div>
       </div>
 
+      {/* 基本信息渲染 */}
+      <div className="space-y-4">
+        {dataFields
+          .filter(field => field.value)
+          .map((field, index) => (
+            <CopyToClipboardWrapper 
+              key={index} 
+              className="bg-gray-50 rounded-lg"
+              url={field.value}
+            >
+            <div className='w-full relative flex items-center space-x-3 p-2 px-4 '>
+              <field.icon className=" absolute left-2 top-1/2 -translate-y-1/2 flex items-center size-6  text-gray-600" />
+              <div className='text-center w-full'>
+                {/* <p className="text-xs text-gray-500">{field.label}</p> */}
+                <p className="text-sm font-medium text-gray-800">{field.value}</p>
+              </div></div>
+            </CopyToClipboardWrapper>
+          ))
+        }
+      </div>
+
       {/* 社交链接渲染 */}
       {!allSocialLinksAreEmpty && (
         <div className="flex flex-wrap items-center justify-center gap-1">
           {Object.entries(acc)
-            .filter(([key]) => !['i', 'n', 'd', 'bg', 'ln', 'em', 'p', 'o', 'ti', 'r'].includes(key)) // 过滤掉 excludedKeys 中的键
+            .filter(([key]) => !['i', 'n', 'd', 'bg', 'ln', 'em', 'p', 'o', 'ti', 'r', 'addr'].includes(key)) // 过滤掉 excludedKeys 中的键
             .map(([key, value]: [string, any]) => {
               if (key !== 'ls' && value && !['i', 'n', 'd', 'bg', 'ln', 'em', 'p', 'o', 'ti', 'r'].includes(key)) {
                 const propIcon = iconMap[key as string];
@@ -214,24 +287,24 @@ export default function DisplayData({ acc }: DisplayDataProps) {
                 }
 
                 return (
-                  <span className="p-2" key={key}>
-                    <Link
-                      href={link}
-                      target={target}
-                      rel={rel}
-                      className="social-link-icon"
-                    >
-                      {propIcon ? (
-                        <IconWrapper className="size-6" Icon={propIcon} />
-                      ) : (
-                        <span>{name}</span>
-                      )}
-                    </Link>
-                  </span>
+                  <a 
+                    key={key}
+                    href={link}
+                    target={target}
+                    rel={rel}
+                    className="hover:bg-gray-100 p-2 rounded-full"
+                  >
+                    {propIcon ? (
+                      <IconWrapper className="size-6" Icon={propIcon} />
+                    ) : (
+                      <span>{name}</span>
+                    )}
+                  </a>
                 );
               }
               return null;
-            })}
+            })
+          }
         </div>
       )}
 
@@ -240,12 +313,13 @@ export default function DisplayData({ acc }: DisplayDataProps) {
         {acc.ls &&
           acc.ls.map((link, id) => (
             <ExtraLinksCard
+              key={id}
               label={link.l}
               icon={link.i}
               url={link.u}
-              key={id}
             />
-          ))}
+          ))
+        }
       </ul>
     </div>
   );

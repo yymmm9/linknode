@@ -7,7 +7,8 @@ export const names = {
   n: 'First Name', // 名
 
   ln: 'Last Name', // 姓
-
+  addr: 'Address',
+  
   d: 'Description', // 简介或描述
   f: 'Facebook', // Facebook 个人主页链接
   t: 'Twitter', // Twitter 个人主页链接

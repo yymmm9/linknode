@@ -39,13 +39,18 @@
   "ProfileForm": {
     "Title": "Profile Information",
     "Description": "Enter your profile or title information here.",
-    "Name": "Name",
-    "Lastname": "Lastname",
-    "NamePlaceholder": "John",
-    "LastnamePlaceholder": "Doe",
+    "FirstName": "First Name",
+    "FirstNamePlaceholder": "Enter your first name",
+    "LastName": "Last Name",
+    "LastNamePlaceholder": "Enter your last name",
     "Phone": "Phone",
     "Email": "Email",
     "About": "About yourself",
+    "Address": "Address",
+    "AddressPlaceholder": "Enter your address",
+    "Remarks": "Remarks",
+    "RemarksPlaceholder": "Enter your remarks",
+    "SaveVCard": "Save Contact",
     "Organization": "Organization",
     "OrganizationPlaceholder": "Enter your organization",
     "formTitle": "Title",
@@ -54,7 +59,16 @@
     "RolePlaceholder": "Select your role",
     "NoInformationTitle": "No Personal Information",
     "NoInformationDescription": "Add your personal information to help others understand you better",
-    "AddInformation": "Add Information"
+    "AddInformation": "Add Information",
+    "FirstName": "First Name",
+    "FirstNamePlaceholder": "Enter your first name",
+    "LastName": "Last Name", 
+    "LastNamePlaceholder": "Enter your last name",
+    "Address": "Address",
+    "AddressPlaceholder": "Enter your address",
+    "Remarks": "Remarks",
+    "RemarksPlaceholder": "Enter your remarks",
+    "SaveVCard": "Save Contact"
   },
   "Profile": {
     "PageTitle": "Your Profile",
@@ -210,12 +224,15 @@
       "signIn": "Sign In"
     }
   },
+  "CreatePage": {
+    "title": "Create Page"
+  },
   "SortableLinks": {
     "iconKey": "Icon Key",
     "label": "Label",
     "destinationUrl": "Destination URL",
     "placeholderLabel": "Amazon",
-    "placeholderUrl": "https://example.com",
+    "placeholderUrl": "example.com",
     "placeholderIcon": "ri:4k-fill"
   },
   "ContactDrawer": {
@@ -227,5 +244,8 @@
     "close": "Close",
     "copy-success": "Copied successfully",
     "copy-error": "Failed to copy"
+  },
+  "CreatePage": {
+    "title": "Create Page"
   }
 }
