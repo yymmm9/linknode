@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 import type { ExtraLinkProps, DataProps } from '@/types';
+import { safeBase64JsonDecode } from '@/lib/utils';
 
 interface DataContextType {
   data: DataProps;
@@ -11,6 +12,8 @@ interface DataContextType {
   updateAdditionalInfo: (updatedIndex: ExtraLinkProps[]) => void;
   showDemo: () => void;
   selectBackground: (bgcode: string) => void;
+  encodeData: () => string;
+  decodeData: (base64Data: string) => void;
 }
 
 const initialData: DataProps = {
@@ -119,6 +122,25 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     setData(demoData);
   };
 
+  const encodeData = useCallback(() => {
+    try {
+      const jsonStr = JSON.stringify(data);
+      return btoa(jsonStr);
+    } catch (error) {
+      console.error('编码错误:', error);
+      return '';
+    }
+  }, [data]);
+
+  const decodeData = useCallback((base64Data: string) => {
+    const defaultData: DataProps = {
+      n: '', i: '', d: '', f: '', t: '', ig: '', tg: '', gh: '', l: '', e: '', w: '', y: '', bg: '', ls: []
+    };
+
+    const decodedData = safeBase64JsonDecode(base64Data, defaultData);
+    setData(decodedData);
+  }, []);
+
   return (
     <DataContext.Provider
       value={{
@@ -131,6 +153,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         updateAdditionalInfo,
         showDemo,
         selectBackground,
+        encodeData,
+        decodeData,
       }}
     >
       {children}

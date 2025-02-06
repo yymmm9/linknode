@@ -59,16 +59,8 @@
     "RolePlaceholder": "Select your role",
     "NoInformationTitle": "No Personal Information",
     "NoInformationDescription": "Add your personal information to help others understand you better",
-    "AddInformation": "Add Information",
-    "FirstName": "First Name",
-    "FirstNamePlaceholder": "Enter your first name",
-    "LastName": "Last Name", 
-    "LastNamePlaceholder": "Enter your last name",
-    "Address": "Address",
-    "AddressPlaceholder": "Enter your address",
-    "Remarks": "Remarks",
-    "RemarksPlaceholder": "Enter your remarks",
-    "SaveVCard": "Save Contact"
+    "AddInformation": "Add Information"
+   
   },
   "Profile": {
     "PageTitle": "Your Profile",
@@ -129,7 +121,8 @@
     "bu-huo-ke-hu-zhen-shi-fan-kui-ping-lun-shu-liang-zeng-chang-bi-chuan-tong-fang-shi-gao-chu-534-zhu-ni-kuai-su-ti-sheng-pin-pai-ying-xiang-li": "Capture real customer feedback, increase the number of comments by 534% compared to traditional methods, and help you quickly increase brand influence.",
     "yi-chu-ji-fa-qing-song-huo-qu-ke-hu-hao-ping": "Ready to go, easily get customer praise",
     "caption": "Loyalty APP is launching in June",
-    "hov-links": "hov - links"
+    "hov-links": "个人链接中心"
+    
   },
   "Features": {
     "zhen-shi-de-hao-ping-bang-ni-jian-li-kou-bei-ying-de-qian-zai-ke-hu-de-xin-ren-ding-dan-zi-ran-er-ran-jiu-lai-le": "Genuine reviews build your reputation, earn potential customer trust, and orders follow naturally.",
@@ -244,8 +237,5 @@
     "close": "Close",
     "copy-success": "Copied successfully",
     "copy-error": "Failed to copy"
-  },
-  "CreatePage": {
-    "title": "Create Page"
   }
 }

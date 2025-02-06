@@ -210,3 +210,46 @@ export function checkValidCustomCredentials(shortUrlInfo: ShortLinkProps) {
 
   return false;
 }
+
+/**
+ * 安全地解码 Base64 编码的 JSON 字符串
+ * @param base64Str Base64 编码的 JSON 字符串
+ * @param defaultValue 解码失败时返回的默认值
+ * @returns 解码后的对象或默认值
+ */
+export function safeBase64JsonDecode<T>(
+  base64Str: string, 
+  defaultValue: T
+): T {
+  try {
+    // 先尝试 Base64 解码
+    const jsonStr = atob(base64Str);
+    
+    // 移除非法字符
+    const cleanJsonStr = jsonStr.replace(/[\x00-\x1F\x7F-\x9F]/g, '');
+    
+    // 解析 JSON
+    return JSON.parse(cleanJsonStr) as T;
+  } catch (error) {
+    console.error('JSON 解码错误:', error);
+    return defaultValue;
+  }
+}
+
+/**
+ * 安全地解析 JSON 字符串
+ * @param jsonStr JSON 字符串
+ * @param defaultValue 解析失败时返回的默认值
+ * @returns 解析后的对象或默认值
+ */
+export function safeJsonParse<T>(
+  jsonStr: string, 
+  defaultValue: T
+): T {
+  try {
+    return JSON.parse(jsonStr) as T;
+  } catch (error) {
+    console.error('JSON 解析错误:', error);
+    return defaultValue;
+  }
+}

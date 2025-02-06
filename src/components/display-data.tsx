@@ -87,11 +87,7 @@ export default function DisplayData({ acc }: DisplayDataProps) {
   const allSocialLinksAreEmpty = socialLinks.every(link => !link);
 
   const dataFields = React.useMemo(() => [
-    // { 
-    //   icon: User, 
-    //   label: t('Name'), 
-    //   value: fullname 
-    // },
+   
     // { 
     //   icon: Briefcase, 
     //   label: t('Title'), 
