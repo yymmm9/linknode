@@ -56,17 +56,9 @@ export default function ExtraLinksForm() {
       i: '',
       l: '',
       u: '',
+      ls: [], // 添加空的嵌套链接数组
     };
-    
-    // 防御性处理：确保 data.ls 存在，如果不存在则初始化为空数组
-    const currentLinks = data.ls || [];
-    
-    // 更新整个 data 对象，确保 ls 属性存在
-    addNewData({
-      ...data,
-      ls: [...currentLinks, newLink]
-    });
-    
+    addNewData(newLink);
     setShouldScroll(true);
   };
 

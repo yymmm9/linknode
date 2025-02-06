@@ -23,7 +23,7 @@ import ExtraLinksForm from './forms/extra-links-form';
 import ProfileForm from './forms/profile-form';
 import SocialLinksForm from './forms/social-links-form';
 import { toast } from "sonner"
-import { encodeData } from '@/lib/utils';
+import { encodeData, decodeData } from '@/lib/utils';
 
 interface EditShortLinkProps {
   linkKey: string;
@@ -34,45 +34,52 @@ interface EditShortLinkProps {
 const parseLinkData = (url: string) => {
   console.log("parseLinkData 输入", {url})
   try {
-    // 尝试多种解析方式
-    const urlParts = url.split('?');
-    const queryString = urlParts[1];
-    
-    // 方法1：查询参数解析
-    if (queryString) {
+    // 方法1：尝试从查询参数解析
+    const parseFromQueryString = () => {
+      const queryString = url.split('?')[1];
       const params = new URLSearchParams(queryString);
       const rawData = params.get('data');
       if (rawData) {
-        const parsedData = JSON.parse(decodeURIComponent(rawData));
+        const parsedData = decodeData(rawData);
         console.log("parseLinkData 查询参数解析结果", parsedData);
         return parsedData;
       }
-    }
+      return null;
+    };
 
-    // 方法2：尝试直接解析 URL
-    try {
-      const parsedUrl = new URL(url);
-      const dataParam = parsedUrl.searchParams.get('data');
-      if (dataParam) {
-        const parsedData = JSON.parse(decodeURIComponent(dataParam));
-        console.log("parseLinkData URL解析结果", parsedData);
-        return parsedData;
+    // 方法2：尝试从 URL 解析
+    const parseFromUrl = () => {
+      try {
+        const parsedUrl = new URL(url);
+        const dataParam = parsedUrl.searchParams.get('data');
+        if (dataParam) {
+          const parsedData = decodeData(dataParam);
+          console.log("parseLinkData URL解析结果", parsedData);
+          return parsedData;
+        }
+      } catch (urlError) {
+        console.warn('URL解析失败:', urlError);
       }
-    } catch (urlError) {
-      console.warn("URL 解析失败", urlError);
-    }
+      return null;
+    };
 
     // 方法3：尝试直接解析 JSON
-    try {
-      const parsedData = JSON.parse(decodeURIComponent(url));
-      console.log("parseLinkData JSON解析结果", parsedData);
-      return parsedData;
-    } catch (jsonError) {
-      console.warn("JSON 解析失败", jsonError);
-    }
+    const parseDirectJson = () => {
+      try {
+        const parsedData = decodeData(url);
+        console.log("parseLinkData JSON解析结果", parsedData);
+        return parsedData;
+      } catch (jsonError) {
+        console.warn('JSON解析失败:', jsonError);
+      }
+      return null;
+    };
 
-    console.warn("无法解析链接数据");
-    return null;
+    // 依次尝试解析方法
+    return parseFromQueryString() 
+      || parseFromUrl() 
+      || parseDirectJson() 
+      || null;
   } catch (error) {
     console.error('[parseLinkData] 解析错误:', error);
     return null;

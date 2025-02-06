@@ -57,9 +57,10 @@ export type DataProps = {
 
 export interface ExtraLinkProps {
   id: number;
-  i: string;
-  l: string;
-  u: string;
+  i?: string;  // 图标
+  l?: string;  // 链接标签
+  u?: string;  // URL
+  ls?: ExtraLinkProps[];  // 添加可选的嵌套链接数组
 }
 
 export interface DisplayDataProps {

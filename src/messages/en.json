@@ -2,6 +2,46 @@
   "LinkPage": {
     "title": "{name}'s Links",
     "description": "View all personal links for {name}",
-    "openGraphDescription": "Find all of {name}'s links in one place"
+    "openGraphDescription": "Find all of {name}'s links in one place",
+    "zh-CN": {
+      "title": "{name} 的链接",
+      "description": "查看 {name} 的所有个人链接",
+      "openGraphDescription": "{name} 的所有链接都在这里"
+    },
+    "fr-FR": {
+      "title": "Liens de {name}",
+      "description": "Afficher tous les liens personnels de {name}",
+      "openGraphDescription": "Trouvez tous les liens de {name} en un seul endroit"
+    },
+    "es-ES": {
+      "title": "Enlaces de {name}",
+      "description": "Ver todos los enlaces personales de {name}",
+      "openGraphDescription": "Encuentra todos los enlaces de {name} en un solo lugar"
+    },
+    "de-DE": {
+      "title": "{name}s Links",
+      "description": "Alle persönlichen Links von {name} anzeigen",
+      "openGraphDescription": "Finde alle Links von {name} an einem Ort"
+    },
+    "it-IT": {
+      "title": "Collegamenti di {name}",
+      "description": "Visualizza tutti i collegamenti personali di {name}",
+      "openGraphDescription": "Trova tutti i collegamenti di {name} in un solo posto"
+    },
+    "pt-BR": {
+      "title": "Links de {name}",
+      "description": "Exibir todos os links pessoais de {name}",
+      "openGraphDescription": "Encontre todos os links de {name} em um só lugar"
+    },
+    "ja-JP": {
+      "title": "{name} のリンク",
+      "description": "{name} のすべての個人リンクを表示",
+      "openGraphDescription": "{name} のすべてのリンクがここにあります"
+    },
+    "ko-KR": {
+      "title": "{name} 의 링크",
+      "description": "{name} 의 모든 개인 링크를 표시",
+      "openGraphDescription": "{name} 의 모든 링크가 여기 있습니다"
+    }
   }
 }
