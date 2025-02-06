@@ -1,4 +1,4 @@
-import { decodeData } from '@/lib/utils';
+import { decodeData, getFullName } from '@/lib/utils';
 import NotFound from '@/app/not-found';
 import { BACKGROUND_OPTIONS } from '@/components/backgrounds/background-snippets';
 import DisplayData from '@/components/display-data';
@@ -6,6 +6,7 @@ import DataLoading from './loading';
 import LinkPageError from './error';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
 interface SearchParamsProps {
   searchParams: {
@@ -13,7 +14,18 @@ interface SearchParamsProps {
   };
 }
 
-export function generateMetadata({ searchParams }: SearchParamsProps) {
+export async function generateMetadata({ 
+  params: { locale }, 
+  searchParams 
+}: { 
+  params: { locale: string }, 
+  searchParams: { data?: string } 
+}) {
+  const t = await getTranslations({ 
+    locale, 
+    namespace: 'LinkPage' 
+  });
+
   const { data: queryData } = searchParams;
 
   if (!queryData) return NotFound();
@@ -22,28 +34,40 @@ export function generateMetadata({ searchParams }: SearchParamsProps) {
 
   if (!data) return null;
 
+  // 生成全名
+  const fullName = getFullName(data.n, data.ln, locale);
+
   return {
-    title: `${data.n}'s`,
-    description: `Find all of ${data.n}'s links in one place.`,
+    title: t('title', { name: fullName }),
+    description: t('description', { name: fullName }),
     openGraph: {
-      type: 'website',
-      locale: 'en_US',
-      url: 'https://on.hov.sh',
-      title: `${data.n}'s - hov`,
-      description: `Find all of ${data.n}'s links in one place.`,
-      images: `https://on.hov.sh/api/og?data=${encodeURI(
-        data.n ? data.n : 'Made with hov',
-      )}`,
-      siteName: `${data.n}'s - hov`,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${data.n} - hov`,
-      description: `Find all of ${data.n}'s links in one place.`,
-      images: `https://on.hov.sh/api/og?data=${encodeURI(
-        data.n ? data.n : 'Made with hov',
-      )}`,
+      title: t('title', { name: fullName }),
+      description: t('openGraphDescription', { name: fullName }),
+      images: [
+        {
+          url: data.i || `/og?title=${encodeURIComponent(
+            t('title', { name: fullName })
+          )}`,
+          width: 1200,
+          height: 630,
+          alt: t('title', { name: fullName }),
+        },
+      ],
       creator: '@',
+    },
+    robots: {
+      index: false,
+      follow: false,
+      googleBot: {
+        index: false,
+        follow: false,
+      },
+    },
+    other: {
+      'googlebot': 'noindex',
+      'googlebot-news': 'noindex',
+      'googlebot-image': 'noindex',
+      'robots': 'noindex, nofollow',
     },
   };
 }

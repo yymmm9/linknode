@@ -167,3 +167,12 @@ export interface APIResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface DataContextType {
+  data: DataProps;
+  setData: (data: DataProps) => void;
+  addNewData: (newData: ExtraLinkProps | Partial<DataProps>) => void;
+  updateIndex: (updatedItems: ExtraLinkProps[]) => void;
+  showDemo: () => void;
+  selectBackground: (bgcode: string) => void;
+}

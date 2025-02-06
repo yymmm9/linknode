@@ -1,0 +1,7 @@
+{
+  "LinkPage": {
+    "title": "{name}'s Links",
+    "description": "View all personal links for {name}",
+    "openGraphDescription": "Find all of {name}'s links in one place"
+  }
+}

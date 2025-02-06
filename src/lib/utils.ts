@@ -253,3 +253,28 @@ export function safeJsonParse<T>(
     return defaultValue;
   }
 }
+
+/**
+ * 根据当前语言环境生成全名
+ * @param firstName 名字
+ * @param lastName 姓氏
+ * @param locale 语言环境，默认为 'en'
+ * @returns 格式化后的全名
+ */
+export function getFullName(
+  firstName?: string, 
+  lastName?: string, 
+  locale: string = 'en'
+): string {
+  // 处理可能为 undefined 的情况
+  const first = firstName?.trim() || '';
+  const last = lastName?.trim() || '';
+
+  // 如果两个名字都为空，返回默认值
+  if (!first && !last) return '用户';
+
+  // 根据语言环境格式化名字
+  return locale === 'zh' 
+    ? `${last}${first}` 
+    : `${first} ${last}`.trim();
+}

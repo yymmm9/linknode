@@ -47,6 +47,9 @@ export default function ExtraLinksForm() {
   const [shouldScroll, setShouldScroll] = React.useState(false);
   const { data, addNewData, updateIndex } = useData();
 
+  // 防御性处理：确保 data.ls 始终是一个数组
+  const safeLinks = data.ls || [];
+
   const addLinkDetailForm = () => {
     const newLink: ExtraLinkProps = {
       id: Date.now(),
@@ -54,7 +57,16 @@ export default function ExtraLinksForm() {
       l: '',
       u: '',
     };
-    addNewData(newLink);
+    
+    // 防御性处理：确保 data.ls 存在，如果不存在则初始化为空数组
+    const currentLinks = data.ls || [];
+    
+    // 更新整个 data 对象，确保 ls 属性存在
+    addNewData({
+      ...data,
+      ls: [...currentLinks, newLink]
+    });
+    
     setShouldScroll(true);
   };
 
@@ -74,7 +86,7 @@ export default function ExtraLinksForm() {
     const { active, over } = event;
 
     if (active.id !== over?.id) {
-      const updatedItems = [...data.ls]; // Accessing items from the context
+      const updatedItems = [...safeLinks]; // Accessing items from the context
       const draggedItem = updatedItems.find((item) => item.id === active.id);
       const targetItem = updatedItems.find((item) => item.id === over?.id);
 
@@ -98,7 +110,6 @@ export default function ExtraLinksForm() {
         <CardHeader className="space-y-1">
           <CardTitle className="flex items-center justify-between text-xl">
             {t('Title')}
-            {/* <GetIconInfo /> */}
           </CardTitle>
           <CardDescription>{t('Description')}</CardDescription>
         </CardHeader>
@@ -110,10 +121,10 @@ export default function ExtraLinksForm() {
             modifiers={[restrictToVerticalAxis, restrictToParentElement]}
           >
             <SortableContext
-              items={data.ls.map((link) => link.id)}
+              items={safeLinks.map((link) => link.id)}
               strategy={verticalListSortingStrategy}
             >
-              {data.ls
+              {safeLinks
                 .filter((link) => link.id > 1 || link.l || link.u)
                 .map((link, index) => (
                   <SortableLinks key={link.id} id={link} index={index} />
