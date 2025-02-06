@@ -305,18 +305,20 @@ export default function DisplayData({ acc }: DisplayDataProps) {
       )}
 
       {/* 其他组件渲染 */}
-      <ul className="space-y-2 overflow-visible">
+      {acc?.ls.length > 0 && <ul className="space-y-2 overflow-visible">
         {acc.ls &&
-          acc.ls.map((link, id) => (
+          acc.ls.map((link, id) => {
+            if(!link?.u) return
+            return(
             <ExtraLinksCard
               key={id}
-              label={link.l}
+              label={link.l ?? ''}
               icon={link.i}
-              url={link.u}
+              url={link.u ?? ''}
             />
-          ))
+          )})
         }
-      </ul>
+      </ul>}
     </div>
   );
 }
