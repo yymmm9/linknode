@@ -213,9 +213,10 @@
     "description": "快速轻松地缩短您的长网址"
   },
   "LinkPage": {
+    "title": "的链接",
+    "description": " - 个人链接",
     "poweredBy": "由 hov.sh 提供支持",
     "createYourLinks": "创建你的链接",
-    "title": "链接管理",
     "create-link": "创建新链接"
   },
   "CreateShortLink": {

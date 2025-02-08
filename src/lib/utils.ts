@@ -130,25 +130,58 @@ export const decodeData = (base64: string): DataProps | null => {
   }
 
   try {
-    // 安全解码
-    const decodedString = decode(base64);
+    // 1. 预处理：处理 URL 编码问题
+    let cleanBase64 = base64
+      .replace(/ /g, '+')  // 替换空格为 +
+      .replace(/[\r\n]+/g, '')  // 移除换行符
+      .replace(/[^A-Za-z0-9+/=]/g, '');  // 只保留合法的 Base64 字符
+
+    // 2. 安全解码
+    let decodedString: string;
+    try {
+      decodedString = decode(cleanBase64);
+    } catch (base64Error) {
+      console.error('Base64 解码失败:', base64Error);
+      // 尝试先进行 URL 解码
+      const urlDecoded = decodeURIComponent(base64);
+      cleanBase64 = urlDecoded
+        .replace(/ /g, '+')
+        .replace(/[\r\n]+/g, '')
+        .replace(/[^A-Za-z0-9+/=]/g, '');
+      decodedString = decode(cleanBase64);
+    }
+
     console.log('解码后的原始字符串:', decodedString);
-    console.log('解码后的原始字符串长度:', decodedString.length);
 
-    // 解析并过滤空值
-    const parsedData = JSON.parse(decodedString);
-    const filteredData = filterEmptyValues(parsedData);
+    // 3. 数据清理
+    const cleanedString = decodedString
+      .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')  // 移除控制字符
+      .replace(/\s+/g, ' ')  // 标准化空白字符
+      .trim();  // 移除首尾空白
 
-    // 返回过滤后的数据
-    return filteredData as DataProps;
+    // 4. 尝试解析 JSON
+    try {
+      const parsedData = JSON.parse(cleanedString);
+      // 5. 过滤并验证数据
+      const filteredData = filterEmptyValues(parsedData);
+      
+      // 6. 确保必要字段存在
+      if (!filteredData.n && !filteredData.ln) {
+        console.error('缺少必要的名字字段');
+        return null;
+      }
+
+      return filteredData as DataProps;
+    } catch (jsonError) {
+      console.error('JSON 解析失败:', jsonError);
+      return null;
+    }
   } catch (error) {
-    // 捕获并记录任何未预料的错误
     console.error('解码数据时发生未知错误:', {
       errorMessage: error instanceof Error ? error.message : '未知错误',
       base64Input: base64,
       inputLength: base64.length
     });
-
     return null;
   }
 };

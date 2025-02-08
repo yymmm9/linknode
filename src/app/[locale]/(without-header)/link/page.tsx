@@ -30,27 +30,49 @@ export async function generateMetadata({
 
   if (!queryData) return NotFound();
 
-  const data = decodeData(queryData);
+  // 1. 先尝试直接解码
+  let decodedData = decodeData(queryData);
+  
+  // 2. 如果解码失败，尝试先进行 URL 解码
+  if (!decodedData) {
+    try {
+      const urlDecoded = decodeURIComponent(queryData);
+      decodedData = decodeData(urlDecoded);
+      console.log('URL decoded data:', decodedData);
+    } catch (error) {
+      console.error('解码数据时出错:', error);
+      return NotFound();
+    }
+  }
 
-  if (!data) return null;
+  // 3. 如果还是失败，返回 404
+  if (!decodedData) {
+    console.error('无法解码数据');
+    return NotFound();
+  }
 
   // 生成全名
-  const fullName = getFullName(data.n, data.ln, locale);
+  const fullName = getFullName(decodedData.n, decodedData.ln, locale);
+  // 生成链接名称
+  const linkName = decodedData.t || fullName;
+
+  const title = linkName + t('title');
+  const description = linkName + t('description');
 
   return {
-    title: t('title', { name: fullName }),
-    description: t('description', { name: fullName }),
+    title: title,
+    description: description,
     openGraph: {
-      title: t('title', { name: fullName }),
-      description: t('openGraphDescription', { name: fullName }),
+      title: title,
+      description: description,
       images: [
         {
-          url: data.i || `/og?title=${encodeURIComponent(
-            t('title', { name: fullName })
+          url: decodedData.i || `/og?title=${encodeURIComponent(
+            title
           )}`,
           width: 1200,
           height: 630,
-          alt: t('title', { name: fullName }),
+          alt: title,
         },
       ],
       creator: '@',

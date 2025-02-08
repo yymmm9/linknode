@@ -1,7 +1,6 @@
 {
   "LinkPage": {
-    "title": "{name}的链接",
-    "description": "查看{name}的所有个人链接",
-    "openGraphDescription": "在一个地方找到{name}的所有链接"
+    "title": "的链接",
+    "description": " - 个人链接"
   }
 }

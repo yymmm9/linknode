@@ -186,6 +186,8 @@
     "PageTitle": "Create Your Link"
   },
   "LinkPage": {
+    "title": " Links",
+    "description": " - Personal Links",
     "poweredBy": "Powered by hov.sh",
     "createYourLinks": "Create Your Own Links"
   },
