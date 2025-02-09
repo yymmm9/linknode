@@ -304,21 +304,19 @@ export default function DisplayData({ acc }: DisplayDataProps) {
         </div>
       )}
 
-      {/* 其他组件渲染 */}
-      {acc?.ls.length > 0 && <ul className="space-y-2 overflow-visible">
-        {acc.ls &&
-          acc.ls.map((link, id) => {
-            if(!link?.u) return
-            return(
+      {/* 链接列表渲染 */}
+      {acc?.ls && Array.isArray(acc.ls) && acc.ls.length > 0 && (
+        <ul className="space-y-2 overflow-visible">
+          {acc.ls.filter(link => link?.u).map((link, id) => (
             <ExtraLinksCard
               key={id}
               label={link.l ?? ''}
               icon={link.i}
               url={link.u ?? ''}
             />
-          )})
-        }
-      </ul>}
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
