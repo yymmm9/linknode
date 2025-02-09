@@ -87,13 +87,25 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const addNewData = (linkData: ExtraLinkProps) => {
+    // 防御性检查：验证输入数据
+    if (!linkData || typeof linkData !== 'object') {
+      console.error('addNewData: 无效的链接数据');
+      return;
+    }
+
     setData((prevData) => {
       // 防御性检查：确保 ls 是数组，如果不是则初始化为空数组
       const currentLinks = Array.isArray(prevData.ls) ? prevData.ls : [];
       
+      // 确保新链接有唯一 ID
+      const newLink = {
+        ...linkData,
+        id: linkData.id || Date.now() + Math.floor(Math.random() * 1000)
+      };
+
       return {
         ...prevData,
-        ls: [...currentLinks, linkData],
+        ls: [...currentLinks, newLink],
       };
     });
   };

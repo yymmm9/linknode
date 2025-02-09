@@ -51,15 +51,31 @@ export default function ExtraLinksForm() {
   const safeLinks = Array.isArray(data.ls) ? data.ls : [];
 
   const addLinkDetailForm = () => {
+    // 防御性检查：确保 addNewData 存在且是一个函数
+    if (typeof addNewData !== 'function') {
+      console.error('addNewData 不是一个有效的函数');
+      return;
+    }
+
+    // 生成唯一 ID，避免可能的冲突
+    const newLinkId = Date.now() + Math.floor(Math.random() * 1000);
+
     const newLink: ExtraLinkProps = {
-      id: Date.now(),
-      i: '',
-      l: '',
-      u: '',
-      ls: [], // 添加空的嵌套链接数组
+      id: newLinkId,
+      i: '', // 图标
+      l: '', // 标签
+      u: '', // URL
+      ls: [], // 嵌套链接数组，确保始终初始化
     };
-    addNewData(newLink);
-    setShouldScroll(true);
+
+    try {
+      // 安全地添加新链接
+      addNewData(newLink);
+      setShouldScroll(true);
+    } catch (error) {
+      console.error('添加新链接时发生错误:', error);
+      // 可以在这里添加用户友好的错误提示
+    }
   };
 
   React.useEffect(() => {
