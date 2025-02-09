@@ -87,10 +87,15 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const addNewData = (linkData: ExtraLinkProps) => {
-    setData((prevData) => ({
-      ...prevData,
-      ls: [...prevData.ls, linkData],
-    }));
+    setData((prevData) => {
+      // 防御性检查：确保 ls 是数组，如果不是则初始化为空数组
+      const currentLinks = Array.isArray(prevData.ls) ? prevData.ls : [];
+      
+      return {
+        ...prevData,
+        ls: [...currentLinks, linkData],
+      };
+    });
   };
 
   const updateIndex = (updatedIndex: ExtraLinkProps[]) => {

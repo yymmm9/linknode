@@ -13,7 +13,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import { Edit } from 'lucide-react';
+
 import updateShortLink from '@/app/_actions/shortlink/update';
 import retrieveShortLink from '@/app/_actions/shortlink/retrieve';
 import { useData } from '@/lib/context/link-context';
@@ -22,7 +22,7 @@ import BackgroundShell from './backgrounds/background-shell';
 import ExtraLinksForm from './forms/extra-links-form';
 import ProfileForm from './forms/profile-form';
 import SocialLinksForm from './forms/social-links-form';
-import { toast } from "sonner"
+
 import { encodeData, decodeData } from '@/lib/utils';
 
 interface EditShortLinkProps {
@@ -32,11 +32,19 @@ interface EditShortLinkProps {
 
 // 解析链接数据的函数
 const parseLinkData = (url: string) => {
+  // 防御性检查：确保输入不为空
+  if (!url || typeof url !== 'string') {
+    console.warn('parseLinkData: 无效的输入');
+    return null;
+  }
+
   console.log("parseLinkData 输入", {url})
   try {
     // 方法1：尝试从查询参数解析
     const parseFromQueryString = () => {
       const queryString = url.split('?')[1];
+      if (!queryString) return null;
+
       const params = new URLSearchParams(queryString);
       const rawData = params.get('data');
       if (rawData) {
@@ -118,14 +126,20 @@ export default function EditShortLink({ linkKey: key, linkId: id }: EditShortLin
 
   // 更新链接
   const updateLink = useCallback(async () => {
-    if (!key || !contextData) {
-      console.log('[updateLink] Missing key or data');
+    // 防御性检查：确保关键参数存在且有效
+    if (!key || !contextData || !id) {
+      console.warn('[updateLink] 缺少必要参数', { key, id, contextData });
       return;
     }
 
     try {
+      // 防御性检查：确保编码数据有效
       const encodedData = encodeData(contextData);
-      console.log({encodedData})
+      if (!encodedData) {
+        console.error('[updateLink] 数据编码失败');
+        return;
+      }
+
       const updateUrl = `${window.location.protocol}//${window.location.host}/link?data=${encodedData}`;
       
       const result = await updateShortLink({
@@ -134,25 +148,29 @@ export default function EditShortLink({ linkKey: key, linkId: id }: EditShortLin
         key,
       });
 
-      if (result.success) {
+      if (result?.success) {
         // 更新缓存
         queryClient.setQueryData(['link', key], contextData);
         // 关闭抽屉
         setIsDrawerOpen(false);
       } else {
-        console.error('[updateLink] Update failed:', result.error);
+        console.error('[updateLink] 更新失败:', result?.error || '未知错误');
       }
     } catch (error) {
-      console.error('[updateLink] Error:', error);
+      console.error('[updateLink] 发生错误:', error);
     }
   }, [key, id, contextData, queryClient]);
 
   // 处理抽屉状态变化
   const handleDrawerChange = useCallback((open: boolean) => {
+    // 防御性检查：确保状态变化是有效的
     setIsDrawerOpen(open);
-    if (open && linkData) {
-      // 如果有数据，更新 context
+    
+    // 只有在打开抽屉且存在有效数据时，才更新上下文
+    if (open && linkData && typeof linkData === 'object') {
       setData(linkData);
+    } else if (open) {
+      console.warn('打开抽屉时没有有效的链接数据');
     }
   }, [linkData, setData]);
 

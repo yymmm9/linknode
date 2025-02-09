@@ -48,7 +48,7 @@ export default function ExtraLinksForm() {
   const { data, addNewData, updateIndex } = useData();
 
   // 防御性处理：确保 data.ls 始终是一个数组
-  const safeLinks = data.ls || [];
+  const safeLinks = Array.isArray(data.ls) ? data.ls : [];
 
   const addLinkDetailForm = () => {
     const newLink: ExtraLinkProps = {
