@@ -14,16 +14,16 @@ interface SearchParamsProps {
   };
 }
 
-export async function generateMetadata({ 
-  params: { locale }, 
-  searchParams 
-}: { 
-  params: { locale: string }, 
-  searchParams: { data?: string } 
+export async function generateMetadata({
+  params: { locale },
+  searchParams,
+}: {
+  params: { locale: string };
+  searchParams: { data?: string };
 }) {
-  const t = await getTranslations({ 
-    locale, 
-    namespace: 'LinkPage' 
+  const t = await getTranslations({
+    locale,
+    namespace: 'LinkPage',
   });
 
   const { data: queryData } = searchParams;
@@ -32,7 +32,7 @@ export async function generateMetadata({
 
   // 1. 先尝试直接解码
   let decodedData = decodeData(queryData);
-  
+
   // 2. 如果解码失败，尝试先进行 URL 解码
   if (!decodedData) {
     try {
@@ -67,9 +67,7 @@ export async function generateMetadata({
       description: description,
       images: [
         {
-          url: decodedData.i || `/og?title=${encodeURIComponent(
-            title
-          )}`,
+          url: decodedData.i || `/og?title=${encodeURIComponent(title)}`,
           width: 1200,
           height: 630,
           alt: title,
@@ -98,9 +96,9 @@ export default function Page({ searchParams }: SearchParamsProps) {
   const t = useTranslations('LinkPage');
 
   if (!searchParams.data) return <NotFound />;
-console.log("searchParams.data",searchParams.data)
-const data = decodeData(searchParams.data);
-console.log("decode.data",data)
+  console.log('searchParams.data', searchParams.data);
+  const data = decodeData(searchParams.data);
+  console.log('decode.data', data);
 
   if (!data) return <LinkPageError />;
 
@@ -112,30 +110,26 @@ console.log("decode.data",data)
     ? selectedBgOption.component
     : null;
 
+  let noBadge = true;
+
   return (
     <>
       <div className="fixed left-0 top-0 z-[-10] size-full">
         {selectedBgComponent}
       </div>
       <div className="hide_scrollbar p-2 pt-10">
-        {data ? (
-          <DisplayData 
-            acc={data} 
-          />
-        ) : (
-          <DataLoading />
-        )}
+        {data ? <DisplayData acc={data} /> : <DataLoading />}
       </div>
       <div className="fixed bottom-0 left-0 w-full text-center p-4 bg-gray-100 flex gap-4 items-center justify-center">
-        <div className="text-sm text-gray-600">
-          {t('poweredBy')}
-        </div>
-        <Link 
-          href="/create" 
-          className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm"
-        >
-          {t('createYourLinks')}
-        </Link>
+        <div className="text-sm text-gray-600">{t('poweredBy')}</div>
+        {noBadge ? null : (
+          <Link
+            href="/create"
+            className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm"
+          >
+            {t('createYourLinks')}
+          </Link>
+        )}
       </div>
     </>
   );
