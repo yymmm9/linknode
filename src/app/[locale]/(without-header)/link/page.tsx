@@ -121,7 +121,7 @@ export default function Page({ searchParams }: SearchParamsProps) {
         {data ? <DisplayData acc={data} /> : <DataLoading />}
       </div>
       <div className="fixed bottom-0 left-0 w-full text-center p-4 bg-gray-100 flex gap-4 items-center justify-center">
-        <div className="text-sm text-gray-600">{t('poweredBy')}</div>
+        <Link href={'/'}><div className="text-sm text-gray-600">{t('poweredBy')}</div></Link>
         {noBadge ? null : (
           <Link
             href="/create"

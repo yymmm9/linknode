@@ -44,17 +44,23 @@ function getInitials(firstName: string = '', lastName: string = '') {
   }
 }
 
-// 格式化姓名的函数
+function isAlphabetic(name: string): boolean {
+  return /^[A-Za-z]+$/.test(name);
+}
+
 function formatName(firstName?: string, lastName?: string, locale?: string): string {
   if (!firstName && !lastName) return '';
-  if (!firstName) return lastName || '';
-  if (!lastName) return firstName || '';
-  
+  if (!firstName) return isAlphabetic(lastName!) ? lastName! : '';
+  if (!lastName) return isAlphabetic(firstName!) ? firstName! : '';
+
+  if (isAlphabetic(firstName) || isAlphabetic(lastName)) {
+    return firstName + ' ' + lastName;
+  }
+
   return locale === 'zh' 
     ? `${lastName}${firstName}` 
     : `${firstName} ${lastName}`;
 }
-
 export default function DisplayData({ acc }: DisplayDataProps) {
   const { locale } = useParams();
   const t = useTranslations('ProfileForm');
