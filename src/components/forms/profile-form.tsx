@@ -129,6 +129,21 @@ export default function ProfileForm() {
             onChange={handleInputChange}
           />
         </div>
+        <div className="flex items-center gap-2 mt-4">
+          <input
+            id="auto-add-contact"
+            name="ac"
+            type="checkbox"
+            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            checked={data.ac === 'true'}
+            onChange={(e) => {
+              updateProfileInfo('ac', e.target.checked ? 'true' : 'false');
+            }}
+          />
+          <Label htmlFor="auto-add-contact" className="text-sm font-normal cursor-pointer">
+            {t('AutoAddContact') || '自动添加为联系人（访问时弹出添加联系人对话框）'}
+          </Label>
+        </div>
       </CardContent>
     </Card>
   );

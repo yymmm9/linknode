@@ -36,6 +36,7 @@ export const names = {
 
   b: 'Birthday',
   url: 'URL', // 添加 url 键
+  ac: 'Auto Add Contact', // 自动添加为联系人
 };
 
 // 使用 typeof names 来生成 DataProps，ls 需要手动添加
@@ -61,6 +62,7 @@ export interface ExtraLinkProps {
   l?: string;  // 链接标签
   u?: string;  // URL
   ls?: ExtraLinkProps[];  // 添加可选的嵌套链接数组
+  ac?: boolean; // 自动添加为联系人 (Auto Add Contact)
 }
 
 export interface DisplayDataProps {

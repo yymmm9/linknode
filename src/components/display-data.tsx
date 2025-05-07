@@ -319,6 +319,7 @@ export default function DisplayData({ acc }: DisplayDataProps) {
               label={link.l ?? ''}
               icon={link.i}
               url={link.u ?? ''}
+              autoAddContact={acc.ac === 'true'}
             />
           ))}
         </ul>
