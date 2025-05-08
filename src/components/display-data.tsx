@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { DataProps, DisplayDataProps } from '@/types';
 import ExtraLinksCard from '@/components/extra-links-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import AutoAddContact from './client/auto-add-contact';
 import { names } from '@/types';
 import { iconMap } from './forms/social-links-form';
 import { IconWrapper } from './ui/social-input';
@@ -134,6 +135,8 @@ export default function DisplayData({ acc }: DisplayDataProps) {
   if (hasNoInformation) {
     return (
       <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-4 overflow-y-scroll p-4 text-center">
+        {/* 自动添加为联系人组件 */}
+        <AutoAddContact data={acc} enabled={acc.ac === 'true'} />
         <div className="flex flex-col items-center justify-center h-full space-y-4">
           <div className="bg-gray-100 rounded-full w-24 h-24 flex items-center justify-center mb-4">
             <svg 
@@ -172,8 +175,10 @@ export default function DisplayData({ acc }: DisplayDataProps) {
   }
 
   return (
-    <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-4 overflow-y-scroll p-4">
-      <div className="z-50 text-center flex flex-col items-center">
+    <div className="hide_scrollbar mx-auto size-full max-w-lg space-y-4 overflow-y-scroll p-4 text-center">
+      {/* 自动添加为联系人组件 */}
+      <AutoAddContact data={acc} enabled={acc.ac === 'true'} />
+      <div className="flex flex-col items-center justify-center">
         {/* 头像和个人信息渲染 */}
         <div className="relative mb-4">
           <SaveVcf 

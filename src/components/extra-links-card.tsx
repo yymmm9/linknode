@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
+import VCard from 'vcard-creator';
 
 interface ExtraLinksCardProps {
   label: string;
@@ -20,36 +21,35 @@ export default function ExtraLinksCard({
     // 如果设置了自动添加为联系人，并且URL是tel:开头的电话链接
     if (autoAddContact && url.startsWith('tel:')) {
       const phoneNumber = url.replace('tel:', '');
-      // 尝试调用原生API添加联系人
+      
       try {
-        // 检查是否支持联系人API
-        if ('contacts' in navigator && 'ContactsManager' in window) {
-          // @ts-ignore - 联系人API可能不被TypeScript识别
-          const props = ['name', 'tel'];
-          // @ts-ignore
-          navigator.contacts.select(props, { multiple: false })
-            .then((contacts: any) => {
-              console.log('已选择联系人:', contacts);
-            })
-            .catch((error: any) => {
-              console.error('选择联系人时出错:', error);
-            });
-        } else {
-          console.log('此浏览器不支持联系人API');
-          // 回退方案：创建vCard格式的联系人数据
-          const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:${label}
-TEL:${phoneNumber}
-END:VCARD`;
-          const blob = new Blob([vcard], { type: 'text/vcard' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `${label}.vcf`;
+        // 使用 vcard-creator 创建vCard
+        const myVCard = new VCard();
+        
+        // 添加基本信息
+        myVCard
+          .addName('', label) // 将标签作为名字
+          .addPhoneNumber(phoneNumber, 'PREF;CELL') // 设置为手机号码
+          .addNote(`来自个人链接`); // 添加备注
+        
+        // 生成vCard字符串
+        const vCardString = myVCard.toString();
+        
+        // 创建BLOB并下载
+        const blob = new Blob([vCardString], { type: 'text/vcard' });
+        const downloadUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = `${label}.vcf`;
+        
+        // 模拟点击事件以触发下载
+        // 在iOS上，我们需要将元素添加到DOM中才能正常工作
+        document.body.appendChild(a);
+        setTimeout(() => {
           a.click();
-          URL.revokeObjectURL(url);
-        }
+          document.body.removeChild(a);
+          URL.revokeObjectURL(downloadUrl);
+        }, 100);
       } catch (error) {
         console.error('添加联系人时出错:', error);
       }
