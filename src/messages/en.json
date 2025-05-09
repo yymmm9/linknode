@@ -1,6 +1,28 @@
 {
   "LinkPage": {
     "title": " Links",
-    "description": " - Personal Links"
+    "description": " - Personal Links",
+    "poweredBy": "Powered by LinkNode",
+    "createYourLinks": "Create Your Links"
+  },
+  "ProfileForm": {
+    "Title": "Personal Profile",
+    "Description": "Fill in your personal information",
+    "FirstName": "First Name",
+    "LastName": "Last Name",
+    "FirstNamePlaceholder": "Enter your first name",
+    "LastNamePlaceholder": "Enter your last name",
+    "Phone": "Phone",
+    "Email": "Email",
+    "formTitle": "Job Title",
+    "TitlePlaceholder": "e.g. Product Manager",
+    "Organization": "Company/Organization",
+    "OrganizationPlaceholder": "e.g. ABC Company",
+    "Role": "Role",
+    "RolePlaceholder": "e.g. Technical Department",
+    "Address": "Address",
+    "AddressPlaceholder": "e.g. 123 Main St, City",
+    "About": "About Me",
+    "AutoAddContact": "Auto Add as Contact"
   }
 }

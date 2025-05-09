@@ -7,7 +7,7 @@ interface DataContextType {
   setData: (data: DataProps) => void;
   addNewData: (linkData: ExtraLinkProps) => void;
   updateIndex: (updatedIndex: ExtraLinkProps[]) => void;
-  updateProfileInfo: (name: string, value: string) => void;
+  updateProfileInfo: (name: string, value: string | boolean) => void;
   updateSocialInfo: (name: string, value: string) => void;
   updateAdditionalInfo: (updatedIndex: ExtraLinkProps[]) => void;
   showDemo: () => void;
@@ -124,7 +124,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     }));
   };
 
-  const updateProfileInfo = (name: string, value: string) => {
+  const updateProfileInfo = (name: string, value: string | boolean) => {
     setData((prevState) => ({
       ...prevState,
       [name]: value,

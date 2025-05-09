@@ -62,8 +62,7 @@
     "TitlePlaceholder": "输入您的职位",
     "NoInformationTitle": "尚未添加个人信息",
     "NoInformationDescription": "添加您的个人信息，让别人更好地了解您",
-    "AddInformation": "添加信息",
-    "AutoAddContact": "自动添加为联系人（访问时弹出添加联系人对话框）"
+    "AddInformation": "添加信息"
   },
   "Profile": {
     "LinksTitle": "创建的链接",

@@ -10,10 +10,12 @@ export const SaveVcf = ({
   acc,
   variant = "default",
   cta,
+  autoAdd = false,
 }: {
   acc?: Partial<DataProps>;
   variant?: "icon" | "default";
   cta?: string;
+  autoAdd?: boolean;
 }) => {
   const t = useTranslations("ProfileForm");
 
@@ -54,8 +56,23 @@ export const SaveVcf = ({
   const downloadVCard = () => {
     const vCardString = createVCard();
     const blob = new Blob([vCardString], { type: "text/vcard" });
-    const link = document.createElement("a");
     
+    if (autoAdd) {
+      // 使用 navigator.contacts API 直接添加联系人（如果浏览器支持）
+      if ('contacts' in navigator && 'ContactsManager' in window) {
+        try {
+          // 尝试直接打开系统添加联系人对话框
+          window.location.href = `data:text/vcard;charset=utf-8,${encodeURIComponent(vCardString)}`;
+          return;
+        } catch (error) {
+          console.error('自动添加联系人失败:', error);
+          // 如果失败，回退到下载方式
+        }
+      }
+    }
+    
+    // 如果自动添加不可用或者不启用，则使用下载方式
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = `${firstName}_${lastName}.vcf`;
     

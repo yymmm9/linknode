@@ -94,7 +94,6 @@ export default function SortableLinks({ id, index }: SortableLinksProps) {
                 }}
               />
             </div>
-
           </div>
         </div>
         <div className="absolute -top-2 right-5 bg-white flex gap-2">
