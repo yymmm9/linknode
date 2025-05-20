@@ -85,14 +85,14 @@ export const SaveVcf = ({
   if (!acc) return null;
   
   const buttonStyles = cn(
-    variant === "default" ? "gap-2" : "absolute bottom-0 right-0 z-10 size-8 p-1 rounded-full h-fit"
+    variant === "default" ? "gap-2 w-full" : "absolute bottom-0 right-0 z-10 size-8 p-1 rounded-full h-fit"
   );
 
   return (
     <Button
       variant={variant === "default" ? "secondary" : "default"}
       onClick={downloadVCard}
-      className={buttonStyles}
+      className={cn(buttonStyles, "")}
     >
       {variant === "icon" || !cta ? <PlusIcon className="size-6" /> : null}
       {variant === "default" && cta ? (
