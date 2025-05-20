@@ -61,35 +61,106 @@ export const SaveVcf = ({
         // 获取图片的blob
         const blob = await response.blob();
         
-        // 将blob转换为base64
-        const base64Content = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            if (typeof reader.result === 'string') {
-              // 提取base64部分（去掉data:image/...;base64,前缀）
-              const base64Data = reader.result.split(',')[1];
-              if (base64Data) {
-                resolve(base64Data);
-              } else {
-                reject(new Error('Invalid image data'));
-              }
-            } else {
-              reject(new Error('Failed to read image data'));
+        // 获取MIME类型并转换为vCard兼容的格式
+        let mimeType = 'JPEG'; // 默认使用JPEG
+        const type = blob.type.toLowerCase();
+        
+        if (type.includes('jpeg') || type.includes('jpg')) {
+          mimeType = 'JPEG';
+        } else if (type.includes('png')) {
+          mimeType = 'PNG';
+        } else if (type.includes('gif')) {
+          mimeType = 'GIF';
+        }
+        
+        // 将blob转换为ArrayBuffer
+        const arrayBuffer = await blob.arrayBuffer();
+        
+        // 将ArrayBuffer转换为base64字符串
+        let binary = '';
+        const bytes = new Uint8Array(arrayBuffer);
+        const byteLength = bytes.length; // 使用length属性而不是byteLength
+        for (let i = 0; i < byteLength; i++) {
+          binary += String.fromCharCode(bytes[i] ?? 0);
+        }
+        const base64Content = btoa(binary);
+        
+        console.log('Adding photo to vCard with type:', mimeType);
+        
+        // 直接构建vCard字符串来添加照片
+        // 因为vcard-creator对某些MIME类型支持不好
+        const vcardString = myVCard.toString();
+        const lines = vcardString.split('\n');
+        
+        // 在END:VCARD前插入照片
+        const endIndex = lines.findIndex(line => line.trim() === 'END:VCARD');
+        if (endIndex >= 0) {
+          // 添加照片属性
+          // 将照片数据分成多行，每行最多75个字符（vCard规范要求）
+          const chunkSize = 75;
+          const chunks: string[] = [];
+          
+          for (let i = 0; i < base64Content.length; i += chunkSize) {
+            chunks.push(base64Content.substring(i, Math.min(i + chunkSize, base64Content.length)));
+          }
+          
+          // 创建新的vCard内容
+          const newLines = [...lines];
+          
+          // 添加照片属性
+          newLines.splice(endIndex, 0, `PHOTO;ENCODING=b;TYPE=${mimeType}:${chunks[0]}`);
+          
+          // 添加剩余的行（如果有）
+          for (let i = 1; i < chunks.length; i++) {
+            newLines.splice(endIndex + i, 0, ` ${chunks[i]}`);
+          }
+          
+          // 创建新的vCard实例
+          const newVCard = new VCard();
+          
+          // 添加所有行到新的vCard
+          newLines.forEach(line => {
+            const trimmedLine = line.trim();
+            if (trimmedLine.startsWith('BEGIN:VCARD') || 
+                trimmedLine.startsWith('END:VCARD') || 
+                trimmedLine === '') {
+              return;
             }
-          };
-          reader.onerror = () => {
-            reject(new Error('Error reading image file'));
-          };
-          reader.readAsDataURL(blob);
-        });
-        
-        // 获取MIME类型
-        const mimeType = blob.type || 'image/jpeg';
-        
-        // 使用vcard-creator的addPhoto方法添加照片
-        myVCard.addPhoto(base64Content, mimeType);
-        
-        console.log('Successfully added photo to vCard');
+            
+            const parts = trimmedLine.split(':');
+            if (parts.length < 2) return;
+            
+            const key = parts[0] as string;
+            const value = parts.slice(1).join(':');
+            
+            try {
+              if (key.startsWith('FN')) {
+                newVCard.addName('', value);
+              } else if (key.startsWith('TEL')) {
+                newVCard.addPhoneNumber(value, 'WORK');
+              } else if (key.startsWith('EMAIL')) {
+                newVCard.addEmail(value);
+              } else if (key.startsWith('ORG')) {
+                newVCard.addCompany(value);
+              } else if (key.startsWith('TITLE')) {
+                newVCard.addJobtitle(value);
+              } else if (key.startsWith('PHOTO')) {
+                // 已经处理过照片
+              }
+            } catch (error) {
+              console.warn(`Failed to process vCard property: ${key}`, error);
+            }
+          });
+          
+          // 复制所有属性到原始vCard
+          Object.keys(newVCard).forEach(key => {
+            if (key in myVCard) {
+              (myVCard as any)[key] = (newVCard as any)[key];
+            }
+          });
+          
+          console.log('Successfully added photo to vCard');
+        }
       } catch (error) {
         console.error('添加头像到vCard时出错:', error);
         // 出错时继续，不添加头像
