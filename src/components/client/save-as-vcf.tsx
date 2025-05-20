@@ -22,24 +22,19 @@ export const SaveVcf = ({
   const searchParams = useSearchParams();
   const t = useTranslations("ProfileForm");
 
-  if (!acc) return null;
-
-  const firstName = acc.n || acc.firstName || '';
-  const lastName = acc.ln || acc.lastName || '';
-  const organization = acc.o || acc.organization || '';
-  const title = acc.ti || acc.title || '';
-  const role = acc.r || acc.role || '';
-  const email = acc.e || acc.email || '';
-  const workPhone = acc.p || acc.workPhone || '';
-  const website = acc.web || acc.website || '';
-  const description = acc.d || '';
-  const address = acc.addr || '';
-
-  const buttonStyles = cn(
-    variant === "default" ? "gap-2" : "absolute bottom-0 right-0 z-10 size-8 p-1 rounded-full h-fit"
-  );
-
-  const createVCard = () => {
+  // 将所有逻辑放在 if 条件之前
+  const createVCard = (accData: Partial<DataProps>) => {
+    const firstName = accData.n || accData.firstName || '';
+    const lastName = accData.ln || accData.lastName || '';
+    const organization = accData.o || accData.organization || '';
+    const title = accData.ti || accData.title || '';
+    const role = accData.r || accData.role || '';
+    const email = accData.e || accData.email || '';
+    const workPhone = accData.p || accData.workPhone || '';
+    const website = accData.web || accData.website || '';
+    const description = accData.d || '';
+    const address = accData.addr || '';
+    
     const myVCard = new VCard();
 
     myVCard
@@ -57,7 +52,11 @@ export const SaveVcf = ({
   };
 
   const downloadVCard = () => {
-    const vCardString = createVCard();
+    if (!acc) return;
+    
+    const firstName = acc.n || acc.firstName || '';
+    const lastName = acc.ln || acc.lastName || '';
+    const vCardString = createVCard(acc);
     const blob = new Blob([vCardString], { type: "text/vcard" });
     const link = document.createElement("a");
     
@@ -69,10 +68,12 @@ export const SaveVcf = ({
     document.body.removeChild(link);
   };
 
-  // 检查URL参数是否有自动下载标志
+  // 检查URL参数是否有自动下载标志 - 确保 Hook 不在条件语句之后
   useEffect(() => {
+    if (!acc) return;
+    
     const autoAdd = searchParams?.get('a');
-    if ((autoAdd === 'true' || autoDownload) && acc) {
+    if (autoAdd === 'true' || autoDownload) {
       // 延迟一点执行，确保组件已完全加载
       const timer = setTimeout(() => {
         downloadVCard();
@@ -80,6 +81,12 @@ export const SaveVcf = ({
       return () => clearTimeout(timer);
     }
   }, [searchParams, acc, autoDownload]);
+  
+  if (!acc) return null;
+  
+  const buttonStyles = cn(
+    variant === "default" ? "gap-2" : "absolute bottom-0 right-0 z-10 size-8 p-1 rounded-full h-fit"
+  );
 
   return (
     <Button
