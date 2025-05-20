@@ -1,28 +1,6 @@
 {
   "LinkPage": {
     "title": "的链接",
-    "description": " - 个人链接",
-    "poweredBy": "由 LinkNode 提供支持",
-    "createYourLinks": "创建你的链接"
-  },
-  "ProfileForm": {
-    "Title": "个人资料",
-    "Description": "填写你的个人信息",
-    "FirstName": "名字",
-    "LastName": "姓氏",
-    "FirstNamePlaceholder": "输入你的名字",
-    "LastNamePlaceholder": "输入你的姓氏",
-    "Phone": "电话",
-    "Email": "邮箱",
-    "formTitle": "职位",
-    "TitlePlaceholder": "例如：产品经理",
-    "Organization": "公司/组织",
-    "OrganizationPlaceholder": "例如：ABC公司",
-    "Role": "角色",
-    "RolePlaceholder": "例如：技术部门",
-    "Address": "地址",
-    "AddressPlaceholder": "例如：北京市海淀区",
-    "About": "关于我",
-    "AutoAddContact": "自动添加为联系人"
+    "description": " - 个人链接"
   }
 }

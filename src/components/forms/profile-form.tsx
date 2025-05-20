@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Switch } from '../ui/switch';
+import { Switch } from '@/components/ui/switch';
 import { useTranslations } from 'next-intl';
 import { useData } from '@/lib/context/link-context';
 
@@ -29,10 +29,9 @@ export default function ProfileForm() {
     updateProfileInfo(name, value);
   }
   
-  const handleSwitchChange = (checked: boolean, name: string) => {
-    // 对于布尔值，直接传递给 updateProfileInfo
-    updateProfileInfo(name, checked);
-  };
+  const handleSwitchChange = (checked: boolean) => {
+    updateProfileInfo('autoAddContact', checked);
+  }
 
 
   return (
@@ -137,11 +136,11 @@ export default function ProfileForm() {
         </div>
         <div className="flex items-center space-x-2 pt-2">
           <Switch 
-            id="autoAddContact"
-            checked={!!data.autoAdd}
-            onCheckedChange={(checked: boolean) => handleSwitchChange(checked, 'autoAdd')}
+            id="auto-add-contact"
+            checked={data.autoAddContact || false}
+            onCheckedChange={handleSwitchChange}
           />
-          <Label htmlFor="autoAddContact">{t('AutoAddContact')}</Label>
+          <Label htmlFor="auto-add-contact">{t('AutoAddContact') || '自动添加为联系人'}</Label>
         </div>
       </CardContent>
     </Card>

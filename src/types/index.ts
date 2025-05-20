@@ -53,7 +53,7 @@ export type DataProps = {
   website?: string;
   url?: string; // 添加 url 字段
   shortLink?: string; // 添加 shortLink 字段
-  autoAdd?: boolean; // 添加自动添加联系人选项
+  autoAddContact?: boolean; // 添加自动添加联系人字段
 };
 
 export interface ExtraLinkProps {
@@ -66,6 +66,7 @@ export interface ExtraLinkProps {
 
 export interface DisplayDataProps {
   acc: DataProps;
+  autoAddContact?: boolean;
 }
 
 const socialLinksData = {

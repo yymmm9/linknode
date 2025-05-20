@@ -61,7 +61,7 @@ function formatName(firstName?: string, lastName?: string, locale?: string): str
     ? `${lastName}${firstName}` 
     : `${firstName} ${lastName}`;
 }
-export default function DisplayData({ acc }: DisplayDataProps) {
+export default function DisplayData({ acc, autoAddContact = false }: DisplayDataProps) {
   const { locale } = useParams();
   const t = useTranslations('ProfileForm');
   const localeValue = useLocale();
@@ -180,7 +180,6 @@ export default function DisplayData({ acc }: DisplayDataProps) {
             acc={acc}
             variant="icon" 
             cta={''} 
-            autoAdd={true}
           />
 
           <Avatar className="size-24 shadow border">
@@ -324,6 +323,16 @@ export default function DisplayData({ acc }: DisplayDataProps) {
           ))}
         </ul>
       )}
+      
+      {/* 添加联系人按钮 */}
+      <div className="mt-4">
+        <SaveVcf 
+          acc={acc} 
+          variant="default" 
+          cta={t('AddToContacts')} 
+          autoDownload={autoAddContact} 
+        />
+      </div>
     </div>
   );
 }

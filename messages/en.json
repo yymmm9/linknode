@@ -59,8 +59,9 @@
     "RolePlaceholder": "Select your role",
     "NoInformationTitle": "No Personal Information",
     "NoInformationDescription": "Add your personal information to help others understand you better",
-    "AddInformation": "Add Information"
-   
+    "AddInformation": "Add Information",
+    "AddToContacts": "Add to Contacts",
+    "AutoAddContact": "Auto Add to Contacts"
   },
   "Profile": {
     "PageTitle": "Your Profile",

@@ -110,6 +110,9 @@ export default function Page({ searchParams }: SearchParamsProps) {
     ? selectedBgOption.component
     : null;
 
+  // 检查是否需要自动添加联系人
+  const autoAddContact = searchParams.a === 'true';
+  
   let noBadge = true;
 
   return (
@@ -118,7 +121,7 @@ export default function Page({ searchParams }: SearchParamsProps) {
         {selectedBgComponent}
       </div>
       <div className="hide_scrollbar p-2 pt-10">
-        {data ? <DisplayData acc={data} /> : <DataLoading />}
+        {data ? <DisplayData acc={data} autoAddContact={autoAddContact} /> : <DataLoading />}
       </div>
       <div className="fixed bottom-0 left-0 w-full text-center p-4 bg-gray-100 flex gap-4 items-center justify-center">
         <Link href={'/'}><div className="text-sm text-gray-600">{t('poweredBy')}</div></Link>
