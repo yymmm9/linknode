@@ -52,48 +52,44 @@ export const SaveVcf = ({
     // 如果有头像URL，添加到vCard中
     if (avatarUrl && typeof avatarUrl === 'string' && avatarUrl.trim() !== '') {
       try {
-        // 获取头像图片
+        // 获取图片的base64内容
         const response = await fetch(avatarUrl);
-        if (response.ok) {
-          const blob = await response.blob();
-          const reader = new FileReader();
-          
-          // 将blob转换为base64
-          const base64Content = await new Promise<string>((resolve) => {
-            reader.onloadend = () => {
-              if (typeof reader.result === 'string') {
-                const base64data = reader.result;
-                // 提取base64部分（去掉前缀）
-                const parts = base64data.split(',');
-                const base64Content = parts.length > 1 ? parts[1] : '';
-                if(base64Content){
-                  resolve(base64Content);
-                }else{
-                  //throw error?
-                  console.error('Error reading file');
-                  resolve('');
-                }
-              }
-            };
-            reader.onerror = () => {
-              console.error('Error reading file');
-              resolve('');
-            };
-          });
-          
-          reader.readAsDataURL(blob);
-          
-          // 添加照片到vCard
-          // 注意：这里使用了自定义字符串操作，因为vcard-creator不直接支持添加照片
-          // 手动添加PHOTO属性到vCard字符串
-          const photoProperty = `PHOTO;ENCODING=b;TYPE=JPEG:${base64Content}`;
-          // 将照片属性添加到vCard字符串中
-          const vCardString = myVCard.toString();
-          const lines = vCardString.split('\n');
-          // 在END行前插入照片属性
-          lines.splice(lines.length - 1, 0, photoProperty);
-          return lines.join('\n');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch avatar: ${response.status} ${response.statusText}`);
         }
+        
+        // 获取图片的blob
+        const blob = await response.blob();
+        
+        // 将blob转换为base64
+        const base64Content = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            if (typeof reader.result === 'string') {
+              // 提取base64部分（去掉data:image/...;base64,前缀）
+              const base64Data = reader.result.split(',')[1];
+              if (base64Data) {
+                resolve(base64Data);
+              } else {
+                reject(new Error('Invalid image data'));
+              }
+            } else {
+              reject(new Error('Failed to read image data'));
+            }
+          };
+          reader.onerror = () => {
+            reject(new Error('Error reading image file'));
+          };
+          reader.readAsDataURL(blob);
+        });
+        
+        // 获取MIME类型
+        const mimeType = blob.type || 'image/jpeg';
+        
+        // 使用vcard-creator的addPhoto方法添加照片
+        myVCard.addPhoto(base64Content, mimeType);
+        
+        console.log('Successfully added photo to vCard');
       } catch (error) {
         console.error('添加头像到vCard时出错:', error);
         // 出错时继续，不添加头像

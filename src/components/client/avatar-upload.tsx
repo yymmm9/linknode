@@ -14,130 +14,167 @@ async function compressImage(file: File, maxSizeKB: number = 100): Promise<File>
     return file;
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (event) => {
+    
+    reader.onload = (e) => {
       const img = new Image();
-      img.src = event.target?.result as string;
+      const url = e.target?.result as string;
       
       img.onload = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         
         if (!ctx) {
-          reject(new Error('无法创建 canvas 上下文'));
+          console.error('Could not get canvas context');
+          resolve(file);
           return;
         }
         
-        // 计算压缩后的尺寸
+        // 计算新尺寸，保持宽高比
         let width = img.width;
         let height = img.height;
         
         // 限制最大尺寸
-        const MAX_WIDTH = 800;
-        const MAX_HEIGHT = 800;
+        const MAX_DIMENSION = 1024;
         
         if (width > height) {
-          if (width > MAX_WIDTH) {
-            height = Math.round(height * MAX_WIDTH / width);
-            width = MAX_WIDTH;
+          if (width > MAX_DIMENSION) {
+            height = Math.round(height * (MAX_DIMENSION / width));
+            width = MAX_DIMENSION;
           }
         } else {
-          if (height > MAX_HEIGHT) {
-            width = Math.round(width * MAX_HEIGHT / height);
-            height = MAX_HEIGHT;
+          if (height > MAX_DIMENSION) {
+            width = Math.round(width * (MAX_DIMENSION / height));
+            height = MAX_DIMENSION;
           }
         }
         
+        // 设置画布大小
         canvas.width = width;
         canvas.height = height;
         
-        // 绘制图片
+        // 初始绘制
         ctx.drawImage(img, 0, 0, width, height);
         
-        // 压缩图片
-        let quality = 0.7; // 起始质量
-        let dataUrl = canvas.toDataURL('image/jpeg', quality);
+        // 初始质量
+        let quality = 0.9;
         let iteration = 0;
         
-        // 递归函数来调整质量直到文件大小合适
-        const reduceSize = () => {
-          // 防止无限循环
-          if (iteration > 10) {
-            const finalFile = dataURLtoFile(dataUrl, file.name);
-            resolve(finalFile);
-            return;
-          }
-          
-          // 计算当前大小
-          const binaryString = atob(dataUrl.split(',')[1]);
-          const currentSize = binaryString.length / 1024;
-          
-          if (currentSize <= maxSizeKB) {
-            // 大小符合要求
-            const finalFile = dataURLtoFile(dataUrl, file.name);
-            resolve(finalFile);
-          } else {
-            // 继续减小
-            iteration++;
-            quality = Math.max(0.1, quality - 0.1);
-            dataUrl = canvas.toDataURL('image/jpeg', quality);
-            reduceSize();
+        // 检查大小并可能需要调整
+        const checkAndReduceSize = () => {
+          try {
+            // 获取当前质量的 data URL
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            
+            // 提取 base64 部分
+            const base64Data = dataUrl.split(',')[1];
+            if (!base64Data) {
+              throw new Error('Invalid data URL format');
+            }
+            
+            // 计算当前大小 (KB) - 使用更准确的大小计算
+            const sizeInKB = (base64Data.length * 0.75) / 1024;
+            
+            if (sizeInKB <= maxSizeKB || quality <= 0.1) {
+              // 大小符合要求或达到最小质量
+              const finalFile = dataURLtoFile(dataUrl, file.name);
+              resolve(finalFile);
+            } else {
+              // 继续减小质量
+              iteration++;
+              quality = Math.max(0.1, quality - 0.1);
+              
+              // 使用 requestAnimationFrame 避免阻塞主线程
+              requestAnimationFrame(checkAndReduceSize);
+            }
+          } catch (error) {
+            console.error('Error during image compression:', error);
+            resolve(file); // 出错时返回原始文件
           }
         };
         
-        reduceSize();
+        // 开始检查大小
+        checkAndReduceSize();
       };
       
       img.onerror = () => {
-        reject(new Error('图片加载失败'));
+        console.error('Error loading image');
+        resolve(file);
       };
+      
+      // 设置图片源
+      img.src = url;
     };
     
     reader.onerror = () => {
-      reject(new Error('文件读取失败'));
+      console.error('Error reading file');
+      resolve(file);
     };
+    
+    // 读取文件
+    reader.readAsDataURL(file);
   });
 }
 
 // 将 dataURL 转换为 File 对象
 function dataURLtoFile(dataURL: string, filename: string): File {
+  // 确保 dataURL 格式正确
   const arr = dataURL.split(',');
-  const mimeMatch = arr[0].match(/:(.*?);/);
-  const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
-  const bstr = atob(arr[1]);
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
+  const base64Data = arr[1];
   
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
+  if (!base64Data) {
+    throw new Error('Invalid dataURL format: missing base64 data');
   }
+
+  // 提取 MIME 类型，默认为 image/jpeg
+  const mimeType = (() => {
+    const match = dataURL.match(/^data:(.*?)(;base64)?,/);
+    return match && match[1] ? match[1] : 'image/jpeg';
+  })();
   
-  return new File([u8arr], filename, { type: mime });
+  try {
+    // 在浏览器环境中使用 atob 进行 base64 解码
+    const binaryString = atob(base64Data);
+    
+    // 创建 Uint8Array 来存储二进制数据
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    
+    // 创建并返回 File 对象
+    return new File([bytes], filename, { type: mimeType });
+  } catch (error) {
+    console.error('Error converting dataURL to File:', error);
+    throw new Error('Failed to convert dataURL to File');
+  }
 }
 
 // 上传图片到 Vercel Blob
 async function uploadToBlob(file: File): Promise<string> {
   try {
-    // 创建一个 FormData 对象
     const formData = new FormData();
     formData.append('file', file);
     
-    // 发送请求到 API 路由
     const response = await fetch('/api/upload', {
       method: 'POST',
       body: formData,
     });
     
     if (!response.ok) {
-      throw new Error('上传失败');
+      const errorText = await response.text();
+      throw new Error(`Upload failed: ${response.status} ${errorText}`);
     }
     
-    const data = await response.json();
+    const data = await response.json() as { url: string };
+    if (!data.url) {
+      throw new Error('Invalid response: missing URL');
+    }
+    
     return data.url;
   } catch (error) {
-    console.error('上传错误:', error);
+    console.error('Error uploading file:', error);
     throw error;
   }
 }
