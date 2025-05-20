@@ -50,7 +50,7 @@ export const SaveVcf = ({
       .addAddress(address);
     
     // 如果有头像URL，添加到vCard中
-    if (avatarUrl) {
+    if (avatarUrl && typeof avatarUrl === 'string' && avatarUrl.trim() !== '') {
       try {
         // 获取头像图片
         const response = await fetch(avatarUrl);
@@ -58,46 +58,40 @@ export const SaveVcf = ({
           const blob = await response.blob();
           const reader = new FileReader();
           
-          // 使用Promise包装FileReader
-          const getBase64 = (): Promise<string> => {
-            return new Promise((resolve) => {
-              reader.onloadend = () => {
-                if (typeof reader.result === 'string') {
-                  const base64data = reader.result;
-                  // 提取base64部分（去掉前缀）
-                  const parts = base64data.split(',');
-                  if (parts.length > 1) {
-                    resolve(parts[1]);
-                  } else {
-                    resolve('');
-                  }
-                } else {
+          // 将blob转换为base64
+          const base64Content = await new Promise<string>((resolve) => {
+            reader.onloadend = () => {
+              if (typeof reader.result === 'string') {
+                const base64data = reader.result;
+                // 提取base64部分（去掉前缀）
+                const parts = base64data.split(',');
+                const base64Content = parts.length > 1 ? parts[1] : '';
+                if(base64Content){
+                  resolve(base64Content);
+                }else{
+                  //throw error?
+                  console.error('Error reading file');
                   resolve('');
                 }
-              };
-              reader.readAsDataURL(blob);
-            });
-          };
+              }
+            };
+            reader.onerror = () => {
+              console.error('Error reading file');
+              resolve('');
+            };
+          });
           
-          // 获取base64内容
-          const base64Content = await getBase64();
+          reader.readAsDataURL(blob);
           
-          // 使用vCard 4.0格式添加照片
-          // 添加照片到vCard字符串
+          // 添加照片到vCard
+          // 注意：这里使用了自定义字符串操作，因为vcard-creator不直接支持添加照片
+          // 手动添加PHOTO属性到vCard字符串
+          const photoProperty = `PHOTO;ENCODING=b;TYPE=JPEG:${base64Content}`;
+          // 将照片属性添加到vCard字符串中
           const vCardString = myVCard.toString();
           const lines = vCardString.split('\n');
-          
-          // 添加多行属性，每行75个字符
-          const photoLines = [];
-          photoLines.push('PHOTO;ENCODING=b;TYPE=JPEG:');
-          
-          // 将base64内容按每行75个字符分割
-          for (let i = 0; i < base64Content.length; i += 75) {
-            photoLines.push(' ' + base64Content.substring(i, i + 75));
-          }
-          
           // 在END行前插入照片属性
-          lines.splice(lines.length - 1, 0, ...photoLines);
+          lines.splice(lines.length - 1, 0, photoProperty);
           return lines.join('\n');
         }
       } catch (error) {

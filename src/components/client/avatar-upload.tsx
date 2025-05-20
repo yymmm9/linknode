@@ -71,10 +71,8 @@ async function compressImage(file: File, maxSizeKB: number = 100): Promise<File>
           }
           
           // 计算当前大小
-          const parts = dataUrl.split(',');
-          if (parts.length > 1) {
-            const binaryString = atob(parts[1]);
-            const currentSize = binaryString.length / 1024;
+          const binaryString = atob(dataUrl.split(',')[1]);
+          const currentSize = binaryString.length / 1024;
           
           if (currentSize <= maxSizeKB) {
             // 大小符合要求
@@ -86,10 +84,6 @@ async function compressImage(file: File, maxSizeKB: number = 100): Promise<File>
             quality = Math.max(0.1, quality - 0.1);
             dataUrl = canvas.toDataURL('image/jpeg', quality);
             reduceSize();
-          }
-          } else {
-            // 如果无法获取数据部分，使用原始文件
-            resolve(file);
           }
         };
         
