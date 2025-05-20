@@ -23,7 +23,7 @@ export const SaveVcf = ({
   const t = useTranslations("ProfileForm");
 
   // 将所有逻辑放在 if 条件之前
-  const createVCard = (accData: Partial<DataProps>) => {
+  const createVCard = async (accData: Partial<DataProps>) => {
     const firstName = accData.n || accData.firstName || '';
     const lastName = accData.ln || accData.lastName || '';
     const organization = accData.o || accData.organization || '';
@@ -34,6 +34,7 @@ export const SaveVcf = ({
     const website = accData.web || accData.website || '';
     const description = accData.d || '';
     const address = accData.addr || '';
+    const avatarUrl = accData.i || '';
     
     const myVCard = new VCard();
 
@@ -47,25 +48,87 @@ export const SaveVcf = ({
       .addURL(website)
       .addNote(description)
       .addAddress(address);
+    
+    // 如果有头像URL，添加到vCard中
+    if (avatarUrl) {
+      try {
+        // 获取头像图片
+        const response = await fetch(avatarUrl);
+        if (response.ok) {
+          const blob = await response.blob();
+          const reader = new FileReader();
+          
+          // 使用Promise包装FileReader
+          const getBase64 = (): Promise<string> => {
+            return new Promise((resolve) => {
+              reader.onloadend = () => {
+                if (typeof reader.result === 'string') {
+                  const base64data = reader.result;
+                  // 提取base64部分（去掉前缀）
+                  const parts = base64data.split(',');
+                  if (parts.length > 1) {
+                    resolve(parts[1]);
+                  } else {
+                    resolve('');
+                  }
+                } else {
+                  resolve('');
+                }
+              };
+              reader.readAsDataURL(blob);
+            });
+          };
+          
+          // 获取base64内容
+          const base64Content = await getBase64();
+          
+          // 使用vCard 4.0格式添加照片
+          // 添加照片到vCard字符串
+          const vCardString = myVCard.toString();
+          const lines = vCardString.split('\n');
+          
+          // 添加多行属性，每行75个字符
+          const photoLines = [];
+          photoLines.push('PHOTO;ENCODING=b;TYPE=JPEG:');
+          
+          // 将base64内容按每行75个字符分割
+          for (let i = 0; i < base64Content.length; i += 75) {
+            photoLines.push(' ' + base64Content.substring(i, i + 75));
+          }
+          
+          // 在END行前插入照片属性
+          lines.splice(lines.length - 1, 0, ...photoLines);
+          return lines.join('\n');
+        }
+      } catch (error) {
+        console.error('添加头像到vCard时出错:', error);
+        // 出错时继续，不添加头像
+      }
+    }
 
     return myVCard.toString();
   };
 
-  const downloadVCard = () => {
+  const downloadVCard = async () => {
     if (!acc) return;
     
     const firstName = acc.n || acc.firstName || '';
     const lastName = acc.ln || acc.lastName || '';
-    const vCardString = createVCard(acc);
-    const blob = new Blob([vCardString], { type: "text/vcard" });
-    const link = document.createElement("a");
     
-    link.href = URL.createObjectURL(blob);
-    link.download = `${firstName}_${lastName}.vcf`;
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const vCardString = await createVCard(acc);
+      const blob = new Blob([vCardString], { type: "text/vcard" });
+      const link = document.createElement("a");
+      
+      link.href = URL.createObjectURL(blob);
+      link.download = `${firstName}_${lastName}.vcf`;
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('下载vCard时出错:', error);
+    }
   };
 
   // 检查URL参数是否有自动下载标志 - 确保 Hook 不在条件语句之后
@@ -75,8 +138,8 @@ export const SaveVcf = ({
     const autoAdd = searchParams?.get('a');
     if (autoAdd === 'true' || autoDownload) {
       // 延迟一点执行，确保组件已完全加载
-      const timer = setTimeout(() => {
-        downloadVCard();
+      const timer = setTimeout(async () => {
+        await downloadVCard();
       }, 500);
       return () => clearTimeout(timer);
     }

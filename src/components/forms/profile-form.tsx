@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { useTranslations } from 'next-intl';
 import { useData } from '@/lib/context/link-context';
+import { AvatarUpload } from '@/components/client/avatar-upload';
 
 type InputChangeEvent = React.ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement
@@ -40,7 +41,11 @@ export default function ProfileForm() {
         <CardTitle className="text-2xl">{t('Title')}</CardTitle>
         <CardDescription>{t('Description')}</CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-2">
+      <CardContent className="grid gap-4">
+        {/* 头像上传组件 */}
+        <div className="flex justify-center">
+          <AvatarUpload />
+        </div>
         <div className="grid gap-2 grid-cols-2">
           <div>
             <Label htmlFor="firstName">{t('FirstName')}</Label>
